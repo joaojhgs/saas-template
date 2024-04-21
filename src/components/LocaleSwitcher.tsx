@@ -1,10 +1,9 @@
 'use client';
 
 import { Dropdown } from 'antd';
-import { usePathname } from 'next-intl/client';
-import Link from 'next-intl/link';
 
 import { languages } from '@/locale';
+import { Link, usePathname } from '@/navigation';
 
 import Icons from './Icons';
 
