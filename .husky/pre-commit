@@ -4,4 +4,3 @@
 chmod ug+x .husky/*
 # chmod 755 ./.husky/hooks/check_branch_naming.sh && bash ./.husky/hooks/check_branch_naming.sh
 pnpm lint-staged
-pnpm commitlint --edit $1

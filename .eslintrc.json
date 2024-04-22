@@ -41,6 +41,8 @@
     "@typescript-eslint/no-explicit-any": "error",
     // Why would you want unused vars?
     "@typescript-eslint/no-unused-vars": "error",
+    // Required to work with i18n next plugin
+    "@typescript-eslint/no-var-requires": "off",
     // We need use unescaped entities without warning
     "react/no-unescaped-entities": "off",
     // We have Head component from Next.js
