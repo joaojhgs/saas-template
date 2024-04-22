@@ -2,7 +2,10 @@ import { Locale } from 'antd/lib/locale';
 import en_US from 'antd/locale/en_US';
 import zh_CN from 'antd/locale/zh_CN';
 
-export const languages = {
+export const languages: Record<
+  string,
+  { name: string; flag: string; unicode: string; antd: Locale }
+> = {
   'zh-CN': {
     name: '简体中文',
     flag: '🇨🇳',

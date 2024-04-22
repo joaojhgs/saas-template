@@ -7,5 +7,6 @@
       "eslint",
       "prettier --write"
     ],
-    "*.css": "prettier --write"
+    "*.css": "prettier --write",
+    "*.json": "eslint --fix --ext .json --format node_modules/eslint-plugin-i18n-json/formatter.js src/locale/messages"
   }

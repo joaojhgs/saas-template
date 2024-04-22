@@ -18,7 +18,7 @@ export function SiteHeader() {
               rel="noreferrer"
               className="btn"
             >
-              <Icons.Github className="h-5 w-5" />
+              <Icons.Github className="size-5" />
             </Link>
             <LocaleSwitcher />
             <ThemeToggle />

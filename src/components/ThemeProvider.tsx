@@ -19,7 +19,7 @@ export function AntdConfigProvider({ children, locale }: ProviderProps) {
 
   return (
     <ConfigProvider
-      locale={(languages as any)[(locale as any) ?? defaultLocale].antd}
+      locale={languages[locale ?? defaultLocale].antd}
       theme={{
         algorithm:
           nowTheme === 'dark' ? theme.darkAlgorithm : theme.defaultAlgorithm,
