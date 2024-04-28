@@ -1,0 +1,14 @@
+{
+  "nav": {
+    "home": "首页"
+  },
+  "site": {
+    "desc": "将 Ant-Design 5 与 Next.js 13 和 Tailwind CSS 结合使用",
+    "title": "Next.js"
+  },
+  "theme": {
+    "dark": "暗色",
+    "light": "亮色",
+    "system": "系统"
+  }
+}
