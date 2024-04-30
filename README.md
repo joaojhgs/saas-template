@@ -25,3 +25,16 @@ This repository integrates it with Tailwindcss, Globalization, themes, state man
 - Automatic import sorting with [@trivago/prettier-plugin-sort-imports](https://github.com/trivago/prettier-plugin-sort-imports)
 - Globalization sorting and linting with [eslint-plugin-i18n-json](https://www.npmjs.com/package/eslint-plugin-i18n-json)
 - Pre-commit lint and prettier checks with [lint-staged](https://github.com/lint-staged/lint-staged)
+
+# Codebase convetions and enforced rules
+
+All files inside the [server](/src/server/) folder should have the `'use server'` directive on top, as them will only be served to the backend and callable from the front end.
+
+Branch names should follow this convention:
+`^((hotfix|bugfix|fix|feature|improvement|chore|style|refactor)\/[a-zA-Z0-9_\-]+)|(main)$`.
+
+Ex: `hotfix-auth-component` | `feature-schedulling` | `main`
+
+Commit messages should follow the [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) naming style. You can also use `pnpm commit` for a cli interface for commit naming.
+
+Files and folders in general should follow the `kebab-case` name convention, only react `.tsx` files inside the `components` folder should follow the `SnakeCase` naming convetion.
