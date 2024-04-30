@@ -3,11 +3,11 @@
     "home": "Home"
   },
   "sign-up-component": {
-    "confirmPassword": "Confirm Password",
+    "confirmPassword": "Confirmar Senha",
     "email": "Email",
     "login": "Login",
-    "password": "Password",
-    "signup": "Submit",
+    "password": "Senha",
+    "signup": "Registrar",
     "title": "Sign Up"
   },
   "site": {

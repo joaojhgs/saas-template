@@ -3,8 +3,8 @@ import { type NextRequest } from 'next/server';
 
 import createIntlMiddleware from 'next-intl/middleware';
 
+import { createClient } from './lib/supabase/server-client';
 import { defaultLocale, languages } from './locale';
-import { createClient } from './utils/supabase/server';
 
 const handleI18nRouting = createIntlMiddleware({
   // A list of all locales that are supported
