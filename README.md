@@ -33,6 +33,70 @@ All files inside the [server](/src/server/) folder should have the `'use server'
 Branch names should follow this convention:
 `^((hotfix|bugfix|fix|feature|improvement|chore|style|refactor)\/[a-zA-Z0-9_\-]+)|(main)$`.
 
+## Database Model
+
+```mermaid
+erDiagram
+    BARBEARIA {
+        int ID
+        string Nome
+        string Localizacao
+        string Descricao
+        string Foto
+        string Documento
+        int IdDonoBarbearia 
+    }
+    TIPOS_DE_CORTE {
+        int ID
+        int IDBarbeiro
+        string Nome
+        string Duracao
+        string Valor
+    }
+    AGENDAMENTOS {
+        int ID
+        int IDBarbeiro
+        date Data
+        int IDTipoDeCorte
+        string InformacoesAdicionais
+        string Status
+        boolean ReceberNotificacao
+        string TelefoneUsuario
+        string NomeUsuario
+    }
+    CONFIGURACAO_DO_BARBEIRO {
+        int ID
+        int IDBarbeiro
+        string DiasDeTrabalho
+        time HorarioPadrao
+        boolean AceitarTudoAutomaticamente
+        time HorariosDeNaoTrabalho
+    }
+    TRABALHOS_REALIZADOS {
+        int ID
+        int IDBarbeiro
+        string Descricao
+        string Foto
+    }
+    FATURAMENTO {
+        int ID
+        int IDBarbeiro
+        date Data
+        float Valor
+    }
+    BARBEIRO {
+        int ID
+    }
+    
+    TIPOS_DE_CORTE ||--o{ AGENDAMENTOS : "é associado a"
+    BARBEIRO ||--o{ TIPOS_DE_CORTE : "tem"
+    BARBEIRO ||--o{ AGENDAMENTOS : "tem"
+    BARBEIRO ||--o{ CONFIGURACAO_DO_BARBEIRO : "tem"
+    BARBEIRO ||--o{ TRABALHOS_REALIZADOS : "tem"
+    BARBEIRO ||--o{ FATURAMENTO : "tem"
+    BARBEARIA ||--o{ BARBEIRO : "tem"
+```
+
 Ex: `hotfix-auth-component` | `feature-schedulling` | `main`
 
 Commit messages should follow the [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) naming style. You can also use `pnpm commit` for a cli interface for commit naming.
