@@ -33,6 +33,12 @@ All files inside the [server](/src/server/) folder should have the `'use server'
 Branch names should follow this convention:
 `^((hotfix|bugfix|fix|feature|improvement|chore|style|refactor)\/[a-zA-Z0-9_\-]+)|(main)$`.
 
+Ex: `hotfix-auth-component` | `feature-schedulling` | `main`
+
+Commit messages should follow the [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) naming style. You can also use `pnpm commit` for a cli interface for commit naming.
+
+Files and folders in general should follow the `kebab-case` name convention, only react `.tsx` files inside the `components` folder should follow the `SnakeCase` naming convetion.
+
 ## Database Model
 
 ```mermaid
@@ -97,8 +103,3 @@ erDiagram
     BARBEARIA ||--o{ BARBEIRO : "tem"
 ```
 
-Ex: `hotfix-auth-component` | `feature-schedulling` | `main`
-
-Commit messages should follow the [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) naming style. You can also use `pnpm commit` for a cli interface for commit naming.
-
-Files and folders in general should follow the `kebab-case` name convention, only react `.tsx` files inside the `components` folder should follow the `SnakeCase` naming convetion.
