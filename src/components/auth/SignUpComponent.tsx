@@ -4,11 +4,9 @@ import { Button, Form, Input, notification } from 'antd';
 import { createSchemaFieldRule } from 'antd-zod';
 import { useTranslations } from 'next-intl';
 
+import { SignUpPasswordInputValidation } from '@/schemas/auth-schemas';
 import { registerWithPassword } from '@/server/controller';
-import {
-  ISignUpPasswordInput,
-  SignUpPasswordInputValidation,
-} from '@/utils/interfaces';
+import { ISignUpPasswordInput } from '@/utils/interfaces';
 
 const SignUpComponent: React.FC = () => {
   const onFinish = (values: ISignUpPasswordInput) => {
