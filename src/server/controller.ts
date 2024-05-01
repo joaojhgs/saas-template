@@ -2,11 +2,10 @@
 
 import { createClient } from '@/lib/supabase/server-client';
 import {
-  ISignInPasswordInput,
-  ISignUpPasswordInput,
   SignInPasswordInputValidation,
   SignUpPasswordInputValidation,
-} from '@/utils/interfaces';
+} from '@/schemas/auth-schemas';
+import { ISignInPasswordInput, ISignUpPasswordInput } from '@/utils/interfaces';
 
 /*
     This is a controller file. It is used to define the functions that will be used by the server.
@@ -22,7 +21,7 @@ export const loginWithPassword = async (data: ISignInPasswordInput) => {
 
 export const registerWithPassword = async (data: ISignUpPasswordInput) => {
   SignUpPasswordInputValidation.parse(data);
-  supabase.auth.signUp(data);
+  return supabase.auth.signUp(data);
 };
 
 export const logout = async () => {
