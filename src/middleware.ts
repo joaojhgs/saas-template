@@ -16,7 +16,6 @@ const handleI18nRouting = createIntlMiddleware({
 
 export async function middleware(request: NextRequest) {
   const response = handleI18nRouting(request);
-
   const supabase = createClient();
 
   await supabase.auth.getUser();

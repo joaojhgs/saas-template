@@ -16,7 +16,10 @@ export default async function RootLayout({
 }) {
   let messages;
   try {
-    messages = (await import(`../../locale/messages/${locale}.json`)).default;
+    messages = {
+      ...(await import(`../../locale/messages/${locale}.json`)).default,
+      ...(await import(`../../locale/messages/zod/${locale}.json`)).default,
+    };
   } catch (error) {
     notFound();
   }

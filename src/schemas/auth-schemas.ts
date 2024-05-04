@@ -7,7 +7,7 @@ export const SignUpPasswordInputValidation = z
     confirmPassword: z.string().min(8),
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords don't match",
+    params: { i18n: 'passwords-dont-match' },
     path: ['confirmPassword'], // path of error
   });
 

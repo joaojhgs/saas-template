@@ -2,13 +2,18 @@
   "nav": {
     "home": "Home"
   },
-  "sign-up-component": {
-    "confirmPassword": "Confirmar Senha",
-    "email": "Email",
-    "login": "Login",
-    "password": "Senha",
-    "signup": "Registrar",
-    "title": "Sign Up"
+  "forms": {
+    "sign-up-component": {
+      "confirmPassword": "Confirmar Senha",
+      "email": "Email",
+      "login": "Login",
+      "password": "Senha",
+      "signup": "Registrar",
+      "title": "Sign Up"
+    }
+  },
+  "customErrors": {
+    "passwords-dont-match": "Senhas não são iguais"
   },
   "site": {
     "desc": "Using Ant-Design 5 with Next.js 13 and Tailwind CSS",
