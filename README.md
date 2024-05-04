@@ -43,13 +43,13 @@ Files and folders in general should follow the `kebab-case` name convention, onl
 
 ```mermaid
 erDiagram
-    BARBERS {
+    BARBER {
         id UUID
         external_user_id VARCHAR(255)
         name VARCHAR(255)
         accept_schedules_automatically BOOLEAN
     }
-    BARBERSHOPS {
+    BARBERSHOP {
         id UUID
         name VARCHAR(255)
         location VARCHAR(255)
@@ -60,24 +60,24 @@ erDiagram
         latitude VARCHAR(255)
         longitude VARCHAR(255)
     }
-    PREVIOUS_SERVICES {
+    PREVIOUS_SERVICE {
         id UUID
         id_barber UUID
         description VARCHAR(255)
         picture VARCHAR(255)
         id_service_type UUID
     }
-    SERVICE_TYPES {
+    SERVICE_TYPE {
         id UUID
         name VARCHAR(255)
     }
-    BARBER_HAS_SERVICE_TYPES {
+    BARBER_HAS_SERVICE_TYPE {
         id_service_type UUID
         id_barber UUID
         duration_minutes INT
         price BIGINT
     }
-    SCHEDULES {
+    SCHEDULE {
         id UUID
         id_barber UUID
         start_time TIMESTAMP
@@ -89,7 +89,7 @@ erDiagram
         user_phone VARCHAR(255)
         user_name VARCHAR(255)
     }
-    WORK_DAYS {
+    WORK_DAY {
         id UUID
         week_day STRING
         work_period_start TIMESTAMP
@@ -103,14 +103,14 @@ erDiagram
         away BOOLEAN
     }
     
-    BARBERS ||--o{ BARBER_HAS_SERVICE_TYPES : "has"
-    BARBERS ||--o{ SCHEDULES : "has"
-    BARBERS ||--o{ PREVIOUS_SERVICES : "has"
-    BARBERSHOPS ||--o{ BARBERS : "has"
-    SERVICE_TYPES ||--o{ BARBER_HAS_SERVICE_TYPES : "is associated with"
-    SERVICE_TYPES ||--o{ PREVIOUS_SERVICES : "is associated with"
-    SERVICE_TYPES ||--o{ SCHEDULES : "is associated with"
-    BARBERS ||--o{ WORK_DAYS : "has"
-    BARBERS ||--o{ CUSTOM_DAY_OF_WORK : "has"
+    BARBER ||--o{ BARBER_HAS_SERVICE_TYPE : "has"
+    BARBER ||--o{ SCHEDULE : "has"
+    BARBER ||--o{ PREVIOUS_SERVICE : "has"
+    BARBERSHOP ||--o{ BARBER : "has"
+    SERVICE_TYPE ||--o{ BARBER_HAS_SERVICE_TYPE : "is associated with"
+    SERVICE_TYPE ||--o{ PREVIOUS_SERVICES : "is associated with"
+    SERVICE_TYPE ||--o{ SCHEDULE : "is associated with"
+    BARBER ||--o{ WORK_DAY : "has"
+    BARBER ||--o{ CUSTOM_DAY_OF_WORK : "has"
 ```
 
