@@ -45,7 +45,7 @@ Files and folders in general should follow the `kebab-case` name convention, onl
 erDiagram
     BARBER {
         id UUID
-        external_user_id VARCHAR(255)
+        id_external_user VARCHAR(255)
         name VARCHAR(255)
         accept_schedules_automatically BOOLEAN
     }
@@ -53,17 +53,17 @@ erDiagram
         id UUID
         name VARCHAR(255)
         location VARCHAR(255)
-        description VARCHAR(255)
+        description TEXT
         picture VARCHAR(255)
         document VARCHAR(255)
-        owner_id UUID
+        id_owner UUID
         latitude VARCHAR(255)
         longitude VARCHAR(255)
     }
     PREVIOUS_SERVICE {
         id UUID
         id_barber UUID
-        description VARCHAR(255)
+        description TEXT
         picture VARCHAR(255)
         id_service_type UUID
     }
@@ -83,7 +83,7 @@ erDiagram
         start_time TIMESTAMP
         end_time TIMESTAMP
         id_service_type UUID
-        additional_information VARCHAR(255)
+        additional_information TEXT
         status VARCHAR(255)
         allow_notifications BOOLEAN
         user_phone VARCHAR(255)
@@ -92,14 +92,14 @@ erDiagram
     WORK_DAY {
         id UUID
         week_day STRING
-        work_period_start TIMESTAMP
-        work_period_end TIMESTAMP
+        start_time TIMESTAMP
+        end_time TIMESTAMP
     }
     CUSTOM_DAY_OF_WORK {
         id UUID
         id_barber UUID
-        work_period_start TIMESTAMP
-        work_period_end TIMESTAMP
+        start_time TIMESTAMP
+        end_time TIMESTAMP
         away BOOLEAN
     }
     
