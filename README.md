@@ -57,6 +57,8 @@ erDiagram
         picture VARCHAR(255)
         document VARCHAR(255)
         owner_id UUID
+        latitude VARCHAR(255)
+        longitude VARCHAR(255)
     }
     PREVIOUS_SERVICES {
         id UUID
