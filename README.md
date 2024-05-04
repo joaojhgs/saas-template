@@ -54,8 +54,11 @@ erDiagram
     }
     TIPOS_DE_CORTE {
         int ID
+        string nome
+    }
+    BARBEIRO_TEM_TIPO_DE_CORTE {
+        int IDTIPOS_DE_CORTE
         int IDBarbeiro
-        string Nome
         string Duracao
         string Valor
     }
@@ -70,19 +73,30 @@ erDiagram
         string TelefoneUsuario
         string NomeUsuario
     }
-    CONFIGURACAO_DO_BARBEIRO {
-        int ID
-        int IDBarbeiro
-        string DiasDeTrabalho
-        time HorarioPadrao
+    BARBEIRO {
+        int IDSupabaseUser
+        string nome
         boolean AceitarTudoAutomaticamente
-        time HorariosDeNaoTrabalho
     }
+    DIAS_DE_TRABALHO {
+        int IDBarbeiro
+        string WeekDay
+        time WorkPeriodFrom
+        time WorkPeriodUntil
+    }
+    custom_day_of_work {
+        int id
+        int barberId
+        date WorkTimeFrom
+        date WorkTimeUntil
+        bool away
+    }  
     TRABALHOS_REALIZADOS {
         int ID
         int IDBarbeiro
         string Descricao
         string Foto
+        int IDTipoDeCorte
     }
     FATURAMENTO {
         int ID
@@ -90,16 +104,18 @@ erDiagram
         date Data
         float Valor
     }
-    BARBEIRO {
+    SUPABASE_USER {
         int ID
     }
     
-    TIPOS_DE_CORTE ||--o{ AGENDAMENTOS : "é associado a"
-    BARBEIRO ||--o{ TIPOS_DE_CORTE : "tem"
+    BARBEIRO_TEM_TIPO_DE_CORTE ||--o{ AGENDAMENTOS : "é associado a"
+    BARBEIRO ||--o{ BARBEIRO_TEM_TIPO_DE_CORTE : "tem"
     BARBEIRO ||--o{ AGENDAMENTOS : "tem"
-    BARBEIRO ||--o{ CONFIGURACAO_DO_BARBEIRO : "tem"
+    SUPABASE_USER ||--o{ BARBEIRO : "tem"
     BARBEIRO ||--o{ TRABALHOS_REALIZADOS : "tem"
+    BARBEIRO ||--o{ custom_day_of_work : "tem"
     BARBEIRO ||--o{ FATURAMENTO : "tem"
-    BARBEARIA ||--o{ BARBEIRO : "tem"
+    BARBEIRO ||--o{ DIAS_DE_TRABALHO : "trabalha"
+    BARBEARIA ||--o{ SUPABASE_USER : "tem"
 ```
 
