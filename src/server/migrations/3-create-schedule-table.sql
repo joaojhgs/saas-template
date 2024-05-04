@@ -4,7 +4,7 @@ CREATE TABLE schedule (
     start_time TIMESTAMP,
     end_time TIMESTAMP,
     id_service_type UUID REFERENCES service_type(id),
-    additional_information VARCHAR(255),
+    additional_information TEXT,
     status VARCHAR(255),
     allow_notifications BOOLEAN,
     user_phone VARCHAR(255),
