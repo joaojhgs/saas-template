@@ -16,11 +16,3 @@ CREATE TABLE barbershop (
     latitude VARCHAR(255),
     longitude VARCHAR(255)
 );
-
-CREATE TABLE previous_service (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    id_barber UUID REFERENCES barber(id),
-    description VARCHAR(255),
-    picture VARCHAR(255),
-    id_service_type UUID REFERENCES service_type(id)
-);
