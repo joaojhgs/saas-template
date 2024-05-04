@@ -43,79 +43,72 @@ Files and folders in general should follow the `kebab-case` name convention, onl
 
 ```mermaid
 erDiagram
-    BARBEARIA {
-        int ID
-        string Nome
-        string Localizacao
-        string Descricao
-        string Foto
-        string Documento
-        int IdDonoBarbearia 
+    BARBERS {
+        id UUID
+        external_user_id VARCHAR(255)
+        name VARCHAR(255)
+        accept_schedules_automatically BOOLEAN
     }
-    TIPOS_DE_CORTE {
-        int ID
-        string nome
+    BARBERSHOPS {
+        id UUID
+        name VARCHAR(255)
+        location VARCHAR(255)
+        description VARCHAR(255)
+        picture VARCHAR(255)
+        document VARCHAR(255)
+        owner_id UUID
     }
-    BARBEIRO_TEM_TIPO_DE_CORTE {
-        int IDTIPOS_DE_CORTE
-        int IDBarbeiro
-        string Duracao
-        string Valor
+    PREVIOUS_SERVICES {
+        id UUID
+        id_barber UUID
+        description VARCHAR(255)
+        picture VARCHAR(255)
+        id_service_type UUID
     }
-    AGENDAMENTOS {
-        int ID
-        int IDBarbeiro
-        date Data
-        int IDTipoDeCorte
-        string InformacoesAdicionais
-        string Status
-        boolean ReceberNotificacao
-        string TelefoneUsuario
-        string NomeUsuario
+    SERVICE_TYPES {
+        id UUID
+        name VARCHAR(255)
     }
-    BARBEIRO {
-        int IDSupabaseUser
-        string nome
-        boolean AceitarTudoAutomaticamente
+    BARBER_HAS_SERVICE_TYPES {
+        id_service_type UUID
+        id_barber UUID
+        duration_minutes INT
+        price BIGINT
     }
-    DIAS_DE_TRABALHO {
-        int IDBarbeiro
-        string WeekDay
-        time WorkPeriodFrom
-        time WorkPeriodUntil
+    SCHEDULES {
+        id UUID
+        id_barber UUID
+        start_time TIMESTAMP
+        end_time TIMESTAMP
+        id_service_type UUID
+        additional_information VARCHAR(255)
+        status VARCHAR(255)
+        allow_notifications BOOLEAN
+        user_phone VARCHAR(255)
+        user_name VARCHAR(255)
     }
-    custom_day_of_work {
-        int id
-        int barberId
-        date WorkTimeFrom
-        date WorkTimeUntil
-        bool away
-    }  
-    TRABALHOS_REALIZADOS {
-        int ID
-        int IDBarbeiro
-        string Descricao
-        string Foto
-        int IDTipoDeCorte
+    WORK_DAYS {
+        id UUID
+        week_day STRING
+        work_period_start TIMESTAMP
+        work_period_end TIMESTAMP
     }
-    FATURAMENTO {
-        int ID
-        int IDBarbeiro
-        date Data
-        float Valor
-    }
-    SUPABASE_USER {
-        int ID
+    CUSTOM_DAY_OF_WORK {
+        id UUID
+        id_barber UUID
+        work_period_start TIMESTAMP
+        work_period_end TIMESTAMP
+        away BOOLEAN
     }
     
-    BARBEIRO_TEM_TIPO_DE_CORTE ||--o{ AGENDAMENTOS : "é associado a"
-    BARBEIRO ||--o{ BARBEIRO_TEM_TIPO_DE_CORTE : "tem"
-    BARBEIRO ||--o{ AGENDAMENTOS : "tem"
-    SUPABASE_USER ||--o{ BARBEIRO : "tem"
-    BARBEIRO ||--o{ TRABALHOS_REALIZADOS : "tem"
-    BARBEIRO ||--o{ custom_day_of_work : "tem"
-    BARBEIRO ||--o{ FATURAMENTO : "tem"
-    BARBEIRO ||--o{ DIAS_DE_TRABALHO : "trabalha"
-    BARBEARIA ||--o{ SUPABASE_USER : "tem"
+    BARBERS ||--o{ BARBER_HAS_SERVICE_TYPES : "has"
+    BARBERS ||--o{ SCHEDULES : "has"
+    BARBERS ||--o{ PREVIOUS_SERVICES : "has"
+    BARBERSHOPS ||--o{ BARBERS : "has"
+    SERVICE_TYPES ||--o{ BARBER_HAS_SERVICE_TYPES : "is associated with"
+    SERVICE_TYPES ||--o{ PREVIOUS_SERVICES : "is associated with"
+    SERVICE_TYPES ||--o{ SCHEDULES : "is associated with"
+    BARBERS ||--o{ WORK_DAYS : "has"
+    BARBERS ||--o{ CUSTOM_DAY_OF_WORK : "has"
 ```
 
