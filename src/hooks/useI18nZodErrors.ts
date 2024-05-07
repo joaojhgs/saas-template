@@ -1,7 +1,7 @@
 import { useTranslations } from 'next-intl';
 import { z } from 'zod';
 
-import { makeZodI18nMap } from '@/lib/zod/zodErrorMap';
+import { makeZodI18nMap } from '@/lib/zod/zod-error-map';
 
 export const useI18nZodErrorsForm = (
   tForm: ReturnType<typeof useTranslations>,
