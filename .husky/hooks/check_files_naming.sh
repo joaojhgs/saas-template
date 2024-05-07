@@ -24,6 +24,18 @@ is_snake_case() {
     fi
 }
 
+# Function to check if a string is in camelCase
+is_camel_case() {
+    local string="$1"
+    string="${string%.*}"  # Remove file extension
+    
+    if [[ "$string" =~ ^[a-z][a-zA-Z0-9]*$ ]]; then
+        return 0
+    else
+        return 1
+    fi
+}
+
 error=0
 # Check all files and folders inside the src folder
 for item in $(find src -type d -o -type f); do
@@ -37,8 +49,14 @@ for item in $(find src -type d -o -type f); do
                 error=1
             fi
         else
-            # Check SnakeCase naming for .tsx files inside components folder
-            if [[ "$item" == "src/components/"*".tsx" ]]; then
+            # Check camelCase naming for files inside hooks folder
+            if [[ "$item" == "src/hooks/"* ]]; then
+                if ! is_camel_case "$(basename "$item")"; then
+                    echo "Error: File '$item' does not follow camelCase naming convention."
+                    error=1
+                fi
+            elif [[ "$item" == "src/components/"*".tsx" ]]; then
+                # Check SnakeCase naming for .tsx files inside components folder
                 if ! is_snake_case "$(basename "$item" .tsx)"; then
                     echo "Error: File '$item' does not follow SnakeCase naming convention."
                     error=1

@@ -1,7 +1,7 @@
 import { getTranslations } from 'next-intl/server';
 import { z } from 'zod';
 
-import { makeZodI18nMap } from '@/lib/zod/zodErrorMap';
+import { makeZodI18nMap } from '@/lib/zod/zod-error-map';
 
 export const initErrors = async () => {
   const t = await getTranslations('zod');
