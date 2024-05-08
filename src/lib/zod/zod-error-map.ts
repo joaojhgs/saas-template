@@ -57,8 +57,8 @@ type ReturnT =
   | Awaited<ReturnType<typeof getTranslations<'zod'>>>;
 
 type ReturnTCustom =
-  | ReturnType<typeof useTranslations<'customErrors'>>
-  | Awaited<ReturnType<typeof getTranslations<'customErrors'>>>;
+  | ReturnType<typeof useTranslations<'customValidationErrors'>>
+  | Awaited<ReturnType<typeof getTranslations<'customValidationErrors'>>>;
 
 type ZodI18nMapOption = {
   t: ReturnT;

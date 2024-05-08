@@ -2,33 +2,22 @@
 
 import React from 'react';
 
-import { Form, Input, notification } from 'antd';
+import { Form, Input } from 'antd';
 import { createSchemaFieldRule } from 'antd-zod';
 import { useTranslations } from 'next-intl';
 
 import { useI18nZodErrorsForm } from '@/client/hooks/useI18nZodErrors';
+import useLogin from '@/client/hooks/useLogin';
 import { SignInPasswordInputValidation } from '@/schemas/auth-schemas';
-import { loginWithPassword } from '@/server/use-cases/auth';
 import { ISignInPasswordInput } from '@/utils/interfaces';
 
 const LoginComponent: React.FC = () => {
   const rule = createSchemaFieldRule(SignInPasswordInputValidation);
   const t = useI18nZodErrorsForm(useTranslations('forms.sign-in-component'));
+  const { mutate } = useLogin();
 
   const handleSubmit = (values: ISignInPasswordInput) => {
-    loginWithPassword(values)
-      .then(() => {
-        notification.success({
-          message: t('results.success.message'),
-          description: t('results.success.description'),
-        });
-      })
-      .catch((error) => {
-        notification.error({
-          message: t('results.error.message'),
-          description: error.message,
-        });
-      });
+    mutate(values);
   };
 
   return (

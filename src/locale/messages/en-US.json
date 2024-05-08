@@ -1,5 +1,5 @@
 {
-  "customErrors": {
+  "customValidationErrors": {
     "passwords-dont-match": "Passwords don't match"
   },
   "forms": {
@@ -23,6 +23,10 @@
   },
   "nav": {
     "home": "Home"
+  },
+  "results": {
+    "error": "Error",
+    "success": "Success"
   },
   "site": {
     "desc": "Using Ant-Design 5 with Next.js 13 and Tailwind CSS",

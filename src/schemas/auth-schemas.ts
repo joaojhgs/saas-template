@@ -15,3 +15,17 @@ export const SignInPasswordInputValidation = z.object({
   email: z.string().email(),
   password: z.string().min(8),
 });
+
+export const UpdatePasswordInputValidation = z
+  .object({
+    password: z.string().min(8),
+    confirmPassword: z.string().min(8),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    params: { i18n: 'passwords-dont-match' },
+    path: ['confirmPassword'], // path of error
+  });
+
+export const ForgotPasswordInputValidation = z.object({
+  email: z.string().email(),
+});

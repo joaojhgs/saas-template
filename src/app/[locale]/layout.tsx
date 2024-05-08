@@ -1,11 +1,10 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
-import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getTranslations } from 'next-intl/server';
 
 import { SiteHeader } from '@/client/components/SiteHeader';
-import ThemeProvider from '@/client/components/ThemeProvider';
+import MainProvider from '@/client/components/providers/MainProvider';
 
 export default async function RootLayout({
   children,
@@ -28,12 +27,10 @@ export default async function RootLayout({
     <html lang={locale}>
       <head />
       <body>
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <ThemeProvider locale={locale}>
-            <SiteHeader />
-            <main>{children}</main>
-          </ThemeProvider>
-        </NextIntlClientProvider>
+        <MainProvider locale={locale} messages={messages}>
+          <SiteHeader />
+          <main>{children}</main>
+        </MainProvider>
       </body>
     </html>
   );

@@ -2,13 +2,23 @@
 
 import { createClient } from '@/lib/supabase/server-client';
 import {
+  ForgotPasswordInputValidation,
   SignInPasswordInputValidation,
   SignUpPasswordInputValidation,
+  UpdatePasswordInputValidation,
 } from '@/schemas/auth-schemas';
-import { ISignInPasswordInput, ISignUpPasswordInput } from '@/utils/interfaces';
+import {
+  IForgotPasswordInput,
+  ISignInPasswordInput,
+  ISignUpPasswordInput,
+  IUpdatePasswordInput,
+} from '@/utils/interfaces';
 
-import { initErrors } from '../init-errors';
-import { ServerError, ServerSuccess } from '../result-handling';
+import {
+  ServerActionError,
+  ServerActionSuccess,
+} from '../../utils/result-handling';
+import { initErrorsAndTranslations } from '../init-errors';
 
 /*
     This is a controller file. It is used to define the functions that will be used by the server.
@@ -18,57 +28,72 @@ import { ServerError, ServerSuccess } from '../result-handling';
 const supabase = createClient();
 
 export const loginWithPassword = async (data: ISignInPasswordInput) => {
-  await initErrors();
+  await initErrorsAndTranslations();
   let response;
   try {
     SignInPasswordInputValidation.parse(data);
     response = await supabase.auth.signInWithPassword(data);
     if (response.error) throw new Error(response.error.message);
   } catch (e) {
-    return new ServerError(e).stringfy();
+    return new ServerActionError(e).stringfy();
   }
-  return new ServerSuccess(response.data).stringfy();
+  return new ServerActionSuccess(response.data).stringfy();
 };
 
 export const registerWithPassword = async (data: ISignUpPasswordInput) => {
-  await initErrors();
+  await initErrorsAndTranslations();
   let response;
   try {
     SignUpPasswordInputValidation.parse(data);
     response = await supabase.auth.signInWithPassword(data);
     if (response.error) throw new Error(response.error.message);
   } catch (e) {
-    return new ServerError(e).stringfy();
+    return new ServerActionError(e).stringfy();
   }
-  return new ServerSuccess(response.data).stringfy();
+  return new ServerActionSuccess(response.data).stringfy();
 };
 
 export const logout = async () => {
   try {
-    await initErrors();
-    return new ServerSuccess(await supabase.auth.signOut());
+    await initErrorsAndTranslations();
+    return new ServerActionSuccess(await supabase.auth.signOut());
   } catch (e) {
-    return new ServerError(e).stringfy();
+    return new ServerActionError(e).stringfy();
   }
 };
 
 export const getCurrentUser = async () => {
+  let response;
   try {
-    await initErrors();
-    return new ServerSuccess(await supabase.auth.getUser());
+    await initErrorsAndTranslations();
+    response = await supabase.auth.getUser();
   } catch (e) {
-    return new ServerError(e).stringfy();
+    return new ServerActionError(e).stringfy();
+  }
+  return new ServerActionSuccess(response).stringfy();
+};
+
+export const updatePassword = async (data: IUpdatePasswordInput) => {
+  try {
+    await initErrorsAndTranslations();
+    UpdatePasswordInputValidation.parse(data);
+    return new ServerActionSuccess(
+      await supabase.auth.updateUser(data),
+    ).stringfy();
+  } catch (e) {
+    return new ServerActionError(e).stringfy();
   }
 };
 
-export const setPassword = async () => {
+export const forgotPassword = async (data: IForgotPasswordInput) => {
   try {
-    await initErrors();
-    return new ServerSuccess(
-      await supabase.auth.updateUser({ password: 'new-password' }),
+    await initErrorsAndTranslations();
+    ForgotPasswordInputValidation.parse(data);
+    return new ServerActionSuccess(
+      await supabase.auth.resetPasswordForEmail(data.email),
     ).stringfy();
   } catch (e) {
-    return new ServerError(e).stringfy();
+    return new ServerActionError(e).stringfy();
   }
 };
 

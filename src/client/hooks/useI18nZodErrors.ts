@@ -12,7 +12,7 @@ export const useI18nZodErrorsForm = (
   tForm: ReturnType<typeof useTranslations>,
 ) => {
   const t = useTranslations('zod');
-  const tCustom = useTranslations('customErrors');
+  const tCustom = useTranslations('customValidationErrors');
   z.setErrorMap(makeZodI18nMap({ t, tForm, tCustom }));
   return tForm;
 };

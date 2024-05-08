@@ -7,9 +7,9 @@ import { useServerInsertedHTML } from 'next/navigation';
 
 import { StyleProvider, createCache, extractStyle } from '@ant-design/cssinjs';
 import dayjs from 'dayjs';
-import 'dayjs/locale/zh-cn';
+import 'dayjs/locale/pt-br';
 
-dayjs.locale('zh-cn');
+dayjs.locale('pt-br');
 
 // suppress useLayoutEffect warnings when running outside a browser
 if (!process.browser) React.useLayoutEffect = React.useEffect;
