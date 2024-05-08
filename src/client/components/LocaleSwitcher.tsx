@@ -2,8 +2,8 @@
 
 import { Dropdown } from 'antd';
 
+import { Link, usePathname } from '@/client/navigation';
 import { languages } from '@/locale';
-import { Link, usePathname } from '@/navigation';
 
 import Icons from './Icons';
 

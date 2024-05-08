@@ -44,18 +44,32 @@ export const registerWithPassword = async (data: ISignUpPasswordInput) => {
 };
 
 export const logout = async () => {
-  await initErrors();
-  return supabase.auth.signOut();
+  try {
+    await initErrors();
+    return new ServerSuccess(await supabase.auth.signOut());
+  } catch (e) {
+    return new ServerError(e).stringfy();
+  }
 };
 
 export const getCurrentUser = async () => {
-  await initErrors();
-  return supabase.auth.getUser();
+  try {
+    await initErrors();
+    return new ServerSuccess(await supabase.auth.getUser());
+  } catch (e) {
+    return new ServerError(e).stringfy();
+  }
 };
 
-export const setPasswrod = async () => {
-  await initErrors();
-  return supabase.auth.updateUser({ password: 'new-password' });
+export const setPassword = async () => {
+  try {
+    await initErrors();
+    return new ServerSuccess(
+      await supabase.auth.updateUser({ password: 'new-password' }),
+    ).stringfy();
+  } catch (e) {
+    return new ServerError(e).stringfy();
+  }
 };
 
 // export const loginWithGoogle = async () => {

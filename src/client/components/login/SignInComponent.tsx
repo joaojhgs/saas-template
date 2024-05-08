@@ -6,7 +6,7 @@ import { Form, Input, notification } from 'antd';
 import { createSchemaFieldRule } from 'antd-zod';
 import { useTranslations } from 'next-intl';
 
-import { useI18nZodErrorsForm } from '@/hooks/useI18nZodErrors';
+import { useI18nZodErrorsForm } from '@/client/hooks/useI18nZodErrors';
 import { SignInPasswordInputValidation } from '@/schemas/auth-schemas';
 import { loginWithPassword } from '@/server/use-cases/auth';
 import { ISignInPasswordInput } from '@/utils/interfaces';

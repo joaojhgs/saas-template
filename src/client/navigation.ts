@@ -3,7 +3,7 @@ import {
   createLocalizedPathnamesNavigation,
 } from 'next-intl/navigation';
 
-import { languages } from './locale';
+import { languages } from '../locale';
 
 const locales = Object.keys(languages);
 

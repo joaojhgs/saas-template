@@ -50,12 +50,12 @@ for item in $(find src -type d -o -type f); do
             fi
         else
             # Check camelCase naming for files inside hooks folder
-            if [[ "$item" == "src/hooks/"* ]]; then
+            if [[ "$item" == "src/client/hooks/"* ]]; then
                 if ! is_camel_case "$(basename "$item")"; then
                     echo "Error: File '$item' does not follow camelCase naming convention."
                     error=1
                 fi
-            elif [[ "$item" == "src/components/"*".tsx" ]]; then
+            elif [[ "$item" == "src/client/components/"*".tsx" ]]; then
                 # Check SnakeCase naming for .tsx files inside components folder
                 if ! is_snake_case "$(basename "$item" .tsx)"; then
                     echo "Error: File '$item' does not follow SnakeCase naming convention."

@@ -3,6 +3,11 @@ import { z } from 'zod';
 
 import { makeZodI18nMap } from '@/lib/zod/zod-error-map';
 
+/*
+  This hook updates the client zod library instance during runtime so it returns errors according to the localization.
+  It also returns the form T function for syntax usage in forms/pages.
+*/
+
 export const useI18nZodErrorsForm = (
   tForm: ReturnType<typeof useTranslations>,
 ) => {

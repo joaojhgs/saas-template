@@ -4,8 +4,8 @@ import { notFound } from 'next/navigation';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getTranslations } from 'next-intl/server';
 
-import { SiteHeader } from '@/components/SiteHeader';
-import ThemeProvider from '@/components/ThemeProvider';
+import { SiteHeader } from '@/client/components/SiteHeader';
+import ThemeProvider from '@/client/components/ThemeProvider';
 
 export default async function RootLayout({
   children,
