@@ -1,6 +1,6 @@
 import { useTranslations } from 'next-intl';
 
-import FormComponent from '@/components/FormComponent';
+import FormComponent from '@/client/components/FormComponent';
 
 export default function Page() {
   const t = useTranslations('site');

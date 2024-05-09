@@ -1,14 +1,23 @@
 {
+  "customValidationErrors": {
+    "passwords-dont-match": "Senhas não são iguais"
+  },
+  "forms": {
+    "sign-in-component": {
+      "contact-us": "Entre em contato",
+      "dont-have-an-account": "Não tem uma conta?",
+      "email": "Email",
+      "forgot-your-password": "Esqueceu sua senha?",
+      "password": "Senha",
+      "sign-in": "Entrar"
+    }
+  },
   "nav": {
     "home": "Home"
   },
-  "sign-up-component": {
-    "confirmPassword": "Confirmar Senha",
-    "email": "Email",
-    "login": "Login",
-    "password": "Senha",
-    "signup": "Registrar",
-    "title": "Sign Up"
+  "results": {
+    "error": "Erro",
+    "success": "Successo"
   },
   "site": {
     "desc": "Using Ant-Design 5 with Next.js 13 and Tailwind CSS",

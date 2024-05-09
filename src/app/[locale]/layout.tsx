@@ -1,11 +1,10 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
-import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getTranslations } from 'next-intl/server';
 
-import { SiteHeader } from '@/components/SiteHeader';
-import ThemeProvider from '@/components/ThemeProvider';
+import { SiteHeader } from '@/client/components/SiteHeader';
+import MainProvider from '@/client/components/providers/MainProvider';
 
 export default async function RootLayout({
   children,
@@ -16,7 +15,10 @@ export default async function RootLayout({
 }) {
   let messages;
   try {
-    messages = (await import(`../../locale/messages/${locale}.json`)).default;
+    messages = {
+      ...(await import(`../../locale/messages/${locale}.json`)).default,
+      ...(await import(`../../locale/messages/zod/${locale}.json`)).default,
+    };
   } catch (error) {
     notFound();
   }
@@ -25,12 +27,10 @@ export default async function RootLayout({
     <html lang={locale}>
       <head />
       <body>
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <ThemeProvider locale={locale}>
-            <SiteHeader />
-            <main>{children}</main>
-          </ThemeProvider>
-        </NextIntlClientProvider>
+        <MainProvider locale={locale} messages={messages}>
+          <SiteHeader />
+          <main>{children}</main>
+        </MainProvider>
       </body>
     </html>
   );
