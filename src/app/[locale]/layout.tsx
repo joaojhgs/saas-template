@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 
 import { getLocale, getTranslations } from 'next-intl/server';
 
-import MainLayout from '@/client/components/layout/mainLayout';
+import MainLayout from '@/client/components/layout/MainLayout';
 import MainProvider from '@/client/components/providers/MainProvider';
 
 export default async function RootLayout({
