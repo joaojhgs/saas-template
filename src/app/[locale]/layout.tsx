@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 
 import { getLocale, getTranslations } from 'next-intl/server';
 
-import { SiteHeader } from '@/client/components/SiteHeader';
+import MainLayout from '@/client/components/layout/mainLayout';
 import MainProvider from '@/client/components/providers/MainProvider';
 
 export default async function RootLayout({
@@ -28,8 +28,7 @@ export default async function RootLayout({
       <head />
       <body>
         <MainProvider locale={locale} messages={messages}>
-          <SiteHeader />
-          <main>{children}</main>
+          <MainLayout>{children}</MainLayout>
         </MainProvider>
       </body>
     </html>
