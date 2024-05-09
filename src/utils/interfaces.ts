@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 import {
+  ConfirmAccountInputValidation,
   ForgotPasswordInputValidation,
   SignInPasswordInputValidation,
   SignUpPasswordInputValidation,
@@ -32,4 +33,8 @@ export type IForgotPasswordInput = z.infer<
 
 export type IUpdatePasswordInput = z.infer<
   typeof UpdatePasswordInputValidation
+>;
+
+export type IConfirmAccountInput = z.infer<
+  typeof ConfirmAccountInputValidation
 >;

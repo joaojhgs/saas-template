@@ -29,3 +29,19 @@ export const UpdatePasswordInputValidation = z
 export const ForgotPasswordInputValidation = z.object({
   email: z.string().email(),
 });
+
+export const ConfirmAccountInputValidation = z.object({
+  type: z.enum([
+    'signup',
+    'invite',
+    'magiclink',
+    'recovery',
+    'email_change',
+    'email',
+  ]),
+  token_hash: z.string(),
+});
+
+export const ValidateCodeAndLoginInputValidation = z.object({
+  code: z.string(),
+});

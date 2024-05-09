@@ -33,6 +33,8 @@ export class ServerActionSuccess {
 /*
   This function will receive the string JSON of a server action, parse it, and throw an error if the status is 'error'.
   Allowing the normal error handling flow using react-query.
+  The parsing is needed because client components can only receive JSON for communication and not objects nor classes
+  (Even though we're just calling a function, there's a HTTP request involved)
 */
 export const handleSAResult = async (
   data: Promise<string>,

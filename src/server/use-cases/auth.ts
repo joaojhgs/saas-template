@@ -2,12 +2,14 @@
 
 import { createClient } from '@/lib/supabase/server-client';
 import {
+  ConfirmAccountInputValidation,
   ForgotPasswordInputValidation,
   SignInPasswordInputValidation,
   SignUpPasswordInputValidation,
   UpdatePasswordInputValidation,
 } from '@/schemas/auth-schemas';
 import {
+  IConfirmAccountInput,
   IForgotPasswordInput,
   ISignInPasswordInput,
   ISignUpPasswordInput,
@@ -25,81 +27,124 @@ import { initErrorsAndTranslations } from '../init-errors';
     The functions defined here will be called by the server to perform the necessary operations.
 */
 
+// This should either be instantiate every request or only called in request contexts, as of now, leave like this
 const supabase = createClient();
 
-export const loginWithPassword = async (data: ISignInPasswordInput) => {
-  await initErrorsAndTranslations();
-  let response;
+export const loginWithPassword = async (values: ISignInPasswordInput) => {
   try {
-    SignInPasswordInputValidation.parse(data);
-    response = await supabase.auth.signInWithPassword(data);
-    if (response.error) throw new Error(response.error.message);
+    await initErrorsAndTranslations();
+    // Always use the result of parse function, it'll throw an error if the values are invalid, if there's more data than it should, the return will be "cleaned up", preventing SQL injection
+    const parsedValues = SignInPasswordInputValidation.parse(values);
+
+    const { data, error } =
+      await supabase.auth.signInWithPassword(parsedValues);
+    if (error) throw new Error(error.message);
+
+    return new ServerActionSuccess(data).stringfy();
   } catch (e) {
     return new ServerActionError(e).stringfy();
   }
-  return new ServerActionSuccess(response.data).stringfy();
 };
 
-export const registerWithPassword = async (data: ISignUpPasswordInput) => {
-  await initErrorsAndTranslations();
-  let response;
+export const registerWithPassword = async (values: ISignUpPasswordInput) => {
   try {
-    SignUpPasswordInputValidation.parse(data);
-    response = await supabase.auth.signInWithPassword(data);
-    if (response.error) throw new Error(response.error.message);
+    await initErrorsAndTranslations();
+    const parsedValues = SignUpPasswordInputValidation.parse(values);
+
+    const { data, error } = await supabase.auth.signUp(parsedValues);
+
+    if (error) throw new Error(error.message);
+
+    return new ServerActionSuccess(data).stringfy();
   } catch (e) {
     return new ServerActionError(e).stringfy();
   }
-  return new ServerActionSuccess(response.data).stringfy();
 };
 
 export const logout = async () => {
   try {
     await initErrorsAndTranslations();
-    return new ServerActionSuccess(await supabase.auth.signOut());
+    const { error } = await supabase.auth.signOut();
+
+    if (error) throw new Error(error.message);
+
+    return new ServerActionSuccess();
   } catch (e) {
     return new ServerActionError(e).stringfy();
   }
 };
 
 export const getCurrentUser = async () => {
-  let response;
   try {
     await initErrorsAndTranslations();
-    response = await supabase.auth.getUser();
-  } catch (e) {
-    return new ServerActionError(e).stringfy();
-  }
-  return new ServerActionSuccess(response).stringfy();
-};
 
-export const updatePassword = async (data: IUpdatePasswordInput) => {
-  try {
-    await initErrorsAndTranslations();
-    UpdatePasswordInputValidation.parse(data);
-    return new ServerActionSuccess(
-      await supabase.auth.updateUser(data),
-    ).stringfy();
+    const { error, data } = await supabase.auth.getUser();
+
+    if (error) throw new Error(error.message);
+
+    return new ServerActionSuccess(data).stringfy();
   } catch (e) {
     return new ServerActionError(e).stringfy();
   }
 };
 
-export const forgotPassword = async (data: IForgotPasswordInput) => {
+export const updatePassword = async (values: IUpdatePasswordInput) => {
   try {
     await initErrorsAndTranslations();
-    ForgotPasswordInputValidation.parse(data);
-    return new ServerActionSuccess(
-      await supabase.auth.resetPasswordForEmail(data.email),
-    ).stringfy();
+    const parsedValue = UpdatePasswordInputValidation.parse(values);
+
+    const { data, error } = await supabase.auth.updateUser(parsedValue);
+
+    if (error) throw new Error(error.message);
+
+    return new ServerActionSuccess(data).stringfy();
   } catch (e) {
     return new ServerActionError(e).stringfy();
   }
 };
 
-// export const loginWithGoogle = async () => {
-//   return supabase.auth.signInWithOAuth({
-//     provider: 'google',
-//     options: { scopes: 'email' },
-//   });
-// };
+export const forgotPassword = async (values: IForgotPasswordInput) => {
+  try {
+    await initErrorsAndTranslations();
+    const parsedValues = ForgotPasswordInputValidation.parse(values);
+
+    const { data, error } = await supabase.auth.resetPasswordForEmail(
+      parsedValues.email,
+    );
+
+    if (error) throw new Error(error.message);
+
+    return new ServerActionSuccess(data).stringfy();
+  } catch (e) {
+    return new ServerActionError(e).stringfy();
+  }
+};
+
+export const confirmAccount = async (values: IConfirmAccountInput) => {
+  try {
+    await initErrorsAndTranslations();
+    const parsedValues = ConfirmAccountInputValidation.parse(values);
+
+    const { data, error } = await supabase.auth.verifyOtp(parsedValues);
+
+    if (error) throw new Error(error.message);
+
+    return new ServerActionSuccess(data).stringfy();
+  } catch (e) {
+    return new ServerActionError(e).stringfy();
+  }
+};
+
+export const validateCodeAndLogin = async (code: string) => {
+  try {
+    await initErrorsAndTranslations();
+
+    const { data, error } = await supabase.auth.exchangeCodeForSession(code);
+
+    if (error) throw new Error(error.message);
+
+    return new ServerActionSuccess(data).stringfy();
+  } catch (e) {
+    return new ServerActionError(e).stringfy();
+  }
+};
