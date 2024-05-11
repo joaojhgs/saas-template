@@ -114,3 +114,19 @@ erDiagram
     BARBER ||--o{ CUSTOM_DAY_OF_WORK : "has"
 ```
 
+
+## Run 
+
+Node version: 20.9.0
+
+Install [pnpm](https://pnpm.io/installation), if it is not installed yet.
+
+Install dependencies:
+```
+pnpm install
+```
+
+Run dev mode: 
+```
+pnpm dev
+```
