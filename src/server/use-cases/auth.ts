@@ -1,5 +1,7 @@
 'use server';
 
+import { AuthTokenResponsePassword } from '@supabase/supabase-js';
+
 import { createClient } from '@/lib/supabase/server-client';
 import {
   ConfirmAccountInputValidation,
@@ -21,6 +23,7 @@ import {
   ServerActionSuccess,
 } from '../../utils/result-handling';
 import { initErrorsAndTranslations } from '../init-errors';
+import serverActionHof from '../server-action';
 
 /*
     This is a controller file. It is used to define the functions that will be used by the server.
@@ -30,21 +33,16 @@ import { initErrorsAndTranslations } from '../init-errors';
 // This should either be instantiate every request or only called in request contexts, as of now, leave like this
 const supabase = createClient();
 
-export const loginWithPassword = async (values: ISignInPasswordInput) => {
-  try {
-    await initErrorsAndTranslations();
-    // Always use the result of parse function, it'll throw an error if the values are invalid, if there's more data than it should, the return will be "cleaned up", preventing SQL injection
-    const parsedValues = SignInPasswordInputValidation.parse(values);
+export const loginWithPassword = serverActionHof<
+  ISignInPasswordInput,
+  AuthTokenResponsePassword['data']
+>(async (supabase, _, values) => {
+  const parsedValues = SignInPasswordInputValidation.parse(values);
 
-    const { data, error } =
-      await supabase.auth.signInWithPassword(parsedValues);
-    if (error) throw new Error(error.message);
-
-    return new ServerActionSuccess(data).stringfy();
-  } catch (e) {
-    return new ServerActionError(e).stringfy();
-  }
-};
+  const { data, error } = await supabase.auth.signInWithPassword(parsedValues);
+  if (error) throw new Error(error.message);
+  return data;
+});
 
 export const registerWithPassword = async (values: ISignUpPasswordInput) => {
   try {
