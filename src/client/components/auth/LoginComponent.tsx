@@ -34,7 +34,7 @@ const LoginComponent: React.FC = () => {
             {t('dont-have-an-account')}
             <a
               href="#"
-              className="text-sm text-purple-700 hover:text-purple-700"
+              className="pl-2 text-sm text-purple-700 hover:text-purple-700"
             >
               {t('contact-us')}
             </a>
