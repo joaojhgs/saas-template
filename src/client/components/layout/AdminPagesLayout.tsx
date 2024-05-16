@@ -13,18 +13,21 @@ type AdminPagesLayoutProps = {
 
 const AdminPagesLayout: React.FC<AdminPagesLayoutProps> = ({ children }) => {
   const pathname = usePathname();
-  const breadcrumbItems = pathname.split('/').map((item, index) => {
-    return {
-      key: index,
-      breadcrumbName: item,
-      href: `/${item}`,
-    };
-  });
+  const breadcrumbItems = pathname
+    .split('/')
+    .slice(2)
+    .map((item, index) => {
+      return {
+        key: index,
+        breadcrumbName: item.charAt(0).toUpperCase() + item.slice(1),
+        href: `/${item}`,
+      };
+    });
 
   return (
-    <Layout style={{ padding: '0 24px 24px' }}>
+    <Layout style={{ padding: '0 48px 48px' }}>
       <Breadcrumb
-        style={{ margin: '16px 0' }}
+        className="my-[16px]"
         items={breadcrumbItems}
         itemRender={(route) => (
           <>
@@ -32,15 +35,7 @@ const AdminPagesLayout: React.FC<AdminPagesLayoutProps> = ({ children }) => {
           </>
         )}
       />
-      <Content
-        style={{
-          padding: 24,
-          margin: 0,
-          minHeight: 280,
-        }}
-      >
-        {children}
-      </Content>
+      <Content className="min-h-[280px] rounded-lg">{children}</Content>
     </Layout>
   );
 };
