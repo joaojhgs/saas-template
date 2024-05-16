@@ -39,8 +39,18 @@ const SiderComponent: React.FC = () => {
         defaultSelectedKeys={['1']}
         mode="vertical"
         items={[
-          { key: '1', label: 'Option 1' },
-          { key: '2', label: 'Option 2' },
+          {
+            key: '1',
+            label: 'Option 1',
+            className: 'text-center',
+            icon: <Icons.Accessibility />,
+          },
+          {
+            key: '2',
+            label: 'Option 2',
+            className: 'text-center',
+            icon: <Icons.Activity />,
+          },
         ]}
       />
     </Sider>
