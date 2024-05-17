@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { Col, Divider, Flex, Image, Layout, Row, Typography } from 'antd';
 
 import useBarbers from '@/client/hooks/useBarbers';
+import useBarbershop from '@/client/hooks/useBarbershop';
 
 const { Title, Paragraph } = Typography;
 
@@ -16,11 +17,13 @@ interface IBarber {
 
 const BarbershopPage = () => {
   const { data } = useBarbers();
+  const { data: barberShopData } = useBarbershop();
   const [barbers, setBarbers] = useState<IBarber[]>([]);
 
   useEffect(() => {
+    console.log(data);
     if (data && data.data) {
-      setBarbers(data.data.barbers as IBarber[]);
+      setBarbers(data.data as IBarber[]);
     }
   }, [data]);
 
@@ -39,26 +42,21 @@ const BarbershopPage = () => {
     <Layout>
       <Row className="m-10 p-10">
         <Col span={12}>
-          <Image
-            src="https://t4.ftcdn.net/jpg/02/10/97/19/360_F_210971959_wXcBYfif7jKeyKkHKhVyOnzQWHawIgK4.jpg"
-            alt="barbershop"
-          />
+          <Image src={barberShopData?.data.picture} alt="barbershop" />
         </Col>
         <Col span={12}>
-          <Title>BarberShop</Title>
-          <Paragraph>
-            BarberShop description Lorem ipsum dolor sit amet consectetur
-            adipisicing elit. Provident, mollitia! Aperiam reiciendis quod
-            harum, id quia aut nisi quae unde eligendi cupiditate eius quam
-            adipisci atque consequuntur laudantium ex dolore.
-          </Paragraph>
+          <Title>{barberShopData?.data.name}</Title>
+          <Paragraph>{barberShopData?.data.description}</Paragraph>
         </Col>
       </Row>
       <Divider />
       <Row>
         {barbers.map((barber: IBarber, index) => (
           <React.Fragment key={index}>
-            {renderBarberCard(barber.name, barber.picture)}
+            {renderBarberCard(
+              barber.name,
+              'https://t4.ftcdn.net/jpg/02/10/97/19/360_F_210971959_wXcBYfif7jKeyKkHKhVyOnzQWHawIgK4.jpg',
+            )}
           </React.Fragment>
         ))}
       </Row>

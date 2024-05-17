@@ -1,15 +1,14 @@
 'use server';
 
 import { IBarber } from '@/utils/interfaces';
-
 import serverActionHof from '../server-action';
 
-export const getBarbersFromBarbershop = serverActionHof<unknown, IBarber[]>(
+export const getBarbershop = serverActionHof<unknown, IBarber>(
   async (supabase, _, _) => {
     const { data, error } = await supabase
-      .from('barber')
+      .from('barbershop')
       .select('*')
-      .order('name');
+      .single();
 
     if (error) throw new Error(error.message);
     return data;
