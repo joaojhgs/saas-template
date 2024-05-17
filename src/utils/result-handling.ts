@@ -36,13 +36,16 @@ export class ServerActionSuccess {
   The parsing is needed because client components can only receive JSON for communication and not objects nor classes
   (Even though we're just calling a function, there's a HTTP request involved)
 */
-export const handleSAResult = async (
-  data: Promise<string>,
-): Promise<ServerActionResult> => {
+export async function handleSAResult<Input>(
+  data: Promise<Input> | Promise<string>,
+): Promise<ServerActionResult<Input>> {
   const result = await data;
-  const parsed = JSON.parse(result);
-  if (parsed.status === ActionStatus.ERROR) {
-    throw new Error(parsed.message);
+  if (typeof result === 'string') {
+    const parsed = JSON.parse(result);
+    if (parsed.status === ActionStatus.ERROR) {
+      throw new Error(parsed.message);
+    }
+    return parsed;
   }
-  return parsed;
-};
+  throw new Error('Invalid data type');
+}

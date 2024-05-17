@@ -13,7 +13,8 @@
     }
   },
   "nav": {
-    "home": "Home"
+    "home": "Home",
+    "menu": "Menu"
   },
   "results": {
     "error": "Erro",

@@ -13,10 +13,10 @@ import {
  * Shared between client and server side.
  */
 
-export type ServerActionResult = {
+export type ServerActionResult<T> = {
   status: 'error' | 'success';
   message?: string;
-  data?: Record<string, unknown>;
+  data?: T;
 };
 
 export type ISignInPasswordInput = z.infer<
