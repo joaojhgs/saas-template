@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import '@/styles/globals.css';
+import '@/client/styles/globals.css';
 
 import 'antd/dist/reset.css';
 
