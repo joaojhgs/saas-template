@@ -1,4 +1,4 @@
-import { ServerActionResult } from './interfaces';
+import { ReactSerializable, ServerActionResult } from '@/types';
 
 enum ActionStatus {
   ERROR = 'error',
@@ -21,7 +21,7 @@ export class ServerActionError {
 
 export class ServerActionSuccess {
   public status;
-  constructor(public data?: Record<string, unknown>) {
+  constructor(public data?: ReactSerializable) {
     this.status = ActionStatus.SUCCESS;
     this.data = data;
   }

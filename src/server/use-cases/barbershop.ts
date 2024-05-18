@@ -1,10 +1,11 @@
 'use server';
 
-import { IBarber } from '@/utils/interfaces';
+import { IBarber } from '@/types';
+
 import serverActionHof from '../server-action';
 
 export const getBarbershop = serverActionHof<unknown, IBarber>(
-  async (supabase, _, _) => {
+  async (supabase) => {
     const { data, error } = await supabase
       .from('barbershop')
       .select('*')

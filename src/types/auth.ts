@@ -13,12 +13,6 @@ import {
  * Shared between client and server side.
  */
 
-export type ServerActionResult<T> = {
-  status: 'error' | 'success';
-  message?: string;
-  data?: T;
-};
-
 export type ISignInPasswordInput = z.infer<
   typeof SignInPasswordInputValidation
 >;
@@ -38,10 +32,3 @@ export type IUpdatePasswordInput = z.infer<
 export type IConfirmAccountInput = z.infer<
   typeof ConfirmAccountInputValidation
 >;
-
-export type IBarber = {
-  name: string;
-  picture: string;
-  slug: string;
-  id: string;
-}

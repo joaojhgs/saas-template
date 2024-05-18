@@ -16,7 +16,7 @@ import {
   ISignInPasswordInput,
   ISignUpPasswordInput,
   IUpdatePasswordInput,
-} from '@/utils/interfaces';
+} from '@/types';
 
 import {
   ServerActionError,
