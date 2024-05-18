@@ -6,22 +6,26 @@ import {
   Button,
   Col,
   Divider,
-  Flex,
   Image,
   Input,
   Layout,
   Row,
+  Skeleton,
   Typography,
 } from 'antd';
 
-import useBarbershop from '@/client/hooks/useBarbershop';
+import {
+  // useEditBarbershop,
+  useGetBarbershop,
+} from '@/client/hooks/useBarbershop';
 
 import Icons from '../../Icons';
 
 const { Title, Paragraph } = Typography;
 
 const BarbershopPage = () => {
-  const { data } = useBarbershop();
+  const { data, isLoading } = useGetBarbershop();
+  // const { mutate: editBarbershop } = useEditBarbershop();
   const [isEditingName, setIsEditingName] = useState(false);
   const [isEditingDescription, setIsEditingDescription] = useState(false);
   const [title, setTitle] = useState('');
@@ -53,70 +57,78 @@ const BarbershopPage = () => {
   };
 
   return (
-    <Layout>
-      <Row className="m-10 p-10">
-        <Col span={12}>
-          <Image src={data?.data?.picture} alt="barbershop" />
+    <Layout className="md:p-4">
+      <Row className="mx-auto max-w-7xl" gutter={[16, 16]}>
+        <Col xs={24} md={12} className="flex items-center justify-center">
+          {isLoading ? (
+            <Skeleton.Image className="h-64 w-full" />
+          ) : (
+            <Image
+              src={data?.data?.picture}
+              alt="barbershop"
+              className="max-h-64 w-full object-cover"
+            />
+          )}
         </Col>
-        <Col span={12}>
-          {isEditingName ? (
-            <>
+        <Col xs={24} md={12} className="flex flex-col">
+          {isLoading ? (
+            <Skeleton active paragraph={{ rows: 1 }} />
+          ) : isEditingName ? (
+            <div className="flex items-center">
               <Input
                 value={title}
                 onChange={handleTitleChange}
-                className="mb-4 w-80"
+                className="w-3/4"
               />
+              <Button type="primary" onClick={toggleEditName} className="ml-4">
+                <Icons.CheckCircle />
+              </Button>
+            </div>
+          ) : (
+            <div className="flex items-center">
+              <Title level={3} className="grow">
+                {title}
+              </Title>
               <Button
                 type="primary"
                 onClick={toggleEditName}
                 className="ml-4 mt-2"
               >
-                <Icons.CheckCircle />
+                <Icons.Pencil />
               </Button>
-            </>
-          ) : (
-            <>
-              <Flex>
-                <Title>{title}</Title>
-                <Button
-                  type="primary"
-                  onClick={toggleEditName}
-                  className="ml-4 mt-2"
-                >
-                  <Icons.Pencil />
-                </Button>
-              </Flex>
-            </>
+            </div>
           )}
+          <Divider />
 
-          {isEditingDescription ? (
-            <>
+          {isLoading ? (
+            <Skeleton active paragraph={{ rows: 4 }} />
+          ) : isEditingDescription ? (
+            <div>
               <Input.TextArea
                 value={description}
                 onChange={handleDescriptionChange}
                 rows={4}
               />
+              <div className="mt-2 flex space-x-2">
+                <Button type="default" onClick={toggleEditDescription}>
+                  Cancel
+                </Button>
+                <Button type="primary" onClick={toggleEditDescription}>
+                  Save
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <div className="flex flex-col">
+              <Paragraph>{description}</Paragraph>
               <Button
                 type="primary"
                 onClick={toggleEditDescription}
-                className="ml-4 mt-2"
+                className="mt-2 self-start"
               >
-                Save
+                Edit Description
               </Button>
-            </>
-          ) : (
-            <>
-              <Flex>
-                <Paragraph>{description}</Paragraph>
-                <Button
-                  type="primary"
-                  onClick={toggleEditDescription}
-                  className="ml-4 mt-2"
-                >
-                  Edit
-                </Button>
-              </Flex>
-            </>
+            </div>
           )}
         </Col>
       </Row>
