@@ -1,10 +1,11 @@
 'use server';
 
-import { IBarber } from '@/utils/interfaces';
+import { IBarbershop, IUpdateBarbershopInput } from '@/types';
+
 import serverActionHof from '../server-action';
 
-export const getBarbershop = serverActionHof<unknown, IBarber>(
-  async (supabase, _, _) => {
+export const getBarbershop = serverActionHof<unknown, IBarbershop>(
+  async (supabase) => {
     const { data, error } = await supabase
       .from('barbershop')
       .select('*')
@@ -14,3 +15,26 @@ export const getBarbershop = serverActionHof<unknown, IBarber>(
     return data;
   },
 );
+
+export const updateBarbershop = serverActionHof<
+  IUpdateBarbershopInput,
+  IBarbershop
+>(async (supabase, _, barbershop_id) => {
+  const { data, error } = await supabase
+    .from('barbershop')
+    .select('*')
+    .eq('id', barbershop_id)
+    .single();
+
+  if (error) throw new Error(error.message);
+
+  const { data: updateData, error: updateError } = await supabase
+    .from('barbershop')
+    .update({ ...data, ..._ })
+    .eq('id', barbershop_id)
+    .single();
+
+  if (updateError) throw new Error(updateError.message);
+
+  return updateData;
+});

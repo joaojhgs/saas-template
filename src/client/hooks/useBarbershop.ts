@@ -1,6 +1,9 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { notification } from 'antd';
+import { useTranslations } from 'next-intl';
 
-import { getBarbershop } from '@/server/use-cases/barbershop';
+import { getBarbershop, updateBarbershop } from '@/server/use-cases/barbershop';
+import { IUpdateBarbershopInput } from '@/types';
 import { handleSAResult } from '@/utils/result-handling';
 
 /*
@@ -10,10 +13,34 @@ import { handleSAResult } from '@/utils/result-handling';
     This ensures, the users stays logged in and authorized securely.
 */
 
-const useBarbershop = () =>
+const useGetBarbershop = () =>
   useQuery({
     queryKey: ['get-barbershop'],
     queryFn: () => handleSAResult(getBarbershop()),
   });
 
-export default useBarbershop;
+const useEditBarbershop = (options?: Record<string, unknown>) => {
+  const queryClient = useQueryClient();
+  const t = useTranslations();
+  return useMutation({
+    ...options,
+    mutationFn: (data: IUpdateBarbershopInput) =>
+      handleSAResult(updateBarbershop(data)),
+    mutationKey: ['update-barbershop'],
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ['get-barbershop'] });
+      notification.success({
+        message: t('results.success'),
+        description: data.message,
+      });
+    },
+    onError: (error) => {
+      notification.error({
+        message: t('results.error'),
+        description: error.message,
+      });
+    },
+  });
+};
+
+export { useGetBarbershop, useEditBarbershop };
