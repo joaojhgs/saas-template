@@ -4,3 +4,9 @@ export type IBarbershop = {
   description: string;
   id: string;
 };
+
+export type IUpdateBarbershopInput = {
+  name?: string;
+  picture?: string;
+  description?: string;
+};

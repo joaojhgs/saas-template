@@ -2,64 +2,125 @@
 
 import React, { useEffect, useState } from 'react';
 
-import { Col, Divider, Flex, Image, Layout, Row, Typography } from 'antd';
+import {
+  Button,
+  Col,
+  Divider,
+  Flex,
+  Image,
+  Input,
+  Layout,
+  Row,
+  Typography,
+} from 'antd';
 
-import useBarbers from '@/client/hooks/useBarbers';
 import useBarbershop from '@/client/hooks/useBarbershop';
+
+import Icons from '../../Icons';
 
 const { Title, Paragraph } = Typography;
 
-interface IBarber {
-  name: string;
-  picture: string;
-  slug: string;
-}
-
 const BarbershopPage = () => {
-  const { data } = useBarbers();
-  const { data: barberShopData } = useBarbershop();
-  const [barbers, setBarbers] = useState<IBarber[]>([]);
+  const { data } = useBarbershop();
+  const [isEditingName, setIsEditingName] = useState(false);
+  const [isEditingDescription, setIsEditingDescription] = useState(false);
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
 
   useEffect(() => {
-    console.log(data);
-    if (data && data.data) {
-      setBarbers(data.data as IBarber[]);
+    if (data) {
+      setTitle(data?.data?.name ?? '');
+      setDescription(data?.data?.description ?? '');
     }
   }, [data]);
 
-  const renderBarberCard = (barberName: string, barberPicture: string) => {
-    return (
-      <Col span={4}>
-        <Flex vertical={true} className="items-center p-10">
-          <Image src={barberPicture} alt="barbershop" />
-          <Title level={4}>{barberName}</Title>
-        </Flex>
-      </Col>
-    );
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.target.value);
+  };
+
+  const handleDescriptionChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement>,
+  ) => {
+    setDescription(e.target.value);
+  };
+
+  const toggleEditName = () => {
+    setIsEditingName(!isEditingName);
+  };
+
+  const toggleEditDescription = () => {
+    setIsEditingDescription(!isEditingDescription);
   };
 
   return (
     <Layout>
       <Row className="m-10 p-10">
         <Col span={12}>
-          <Image src={barberShopData?.data?.picture} alt="barbershop" />
+          <Image src={data?.data?.picture} alt="barbershop" />
         </Col>
         <Col span={12}>
-          <Title>{barberShopData?.data?.name}</Title>
-          <Paragraph>{barberShopData?.data?.description}</Paragraph>
+          {isEditingName ? (
+            <>
+              <Input
+                value={title}
+                onChange={handleTitleChange}
+                className="mb-4 w-80"
+              />
+              <Button
+                type="primary"
+                onClick={toggleEditName}
+                className="ml-4 mt-2"
+              >
+                <Icons.CheckCircle />
+              </Button>
+            </>
+          ) : (
+            <>
+              <Flex>
+                <Title>{title}</Title>
+                <Button
+                  type="primary"
+                  onClick={toggleEditName}
+                  className="ml-4 mt-2"
+                >
+                  <Icons.Pencil />
+                </Button>
+              </Flex>
+            </>
+          )}
+
+          {isEditingDescription ? (
+            <>
+              <Input.TextArea
+                value={description}
+                onChange={handleDescriptionChange}
+                rows={4}
+              />
+              <Button
+                type="primary"
+                onClick={toggleEditDescription}
+                className="ml-4 mt-2"
+              >
+                Save
+              </Button>
+            </>
+          ) : (
+            <>
+              <Flex>
+                <Paragraph>{description}</Paragraph>
+                <Button
+                  type="primary"
+                  onClick={toggleEditDescription}
+                  className="ml-4 mt-2"
+                >
+                  Edit
+                </Button>
+              </Flex>
+            </>
+          )}
         </Col>
       </Row>
       <Divider />
-      <Row>
-        {barbers.map((barber: IBarber, index) => (
-          <React.Fragment key={index}>
-            {renderBarberCard(
-              barber.name,
-              'https://t4.ftcdn.net/jpg/02/10/97/19/360_F_210971959_wXcBYfif7jKeyKkHKhVyOnzQWHawIgK4.jpg',
-            )}
-          </React.Fragment>
-        ))}
-      </Row>
     </Layout>
   );
 };
