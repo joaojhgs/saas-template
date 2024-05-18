@@ -19,19 +19,19 @@ export const getBarbershop = serverActionHof<unknown, IBarbershop>(
 export const updateBarbershop = serverActionHof<
   IUpdateBarbershopInput,
   IBarbershop
->(async (supabase, _, barbershop_id) => {
+>(async (supabase, _, values) => {
   const { data, error } = await supabase
     .from('barbershop')
     .select('*')
-    .eq('id', barbershop_id)
+    .eq('id', values?.id)
     .single();
 
   if (error) throw new Error(error.message);
 
   const { data: updateData, error: updateError } = await supabase
     .from('barbershop')
-    .update({ ...data, ..._ })
-    .eq('id', barbershop_id)
+    .update({ ...data, ...values })
+    .eq('id', values?.id)
     .single();
 
   if (updateError) throw new Error(updateError.message);

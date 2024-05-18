@@ -9,7 +9,7 @@ import {
   SignInPasswordInputValidation,
   SignUpPasswordInputValidation,
   UpdatePasswordInputValidation,
-} from '@/schemas/auth-schemas';
+} from '@/schemas/auth';
 import {
   IConfirmAccountInput,
   IForgotPasswordInput,

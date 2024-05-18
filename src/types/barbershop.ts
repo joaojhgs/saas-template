@@ -1,3 +1,7 @@
+import { z } from 'zod';
+
+import { UpdateBarbershopInputValidation } from '@/schemas/barbershop';
+
 export type IBarbershop = {
   name: string;
   picture: string;
@@ -5,8 +9,6 @@ export type IBarbershop = {
   id: string;
 };
 
-export type IUpdateBarbershopInput = {
-  name?: string;
-  picture?: string;
-  description?: string;
-};
+export type IUpdateBarbershopInput = z.infer<
+  typeof UpdateBarbershopInputValidation
+>;

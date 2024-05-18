@@ -6,6 +6,7 @@ import {
   Button,
   Col,
   Divider,
+  Form,
   Image,
   Input,
   Layout,
@@ -15,7 +16,7 @@ import {
 } from 'antd';
 
 import {
-  // useEditBarbershop,
+  useEditBarbershop,
   useGetBarbershop,
 } from '@/client/hooks/useBarbershop';
 
@@ -25,21 +26,21 @@ const { Title, Paragraph } = Typography;
 
 const BarbershopPage = () => {
   const { data, isLoading } = useGetBarbershop();
-  // const { mutate: editBarbershop } = useEditBarbershop();
-  const [isEditingName, setIsEditingName] = useState(false);
-  const [isEditingDescription, setIsEditingDescription] = useState(false);
-  const [title, setTitle] = useState('');
+  const { mutate: editBarbershop } = useEditBarbershop();
+  const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+
+  const [editingField, setEditingField] = useState<string | null>(null);
 
   useEffect(() => {
     if (data) {
-      setTitle(data?.data?.name ?? '');
+      setName(data?.data?.name ?? '');
       setDescription(data?.data?.description ?? '');
     }
   }, [data]);
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.target.value);
+    setName(e.target.value);
   };
 
   const handleDescriptionChange = (
@@ -48,12 +49,27 @@ const BarbershopPage = () => {
     setDescription(e.target.value);
   };
 
-  const toggleEditName = () => {
-    setIsEditingName(!isEditingName);
+  const toggleEditField = (field: string | null) => {
+    setEditingField(field === editingField ? null : field);
   };
 
-  const toggleEditDescription = () => {
-    setIsEditingDescription(!isEditingDescription);
+  const [form] = Form.useForm();
+
+  const handleSubmit = () => {
+    form.setFieldValue(editingField, form.getFieldValue(editingField));
+    editBarbershop(
+      {
+        id: '9854482e-2198-47cd-9895-e2f805a01360',
+        name,
+        description,
+      },
+      {
+        onSuccess: () => {
+          setEditingField(null);
+          toggleEditField(editingField);
+        },
+      },
+    );
   };
 
   return (
@@ -70,66 +86,85 @@ const BarbershopPage = () => {
             />
           )}
         </Col>
-        <Col xs={24} md={12} className="flex flex-col">
-          {isLoading ? (
-            <Skeleton active paragraph={{ rows: 1 }} />
-          ) : isEditingName ? (
-            <div className="flex items-center">
-              <Input
-                value={title}
-                onChange={handleTitleChange}
-                className="w-3/4"
-              />
-              <Button type="primary" onClick={toggleEditName} className="ml-4">
-                <Icons.CheckCircle />
-              </Button>
-            </div>
-          ) : (
-            <div className="flex items-center">
-              <Title level={3} className="grow">
-                {title}
-              </Title>
-              <Button
-                type="primary"
-                onClick={toggleEditName}
-                className="ml-4 mt-2"
-              >
-                <Icons.Pencil />
-              </Button>
-            </div>
-          )}
-          <Divider />
 
-          {isLoading ? (
-            <Skeleton active paragraph={{ rows: 4 }} />
-          ) : isEditingDescription ? (
-            <div>
-              <Input.TextArea
-                value={description}
-                onChange={handleDescriptionChange}
-                rows={4}
-              />
-              <div className="mt-2 flex space-x-2">
-                <Button type="default" onClick={toggleEditDescription}>
-                  Cancel
-                </Button>
-                <Button type="primary" onClick={toggleEditDescription}>
-                  Save
-                </Button>
-              </div>
-            </div>
-          ) : (
-            <div className="flex flex-col">
-              <Paragraph>{description}</Paragraph>
-              <Button
-                type="primary"
-                onClick={toggleEditDescription}
-                className="mt-2 self-start"
-              >
-                Edit Description
-              </Button>
-            </div>
-          )}
+        <Col xs={24} md={12} className="flex flex-col">
+          <Form variant="filled" style={{ maxWidth: 600 }} form={form}>
+            <Form.Item name="name">
+              {isLoading ? (
+                <Skeleton active paragraph={{ rows: 1 }} />
+              ) : editingField === 'name' ? (
+                <div className="flex items-center">
+                  <Input
+                    value={name}
+                    onChange={handleTitleChange}
+                    className="w-3/4"
+                  />
+                  <Button
+                    type="primary"
+                    onClick={handleSubmit}
+                    className="ml-4"
+                  >
+                    <Icons.CheckCircle />
+                  </Button>
+                </div>
+              ) : (
+                <div className="flex items-center">
+                  <Title level={3} className="grow">
+                    {name}
+                  </Title>
+                  <Button
+                    type="primary"
+                    onClick={() => toggleEditField('name')}
+                    className="ml-4 mt-2"
+                    disabled={editingField !== null && editingField !== 'name'}
+                  >
+                    <Icons.Pencil />
+                  </Button>
+                </div>
+              )}
+            </Form.Item>
+
+            <Divider />
+
+            <Form.Item name="description">
+              {isLoading ? (
+                <Skeleton active paragraph={{ rows: 4 }} />
+              ) : editingField === 'description' ? (
+                <div>
+                  <Input.TextArea
+                    value={description}
+                    onChange={handleDescriptionChange}
+                    rows={4}
+                  />
+                  <div className="mt-2 flex space-x-2">
+                    <Button
+                      type="default"
+                      onClick={() => toggleEditField('description')}
+                    >
+                      Cancel
+                    </Button>
+                    <Button type="primary" onClick={handleSubmit}>
+                      Save
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex flex-col">
+                  <Paragraph>{description}</Paragraph>
+                  <Button
+                    type="primary"
+                    onClick={() => toggleEditField('description')}
+                    className="mt-2 self-start"
+                    disabled={
+                      editingField !== null && editingField !== 'description'
+                    }
+                  >
+                    Edit Description
+                  </Button>
+                </div>
+              )}
+            </Form.Item>
+          </Form>
         </Col>
       </Row>
       <Divider />

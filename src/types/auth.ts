@@ -6,7 +6,7 @@ import {
   SignInPasswordInputValidation,
   SignUpPasswordInputValidation,
   UpdatePasswordInputValidation,
-} from '@/schemas/auth-schemas';
+} from '@/schemas/auth';
 
 /*
  * This file contains all the interfaces and validations that are used in the application.

@@ -8,7 +8,7 @@ import { useTranslations } from 'next-intl';
 
 import { useI18nZodErrorsForm } from '@/client/hooks/useI18nZodErrors';
 import useLogin from '@/client/hooks/useLogin';
-import { SignInPasswordInputValidation } from '@/schemas/auth-schemas';
+import { SignInPasswordInputValidation } from '@/schemas/auth';
 import { ISignInPasswordInput } from '@/types';
 
 const LoginComponent: React.FC = () => {
