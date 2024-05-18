@@ -34,10 +34,3 @@ export type IConfirmAccountInput = z.infer<
 >;
 
 export type BigCalendarView = 'month' | 'week' | 'work_week' | 'day' | 'agenda';
-
-export type IBarber = {
-  name: string;
-  picture: string;
-  slug: string;
-  id: string;
-};
