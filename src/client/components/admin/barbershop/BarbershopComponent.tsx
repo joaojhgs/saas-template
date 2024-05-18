@@ -42,11 +42,11 @@ const BarbershopPage = () => {
     <Layout>
       <Row className="m-10 p-10">
         <Col span={12}>
-          <Image src={barberShopData?.data.picture} alt="barbershop" />
+          <Image src={barberShopData?.data?.picture} alt="barbershop" />
         </Col>
         <Col span={12}>
-          <Title>{barberShopData?.data.name}</Title>
-          <Paragraph>{barberShopData?.data.description}</Paragraph>
+          <Title>{barberShopData?.data?.name}</Title>
+          <Paragraph>{barberShopData?.data?.description}</Paragraph>
         </Col>
       </Row>
       <Divider />
