@@ -14,11 +14,13 @@ import {
   Skeleton,
   Typography,
 } from 'antd';
+import { createSchemaFieldRule } from 'antd-zod';
 
 import {
   useEditBarbershop,
   useGetBarbershop,
 } from '@/client/hooks/useBarbershop';
+import { UpdateBarbershopInputValidation } from '@/schemas/barbershop';
 
 import Icons from '../../Icons';
 
@@ -26,18 +28,22 @@ const { Title, Paragraph } = Typography;
 
 const BarbershopPage = () => {
   const { data, isLoading } = useGetBarbershop();
-  const { mutate: editBarbershop } = useEditBarbershop();
+  const { mutate: editBarbershop, isPending } = useEditBarbershop();
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
 
+  const [form] = Form.useForm();
+
   const [editingField, setEditingField] = useState<string | null>(null);
+
+  const rule = createSchemaFieldRule(UpdateBarbershopInputValidation);
 
   useEffect(() => {
     if (data) {
       setName(data?.data?.name ?? '');
       setDescription(data?.data?.description ?? '');
     }
-  }, [data]);
+  }, [data, form]);
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
@@ -52,8 +58,6 @@ const BarbershopPage = () => {
   const toggleEditField = (field: string | null) => {
     setEditingField(field === editingField ? null : field);
   };
-
-  const [form] = Form.useForm();
 
   const handleSubmit = () => {
     form.setFieldValue(editingField, form.getFieldValue(editingField));
@@ -70,6 +74,13 @@ const BarbershopPage = () => {
         },
       },
     );
+  };
+
+  const handleCancel = () => {
+    toggleEditField(null);
+    setName(data?.data?.name ?? '');
+    setDescription(data?.data?.description ?? '');
+    form.resetFields();
   };
 
   return (
@@ -89,7 +100,7 @@ const BarbershopPage = () => {
 
         <Col xs={24} md={12} className="flex flex-col">
           <Form variant="filled" style={{ maxWidth: 600 }} form={form}>
-            <Form.Item name="name">
+            <Form.Item name="name" rules={[rule]}>
               {isLoading ? (
                 <Skeleton active paragraph={{ rows: 1 }} />
               ) : editingField === 'name' ? (
@@ -97,15 +108,24 @@ const BarbershopPage = () => {
                   <Input
                     value={name}
                     onChange={handleTitleChange}
-                    className="w-3/4"
+                    disabled={isPending}
                   />
-                  <Button
-                    type="primary"
-                    onClick={handleSubmit}
-                    className="ml-4"
-                  >
-                    <Icons.CheckCircle />
-                  </Button>
+                  <div className="ml-4 flex space-x-2">
+                    <Button
+                      type="default"
+                      onClick={handleCancel}
+                      disabled={isPending}
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      type="primary"
+                      onClick={handleSubmit}
+                      disabled={isPending}
+                    >
+                      Save
+                    </Button>
+                  </div>
                 </div>
               ) : (
                 <div className="flex items-center">
@@ -113,9 +133,9 @@ const BarbershopPage = () => {
                     {name}
                   </Title>
                   <Button
-                    type="primary"
+                    type="link"
                     onClick={() => toggleEditField('name')}
-                    className="ml-4 mt-2"
+                    className="mb-3 ml-4"
                     disabled={editingField !== null && editingField !== 'name'}
                   >
                     <Icons.Pencil />
@@ -126,7 +146,7 @@ const BarbershopPage = () => {
 
             <Divider />
 
-            <Form.Item name="description">
+            <Form.Item name="description" rules={[rule]}>
               {isLoading ? (
                 <Skeleton active paragraph={{ rows: 4 }} />
               ) : editingField === 'description' ? (
@@ -135,15 +155,22 @@ const BarbershopPage = () => {
                     value={description}
                     onChange={handleDescriptionChange}
                     rows={4}
+                    disabled={isPending}
+                    autoSize={{ minRows: 2, maxRows: 6 }}
                   />
                   <div className="mt-2 flex space-x-2">
                     <Button
                       type="default"
-                      onClick={() => toggleEditField('description')}
+                      onClick={handleCancel}
+                      disabled={isPending}
                     >
                       Cancel
                     </Button>
-                    <Button type="primary" onClick={handleSubmit}>
+                    <Button
+                      type="primary"
+                      onClick={handleSubmit}
+                      disabled={isPending}
+                    >
                       Save
                     </Button>
                   </div>
