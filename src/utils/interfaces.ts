@@ -38,3 +38,5 @@ export type IUpdatePasswordInput = z.infer<
 export type IConfirmAccountInput = z.infer<
   typeof ConfirmAccountInputValidation
 >;
+
+export type BigCalendarView = 'month' | 'week' | 'work_week' | 'day' | 'agenda';
