@@ -15,6 +15,7 @@ import {
   Typography,
 } from 'antd';
 import { createSchemaFieldRule } from 'antd-zod';
+import { useTranslations } from 'next-intl';
 
 import {
   useEditBarbershop,
@@ -37,6 +38,8 @@ const BarbershopPage = () => {
   const [editingField, setEditingField] = useState<string | null>(null);
 
   const rule = createSchemaFieldRule(UpdateBarbershopInputValidation);
+
+  const t = useTranslations('barbershop');
 
   useEffect(() => {
     if (data) {
@@ -116,14 +119,14 @@ const BarbershopPage = () => {
                       onClick={handleCancel}
                       disabled={isPending}
                     >
-                      Cancel
+                      {t('cancel-button')}
                     </Button>
                     <Button
                       type="primary"
                       onClick={handleSubmit}
                       disabled={isPending}
                     >
-                      Save
+                      {t('save-button')}
                     </Button>
                   </div>
                 </div>
@@ -164,14 +167,14 @@ const BarbershopPage = () => {
                       onClick={handleCancel}
                       disabled={isPending}
                     >
-                      Cancel
+                      {t('cancel-button')}
                     </Button>
                     <Button
                       type="primary"
                       onClick={handleSubmit}
                       disabled={isPending}
                     >
-                      Save
+                      {t('save-button')}
                     </Button>
                   </div>
                 </div>
@@ -186,7 +189,7 @@ const BarbershopPage = () => {
                       editingField !== null && editingField !== 'description'
                     }
                   >
-                    Edit Description
+                    {t('edit-description-button')}
                   </Button>
                 </div>
               )}

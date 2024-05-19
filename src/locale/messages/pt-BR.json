@@ -1,4 +1,10 @@
 {
+  "barbershop": {
+    "cancel-button": "Cancelar",
+    "edit-description-button": "Editar descrição",
+    "save-button": "Salvar",
+    "title": "Barbershop"
+  },
   "customValidationErrors": {
     "passwords-dont-match": "Senhas não são iguais"
   },
