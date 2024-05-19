@@ -1,15 +1,17 @@
 {
-  "barbershop": {
-    "cancel-button": "Cancel",
-    "edit-description-button": "Edit description",
-    "save-button": "Save",
-    "update-barbershop-error": "Error updating barbershop",
-    "update-barbershop-success": "Barbershop updated successfully"
-  },
   "customValidationErrors": {
     "passwords-dont-match": "Passwords don't match"
   },
   "forms": {
+    "barbershop-config": {
+      "cancel-button": "Cancel",
+      "description": "Description",
+      "edit-description-button": "Edit description",
+      "name": "Name",
+      "save-button": "Save",
+      "update-barbershop-error": "Error updating barbershop",
+      "update-barbershop-success": "Barbershop updated successfully"
+    },
     "sign-in-component": {
       "contact-us": "Contact us",
       "dont-have-an-account": "Don't have an account?",

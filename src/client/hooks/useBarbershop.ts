@@ -21,7 +21,7 @@ const useGetBarbershop = () =>
 
 const useEditBarbershop = (options?: Record<string, unknown>) => {
   const queryClient = useQueryClient();
-  const t = useTranslations('barbershop');
+  const t = useTranslations('forms.barbershop-config');
   return useMutation({
     ...options,
     mutationFn: (data: IUpdateBarbershopInput) =>

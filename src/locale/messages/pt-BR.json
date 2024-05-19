@@ -1,15 +1,17 @@
 {
-  "barbershop": {
-    "cancel-button": "Cancelar",
-    "edit-description-button": "Editar descrição",
-    "save-button": "Salvar",
-    "update-barbershop-error": "Erro ao atualizar barbearia",
-    "update-barbershop-success": "Barbearia atualizada com sucesso"
-  },
   "customValidationErrors": {
     "passwords-dont-match": "Senhas não são iguais"
   },
   "forms": {
+    "barbershop-config": {
+      "cancel-button": "Cancelar",
+      "description": "Descrição",
+      "edit-description-button": "Editar descrição",
+      "name": "Nome",
+      "save-button": "Salvar",
+      "update-barbershop-error": "Erro ao atualizar barbearia",
+      "update-barbershop-success": "Barbearia atualizada com sucesso"
+    },
     "sign-in-component": {
       "contact-us": "Entre em contato",
       "dont-have-an-account": "Não tem uma conta?",

@@ -7,7 +7,6 @@ import {
   Col,
   Divider,
   Form,
-  Image,
   Input,
   Layout,
   Row,
@@ -21,9 +20,11 @@ import {
   useEditBarbershop,
   useGetBarbershop,
 } from '@/client/hooks/useBarbershop';
+import { useI18nZodErrorsForm } from '@/client/hooks/useI18nZodErrors';
 import { UpdateBarbershopInputValidation } from '@/schemas/barbershop';
 
 import Icons from '../../Icons';
+import ImageUploader from './components/image-uploader/ImageUploader';
 
 const { Title, Paragraph } = Typography;
 
@@ -39,7 +40,7 @@ const BarbershopPage = () => {
 
   const rule = createSchemaFieldRule(UpdateBarbershopInputValidation);
 
-  const t = useTranslations('barbershop');
+  const t = useI18nZodErrorsForm(useTranslations('forms.barbershop-config'));
 
   useEffect(() => {
     if (data) {
@@ -93,16 +94,22 @@ const BarbershopPage = () => {
           {isLoading ? (
             <Skeleton.Image className="h-64 w-full" />
           ) : (
-            <Image
-              src={data?.data?.picture}
-              alt="barbershop"
-              className="max-h-64 w-full object-cover"
-            />
+            // <Image
+            //   src={data?.data?.picture}
+            //   alt="barbershop"
+            //   className="max-h-64 w-full object-cover"
+            // />
+            <ImageUploader />
           )}
         </Col>
 
         <Col xs={24} md={12} className="flex flex-col">
-          <Form variant="filled" style={{ maxWidth: 600 }} form={form}>
+          <Form
+            variant="filled"
+            style={{ maxWidth: 600 }}
+            form={form}
+            onFinish={handleSubmit}
+          >
             <Form.Item name="name" rules={[rule]}>
               {isLoading ? (
                 <Skeleton active paragraph={{ rows: 1 }} />
@@ -123,7 +130,7 @@ const BarbershopPage = () => {
                     </Button>
                     <Button
                       type="primary"
-                      onClick={handleSubmit}
+                      htmlType="submit"
                       disabled={isPending}
                     >
                       {t('save-button')}
@@ -171,7 +178,7 @@ const BarbershopPage = () => {
                     </Button>
                     <Button
                       type="primary"
-                      onClick={handleSubmit}
+                      htmlType="submit"
                       disabled={isPending}
                     >
                       {t('save-button')}
