@@ -3,7 +3,8 @@
     "cancel-button": "Cancelar",
     "edit-description-button": "Editar descrição",
     "save-button": "Salvar",
-    "title": "Barbershop"
+    "update-barbershop-error": "Erro ao atualizar barbearia",
+    "update-barbershop-success": "Barbearia atualizada com sucesso"
   },
   "customValidationErrors": {
     "passwords-dont-match": "Senhas não são iguais"

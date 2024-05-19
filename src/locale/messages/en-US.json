@@ -3,7 +3,8 @@
     "cancel-button": "Cancel",
     "edit-description-button": "Edit description",
     "save-button": "Save",
-    "title": "Barbershop"
+    "update-barbershop-error": "Error updating barbershop",
+    "update-barbershop-success": "Barbershop updated successfully"
   },
   "customValidationErrors": {
     "passwords-dont-match": "Passwords don't match"

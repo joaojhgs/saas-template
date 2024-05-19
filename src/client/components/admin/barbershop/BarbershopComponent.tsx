@@ -66,7 +66,7 @@ const BarbershopPage = () => {
     form.setFieldValue(editingField, form.getFieldValue(editingField));
     editBarbershop(
       {
-        id: '9854482e-2198-47cd-9895-e2f805a01360',
+        id: data?.data?.id ?? '',
         name,
         description,
       },
