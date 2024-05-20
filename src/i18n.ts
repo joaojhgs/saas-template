@@ -4,5 +4,6 @@ export default getRequestConfig(async ({ locale }) => ({
   messages: {
     ...(await import(`./locale/messages/${locale}.json`)).default,
     ...(await import(`./locale/messages/zod/${locale}.json`)).default,
+    ...(await import(`./locale/messages/big-calendar/${locale}.json`)).default,
   },
 }));

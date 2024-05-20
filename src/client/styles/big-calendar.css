@@ -23,3 +23,6 @@
   @apply bg-colorPrimary !important;
   @apply text-white !important;
 }
+.rbc-slot-selection {
+  @apply bg-colorPrimary !important;
+}

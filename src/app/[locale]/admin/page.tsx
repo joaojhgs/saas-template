@@ -1,6 +1,6 @@
 import React from 'react';
 
-import SchedullesCalendar from '@/client/components/admin/schedulles/SchedullesCalendar';
+import SchedullesCalendar from '@/client/components/admin/schedules/SchedullesCalendar';
 
 interface PageProps {
   // Add any props you need for your page component
@@ -8,7 +8,7 @@ interface PageProps {
 
 const Page: React.FC<PageProps> = () => {
   return (
-    <div>
+    <div className="h-full">
       <SchedullesCalendar />
     </div>
   );
