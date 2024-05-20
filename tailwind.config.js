@@ -18,7 +18,6 @@ const antdThemeColors = Object.fromEntries(
       /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(value),
   ),
 );
-console.dir(antdThemeColors, { depth: null });
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
