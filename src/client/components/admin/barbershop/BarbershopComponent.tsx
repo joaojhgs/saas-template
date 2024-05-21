@@ -88,17 +88,12 @@ const BarbershopPage = () => {
   };
 
   return (
-    <Layout className="md:p-4">
-      <Row className="mx-auto max-w-7xl" gutter={[16, 16]}>
+    <Layout className="w-full md:p-4">
+      <Row className="mx-auto max-w-7xl" gutter={8}>
         <Col xs={24} md={12} className="flex items-center justify-center">
           {isLoading ? (
             <Skeleton.Image className="h-64 w-full" />
           ) : (
-            // <Image
-            //   src={data?.data?.picture}
-            //   alt="barbershop"
-            //   className="max-h-64 w-full object-cover"
-            // />
             <ImageUploader />
           )}
         </Col>

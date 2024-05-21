@@ -2,60 +2,67 @@
 
 import React from 'react';
 
-// import { Button, Image, Input, Upload, message } from 'antd';
-import { Input } from 'antd';
+import { Button, Image } from 'antd';
 
-// import Icons from '../../../../Icons';
+import {
+  useEditBarbershop,
+  useGetBarbershop,
+} from '@/client/hooks/useBarbershop';
 
 const ImageUploader = () => {
-  //   const [imageUrl, setImageUrl] = useState(
-  //     'https://t4.ftcdn.net/jpg/02/10/97/19/360_F_210971959_wXcBYfif7jKeyKkHKhVyOnzQWHawIgK4.jpg',
-  //   );
+  const { data } = useGetBarbershop();
+  const { mutate: editBarbershop } = useEditBarbershop();
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
 
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     let file: File | null = null;
 
     if (e.target.files) {
-      file = e.target.files[0] as File;
+      file = e.target.files[0];
     }
 
-    const formdata = new FormData();
-    formdata.append('files', file as File);
+    if (file) {
+      const formdata = new FormData();
+      formdata.append('files', file);
 
-    const requestOptions = { method: 'POST', body: formdata };
+      const requestOptions = { method: 'POST', body: formdata };
 
-    const response = await fetch('/api/upload', requestOptions);
-    const result = await response.text();
-    console.log(result);
+      const response = await fetch('/api/upload', requestOptions);
+      const result = await response.json();
+
+      const fullPath = result.data.fullPath;
+
+      editBarbershop({
+        id: data?.data?.id ?? '',
+        picture: fullPath,
+      });
+    }
   };
 
-  //   const uploadProps = {
-  //     name: 'file',
-  //     accept: 'image/*',
-  //     showUploadList: false, // Hide the default upload list
-  //     beforeUpload: (file: File) => {
-  //       const isImage = file.type.startsWith('image/');
-  //       if (!isImage) {
-  //         message.error('You can only upload image files!');
-  //       }
-  //       return isImage;
-  //     },
-  //     onChange: handleUpload,
-  //   };
+  const triggerFileInput = () => {
+    fileInputRef.current?.click();
+  };
 
   return (
     <div className="relative inline-block">
-      {/* <Upload {...uploadProps}>
-        <Button
-          icon={<Icons.Pencil />}
-          type="primary"
-          className="absolute top-4 left-4 z-10"
-        >
-          Editar Imagem
-        </Button>
-      </Upload>
-      <Image width={300} src={imageUrl} alt="Banner" className="block" /> */}
-      <Input type="file" accept="image/*" onChange={handleUpload} />
+      <Image
+        src={`https://nhtgmvgjkojhxrtjzzyv.supabase.co/storage/v1/object/public/${data?.data?.picture}`}
+        alt="barbershop"
+        className="max-h-full w-full object-cover"
+      />
+      <Button
+        onClick={triggerFileInput}
+        style={{ position: 'absolute', top: 0, left: 0 }}
+      >
+        Edit Image
+      </Button>
+      <input
+        type="file"
+        accept="image/*"
+        onChange={handleUpload}
+        style={{ display: 'none' }}
+        ref={fileInputRef}
+      />
     </div>
   );
 };
