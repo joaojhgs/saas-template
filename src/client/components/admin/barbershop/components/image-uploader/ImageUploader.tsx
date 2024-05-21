@@ -1,8 +1,8 @@
 'use client';
 
-import React from 'react';
+import React, { useRef, useState } from 'react';
 
-import { Button, Image } from 'antd';
+import { Button, Image, Spin } from 'antd';
 
 import {
   useEditBarbershop,
@@ -12,7 +12,8 @@ import {
 const ImageUploader = () => {
   const { data } = useGetBarbershop();
   const { mutate: editBarbershop } = useEditBarbershop();
-  const fileInputRef = React.useRef<HTMLInputElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [loading, setLoading] = useState(false);
 
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     let file: File | null = null;
@@ -22,20 +23,27 @@ const ImageUploader = () => {
     }
 
     if (file) {
-      const formdata = new FormData();
-      formdata.append('files', file);
+      setLoading(true);
+      const formData = new FormData();
+      formData.append('files', file);
 
-      const requestOptions = { method: 'POST', body: formdata };
+      const requestOptions = { method: 'POST', body: formData };
 
-      const response = await fetch('/api/upload', requestOptions);
-      const result = await response.json();
+      try {
+        const response = await fetch('/api/upload', requestOptions);
+        const result = await response.json();
 
-      const fullPath = result.data.fullPath;
+        const fullPath = result.data.fullPath;
 
-      editBarbershop({
-        id: data?.data?.id ?? '',
-        picture: fullPath,
-      });
+        editBarbershop({
+          id: data?.data?.id ?? '',
+          picture: fullPath,
+        });
+      } catch (error) {
+        console.error('Error uploading file:', error);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
@@ -45,14 +53,25 @@ const ImageUploader = () => {
 
   return (
     <div className="relative inline-block">
-      <Image
-        src={`https://nhtgmvgjkojhxrtjzzyv.supabase.co/storage/v1/object/public/${data?.data?.picture}`}
-        alt="barbershop"
-        className="max-h-full w-full object-cover"
-      />
+      {loading ? (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <Spin />
+        </div>
+      ) : (
+        <Image
+          src={`https://nhtgmvgjkojhxrtjzzyv.supabase.co/storage/v1/object/public/${data?.data?.picture}`}
+          alt="barbershop"
+          className="max-h-full w-full object-cover"
+        />
+      )}
       <Button
         onClick={triggerFileInput}
-        style={{ position: 'absolute', top: 0, left: 0 }}
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          display: loading ? 'none' : 'block',
+        }}
       >
         Edit Image
       </Button>
