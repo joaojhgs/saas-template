@@ -3,7 +3,7 @@ import { notification } from 'antd';
 import { useTranslations } from 'next-intl';
 
 import { getBarbershop, updateBarbershop } from '@/server/use-cases/barbershop';
-import { IUpdateBarbershopInput } from '@/types';
+import { IUpdateBarbershopInput } from '@/schemas';
 import { handleSAResult } from '@/utils/result-handling';
 
 /*

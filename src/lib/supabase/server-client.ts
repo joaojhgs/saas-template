@@ -3,6 +3,7 @@ import { cookies } from 'next/headers';
 import { type CookieOptions, createServerClient } from '@supabase/ssr';
 
 import { env } from '@/env';
+import { Database } from '@/schemas/supabase';
 
 export function createClient() {
   // We can use this one when we think of a solution to instantiate a single supabase on request context
@@ -10,7 +11,7 @@ export function createClient() {
 
   // Create a server's supabase client with newly configured cookie,
   // which could be used to maintain user's session
-  return createServerClient(env.SUPABASE_URL, env.SUPABASE_ANON_KEY, {
+  return createServerClient<Database>(env.SUPABASE_URL, env.SUPABASE_ANON_KEY, {
     cookies: {
       get(name: string) {
         return cookies().get(name)?.value;

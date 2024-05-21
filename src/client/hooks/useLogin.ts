@@ -3,7 +3,7 @@ import { notification } from 'antd';
 import { useTranslations } from 'next-intl';
 
 import { loginWithPassword } from '@/server/use-cases/auth';
-import { ISignInPasswordInput } from '@/types';
+import { ISignInPasswordInput } from '@/schemas';
 import { handleSAResult } from '@/utils/result-handling';
 
 /* 

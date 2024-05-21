@@ -1,6 +1,6 @@
 'use server';
 
-import { IBarber } from '@/types';
+import { IBarber } from '@/schemas';
 
 import serverActionHof from '../server-action';
 

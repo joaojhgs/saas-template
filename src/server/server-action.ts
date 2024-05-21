@@ -2,10 +2,11 @@ import { SupabaseClient } from '@supabase/supabase-js';
 import { getTranslations } from 'next-intl/server';
 
 import { createClient } from '@/lib/supabase/server-client';
-import { ReactSerializable } from '@/types';
+import { ReactSerializable } from '@/schemas';
+import { Database } from '@/schemas/supabase';
 import {
-  ServerActionError,
-  ServerActionSuccess,
+  createServerActionError,
+  createServerActionSuccess,
 } from '@/utils/result-handling';
 
 import { initErrorsAndTranslations } from './init-errors';
@@ -18,25 +19,25 @@ import { initErrorsAndTranslations } from './init-errors';
     and R is the return type of the callback function.    
 */
 
+type ICallback<Input, Return> = (callback: {
+  supabase: SupabaseClient<Database>;
+  t: Awaited<ReturnType<typeof getTranslations<'results'>>>;
+  values?: Input;
+}) => Promise<Return>;
+
 export default function serverActionHof<
-  Input,
-  Return extends ReactSerializable,
->(
-  callback: (
-    supabase: SupabaseClient,
-    t: Awaited<ReturnType<typeof getTranslations<'results'>>>,
-    values?: Input,
-  ) => Promise<Return>,
-): (values?: Input) => Promise<Return> | Promise<string> {
+  Input extends ReactSerializable,
+  Return extends ReactSerializable = Record<string, unknown>,
+>(callback: ICallback<Input, Return>) {
   return async (values?: Input) => {
     try {
       const t = await initErrorsAndTranslations();
       const supabase = createClient();
-      return new ServerActionSuccess(
-        await callback(supabase, t, values),
-      ).stringfy();
+      return createServerActionSuccess(await callback({ supabase, t, values }));
     } catch (e) {
-      return new ServerActionError(e).stringfy();
+      if (e instanceof Error) {
+        return createServerActionError(e);
+      }
     }
   };
 }

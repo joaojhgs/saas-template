@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-import { BigCalendarView } from '@/types';
+import { BigCalendarView } from '@/schemas';
 
 interface PersistState {
   openMenu: boolean;

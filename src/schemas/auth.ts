@@ -8,11 +8,6 @@ import {
   UpdatePasswordInputValidation,
 } from '@/schemas/auth-schemas';
 
-/*
- * This file contains all the interfaces and validations that are used in the application.
- * Shared between client and server side.
- */
-
 export type ISignInPasswordInput = z.infer<
   typeof SignInPasswordInputValidation
 >;
@@ -32,5 +27,3 @@ export type IUpdatePasswordInput = z.infer<
 export type IConfirmAccountInput = z.infer<
   typeof ConfirmAccountInputValidation
 >;
-
-export type BigCalendarView = 'month' | 'week' | 'work_week' | 'day' | 'agenda';

@@ -12,7 +12,9 @@
     "format": "prettier --write \"**/*.{js,ts,tsx,mdx}\" --cache",
     "check": "prettier --check \"**/*.{js,ts,tsx,mdx}\" --cache",
     "prepare": "husky",
-    "commit": "git-cz"
+    "commit": "git-cz",
+    "supabase:login": "supabase login",
+    "supabase:generate": "supabase gen types typescript --project-id nhtgmvgjkojhxrtjzzyv --schema public > src/types/supabase.ts "
   },
   "dependencies": {
     "@ant-design/cssinjs": "^1.20.0",
@@ -24,6 +26,7 @@
     "clsx": "^1.2.1",
     "dayjs": "^1.11.10",
     "jiti": "^1.21.0",
+    "lodash": "^4.17.21",
     "lucide-react": "^0.244.0",
     "next": "14.2.2",
     "next-intl": "3.11.3",
@@ -32,6 +35,7 @@
     "react-big-calendar": "1.12.2",
     "react-dom": "18.2.0",
     "tailwind-merge": "^1.14.0",
+    "type-fest": "^4.18.2",
     "zod": "^3.23.0",
     "zustand": "^4.5.2"
   },
@@ -41,6 +45,7 @@
     "@t3-oss/env-nextjs": "^0.10.0",
     "@tanstack/react-query-devtools": "^5.35.1",
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
+    "@types/lodash": "^4.17.4",
     "@types/node": "18.13.0",
     "@types/react": "18.0.27",
     "@types/react-big-calendar": "1.8.9",
@@ -62,6 +67,7 @@
     "lint-staged": "^15.2.2",
     "postcss": "^8.4.38",
     "prettier": "^3.2.5",
+    "supabase": ">=1.8.1",
     "tailwindcss": "^3.4.3",
     "typescript": "5.1.3",
     "typescript-eslint": "^7.7.0"

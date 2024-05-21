@@ -1,6 +1,6 @@
 'use server';
 
-import { IBarbershop, IUpdateBarbershopInput } from '@/types';
+import { IBarbershop, IUpdateBarbershopInput } from '@/schemas';
 
 import serverActionHof from '../server-action';
 
