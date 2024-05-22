@@ -1,8 +1,13 @@
 'use server';
 
-import { AuthTokenResponsePassword } from '@supabase/supabase-js';
-
-import { createClient } from '@/lib/supabase/server-client';
+import {
+  IConfirmAccountInput,
+  IForgotPasswordInput,
+  ISignInPasswordInput,
+  ISignUpPasswordInput,
+  IUpdatePasswordInput,
+  ServerActionInjected,
+} from '@/schemas';
 import {
   ConfirmAccountInputValidation,
   ForgotPasswordInputValidation,
@@ -10,19 +15,7 @@ import {
   SignUpPasswordInputValidation,
   UpdatePasswordInputValidation,
 } from '@/schemas/auth-schemas';
-import {
-  IConfirmAccountInput,
-  IForgotPasswordInput,
-  ISignInPasswordInput,
-  ISignUpPasswordInput,
-  IUpdatePasswordInput,
-} from '@/types';
 
-import {
-  ServerActionError,
-  ServerActionSuccess,
-} from '../../utils/result-handling';
-import { initErrorsAndTranslations } from '../init-errors';
 import serverActionHof from '../server-action';
 
 /*
@@ -30,80 +23,56 @@ import serverActionHof from '../server-action';
     The functions defined here will be called by the server to perform the necessary operations.
 */
 
-// This should either be instantiate every request or only called in request contexts, as of now, leave like this
-const supabase = createClient();
+export const loginWithPassword = serverActionHof(
+  async ({ supabase, values }: ServerActionInjected<ISignInPasswordInput>) => {
+    const parsedValues = SignInPasswordInputValidation.parse(values);
 
-export const loginWithPassword = serverActionHof<
-  ISignInPasswordInput,
-  AuthTokenResponsePassword['data']
->(async (supabase, _, values) => {
-  const parsedValues = SignInPasswordInputValidation.parse(values);
+    const { data, error } =
+      await supabase.auth.signInWithPassword(parsedValues);
 
-  const { data, error } = await supabase.auth.signInWithPassword(parsedValues);
-  if (error) throw new Error(error.message);
-  return data;
-});
+    if (error) throw new Error(error.message);
+    return data;
+  },
+);
 
-export const registerWithPassword = async (values: ISignUpPasswordInput) => {
-  try {
-    await initErrorsAndTranslations();
+export const registerWithPassword = serverActionHof(
+  async ({ supabase, values }: ServerActionInjected<ISignUpPasswordInput>) => {
     const parsedValues = SignUpPasswordInputValidation.parse(values);
 
     const { data, error } = await supabase.auth.signUp(parsedValues);
 
     if (error) throw new Error(error.message);
+    return data;
+  },
+);
 
-    return new ServerActionSuccess(data).stringfy();
-  } catch (e) {
-    return new ServerActionError(e).stringfy();
-  }
-};
+export const logout = serverActionHof(async ({ supabase }) => {
+  const { error } = await supabase.auth.signOut();
 
-export const logout = async () => {
-  try {
-    await initErrorsAndTranslations();
-    const { error } = await supabase.auth.signOut();
+  if (error) throw new Error(error.message);
+  return undefined;
+});
 
-    if (error) throw new Error(error.message);
+export const getCurrentUser = serverActionHof(async ({ supabase }) => {
+  const { error, data } = await supabase.auth.getUser();
 
-    return new ServerActionSuccess();
-  } catch (e) {
-    return new ServerActionError(e).stringfy();
-  }
-};
+  if (error) throw new Error(error.message);
+  return data;
+});
 
-export const getCurrentUser = async () => {
-  try {
-    await initErrorsAndTranslations();
-
-    const { error, data } = await supabase.auth.getUser();
-
-    if (error) throw new Error(error.message);
-
-    return new ServerActionSuccess(data).stringfy();
-  } catch (e) {
-    return new ServerActionError(e).stringfy();
-  }
-};
-
-export const updatePassword = async (values: IUpdatePasswordInput) => {
-  try {
-    await initErrorsAndTranslations();
+export const updatePassword = serverActionHof(
+  async ({ supabase, values }: ServerActionInjected<IUpdatePasswordInput>) => {
     const parsedValue = UpdatePasswordInputValidation.parse(values);
 
     const { data, error } = await supabase.auth.updateUser(parsedValue);
 
     if (error) throw new Error(error.message);
+    return data;
+  },
+);
 
-    return new ServerActionSuccess(data).stringfy();
-  } catch (e) {
-    return new ServerActionError(e).stringfy();
-  }
-};
-
-export const forgotPassword = async (values: IForgotPasswordInput) => {
-  try {
-    await initErrorsAndTranslations();
+export const forgotPassword = serverActionHof(
+  async ({ supabase, values }: ServerActionInjected<IForgotPasswordInput>) => {
     const parsedValues = ForgotPasswordInputValidation.parse(values);
 
     const { data, error } = await supabase.auth.resetPasswordForEmail(
@@ -111,38 +80,26 @@ export const forgotPassword = async (values: IForgotPasswordInput) => {
     );
 
     if (error) throw new Error(error.message);
+    return data;
+  },
+);
 
-    return new ServerActionSuccess(data).stringfy();
-  } catch (e) {
-    return new ServerActionError(e).stringfy();
-  }
-};
-
-export const confirmAccount = async (values: IConfirmAccountInput) => {
-  try {
-    await initErrorsAndTranslations();
+export const confirmAccount = serverActionHof(
+  async ({ supabase, values }: ServerActionInjected<IConfirmAccountInput>) => {
     const parsedValues = ConfirmAccountInputValidation.parse(values);
 
     const { data, error } = await supabase.auth.verifyOtp(parsedValues);
 
     if (error) throw new Error(error.message);
+    return data;
+  },
+);
 
-    return new ServerActionSuccess(data).stringfy();
-  } catch (e) {
-    return new ServerActionError(e).stringfy();
-  }
-};
-
-export const validateCodeAndLogin = async (code: string) => {
-  try {
-    await initErrorsAndTranslations();
-
+export const validateCodeAndLogin = serverActionHof(
+  async ({ supabase, values: code }: ServerActionInjected<string>) => {
     const { data, error } = await supabase.auth.exchangeCodeForSession(code);
 
     if (error) throw new Error(error.message);
-
-    return new ServerActionSuccess(data).stringfy();
-  } catch (e) {
-    return new ServerActionError(e).stringfy();
-  }
-};
+    return data;
+  },
+);
