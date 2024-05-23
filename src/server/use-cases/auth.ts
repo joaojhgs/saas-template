@@ -53,12 +53,14 @@ export const logout = serverActionHof(async ({ supabase }) => {
   return undefined;
 });
 
-export const getCurrentUser = serverActionHof(async ({ supabase }) => {
-  const { error, data } = await supabase.auth.getUser();
+export const getCurrentUser = serverActionHof(
+  async ({ supabase }: ServerActionInjected) => {
+    const { error, data } = await supabase.auth.getUser();
 
-  if (error) throw new Error(error.message);
-  return data;
-});
+    if (error) throw new Error(error.message);
+    return data;
+  },
+);
 
 export const updatePassword = serverActionHof(
   async ({ supabase, values }: ServerActionInjected<IUpdatePasswordInput>) => {

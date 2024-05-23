@@ -1,6 +1,6 @@
 'use server';
 
-import { handleSAResult } from '@/utils/result-handling';
+import { throwIfError } from '@/utils/result-handling';
 
 import serverActionHof from '../server-action';
 import { getCurrentUser } from './auth';
@@ -34,7 +34,7 @@ export const getBarberSchedules = serverActionHof(async (supabase) => {
 
 export const createScheduleByBarber =
   serverActionHof<ICreateScheduleByBarberInput>(async (supabase, _, values) => {
-    const { data: user } = await handleSAResult(getCurrentUser());
+    const { data: user } = await throwIfError(getCurrentUser());
     const { data, error } = await supabase
       .from('schedule')
       .insert({ ...values, id_barber: user?.user.id })

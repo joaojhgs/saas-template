@@ -2,9 +2,9 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { notification } from 'antd';
 import { useTranslations } from 'next-intl';
 
-import { getBarbershop, updateBarbershop } from '@/server/use-cases/barbershop';
 import { IUpdateBarbershopInput } from '@/schemas';
-import { handleSAResult } from '@/utils/result-handling';
+import { getBarbershop, updateBarbershop } from '@/server/use-cases/barbershop';
+import { throwIfError } from '@/utils/result-handling';
 
 /*
     This hook uses react-query to fetch the current user from our server side function with supabase;
@@ -16,7 +16,7 @@ import { handleSAResult } from '@/utils/result-handling';
 const useGetBarbershop = () =>
   useQuery({
     queryKey: ['get-barbershop'],
-    queryFn: () => handleSAResult(getBarbershop()),
+    queryFn: () => throwIfError(getBarbershop()),
   });
 
 const useEditBarbershop = (options?: Record<string, unknown>) => {
@@ -25,7 +25,7 @@ const useEditBarbershop = (options?: Record<string, unknown>) => {
   return useMutation({
     ...options,
     mutationFn: (data: IUpdateBarbershopInput) =>
-      handleSAResult(updateBarbershop(data)),
+      throwIfError(updateBarbershop(data)),
     mutationKey: ['update-barbershop'],
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['get-barbershop'] });

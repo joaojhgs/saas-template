@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { getBarbersFromBarbershop } from '@/server/use-cases/barbers';
-import { handleSAResult } from '@/utils/result-handling';
+import { throwIfError } from '@/utils/result-handling';
 
 /*
     This hook uses react-query to fetch the current user from our server side function with supabase;
@@ -13,7 +13,7 @@ import { handleSAResult } from '@/utils/result-handling';
 const useBarbers = () =>
   useQuery({
     queryKey: ['get-barbershop-barbers'],
-    queryFn: () => handleSAResult(getBarbersFromBarbershop()),
+    queryFn: () => throwIfError(getBarbersFromBarbershop()),
   });
 
 export default useBarbers;

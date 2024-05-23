@@ -2,9 +2,9 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { notification } from 'antd';
 import { useTranslations } from 'next-intl';
 
-import { loginWithPassword } from '@/server/use-cases/auth';
 import { ISignInPasswordInput } from '@/schemas';
-import { handleSAResult } from '@/utils/result-handling';
+import { loginWithPassword } from '@/server/use-cases/auth';
+import { throwIfError } from '@/utils/result-handling';
 
 /* 
   The custom hook calls the loginWithPassword function from the server use-cases
@@ -21,7 +21,7 @@ const useLogin = (options?: Record<string, unknown>) => {
   return useMutation({
     ...options,
     mutationFn: (data: ISignInPasswordInput) =>
-      handleSAResult(loginWithPassword(data)),
+      throwIfError(loginWithPassword(data)),
     mutationKey: ['login'],
     onSuccess: (data) => {
       // On login success, it invalidates the getUser query to automatically update the cached data and rendering

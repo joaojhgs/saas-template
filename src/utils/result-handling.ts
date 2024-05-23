@@ -33,12 +33,12 @@ export function createServerActionSuccess<Data extends ReactSerializable>(
   The parsing is needed because client components can only receive JSON for communication and not objects nor classes
   (Even though we're just calling a function, there's a HTTP request involved)
 */
-export async function handleSAResult<Input extends ServerActionResult<Input>>(
+export async function throwIfError<Input extends Record<string, unknown>>(
   data: Promise<Input>,
-): Promise<ServerActionResult<Input>> {
+): Promise<Input> {
   const result = await data;
   if (result.status === ActionStatus.ERROR) {
-    throw new Error(result.message);
+    throw new Error(`${result.message}`);
   }
   return result;
 }
