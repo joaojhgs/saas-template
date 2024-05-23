@@ -1,43 +1,31 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
-import { Upload, UploadFile, UploadProps, message } from 'antd';
+import { Button, Image, Upload, UploadProps, message } from 'antd';
 import ImgCrop from 'antd-img-crop';
 
+import Icons from '@/client/components/Icons';
 import {
   useEditBarbershop,
   useGetBarbershop,
 } from '@/client/hooks/useBarbershop';
+import { env } from '@/env';
 
 const ImageUploader = () => {
   const { data, isLoading } = useGetBarbershop();
   const { mutate: editBarbershop } = useEditBarbershop();
-  const [fileList, setFileList] = useState<UploadFile[]>([]);
 
-  useEffect(() => {
-    if (data?.data?.picture) {
-      setFileList([
-        {
-          uid: '-1',
-          name: 'current_picture',
-          status: 'done',
-          url: data?.data?.picture,
-        },
-      ]);
-    }
-  }, [data]);
-
-  const onChange: UploadProps['onChange'] = ({ fileList: newFileList }) => {
-    setFileList(newFileList);
-
-    if (newFileList.length > 0 && newFileList[0].status === 'done') {
-      const uploadedFile = newFileList[0];
-      if (uploadedFile.response?.url) {
+  const onChange: UploadProps['onChange'] = ({ file }) => {
+    if (file && file.status === 'done') {
+      if (file.response.data?.fullPath) {
         editBarbershop(
           {
             id: data?.data?.id ?? '',
-            picture: uploadedFile.response.url ?? '',
+            picture:
+              env.NEXT_PUBLIC_SUPABASE_STORAGE +
+              '/' +
+              file.response.data?.fullPath,
           },
           {
             onSuccess: () => {
@@ -52,27 +40,28 @@ const ImageUploader = () => {
     }
   };
 
-  const beforeUpload = (file: UploadFile) => {
-    setFileList([file]);
-    return false;
-  };
-
   if (isLoading) {
     return <div>Loading...</div>;
   }
 
   return (
-    <ImgCrop rotationSlider>
-      <Upload
-        action="/api/upload"
-        listType="picture"
-        fileList={fileList}
-        onChange={onChange}
-        beforeUpload={beforeUpload}
-      >
-        {fileList.length < 1 && '+ Upload'}
-      </Upload>
-    </ImgCrop>
+    <div className="relative">
+      <ImgCrop rotationSlider>
+        <Upload
+          action="/api/upload"
+          supportServerRender
+          listType="picture"
+          className="absolute left-0 top-0 z-50"
+          onChange={onChange}
+          showUploadList={false}
+        >
+          <Button type="link">
+            <Icons.Pencil />
+          </Button>
+        </Upload>
+      </ImgCrop>
+      <Image alt="banner" src={data?.data?.picture} />
+    </div>
   );
 };
 
