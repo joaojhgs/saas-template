@@ -1,8 +1,8 @@
 import { z } from 'zod';
 
 export const CreateScheduleBarberInput = z.object({
-  start_time: z.date(),
-  end_time: z.date(),
+  start_time: z.string().date(),
+  end_time: z.string().date(),
   additional_information: z.string().max(255),
   status: z.enum(['pending', 'approved', 'canceled']),
   allow_notifications: z.boolean(),

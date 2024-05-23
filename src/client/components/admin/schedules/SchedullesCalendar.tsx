@@ -27,8 +27,8 @@ const SchedullesCalendar: React.FC<SchedullesCalendarProps> = () => {
       onNavigate={setCalendarDate}
       events={data?.data?.map((item) => ({
         ...item,
-        start: new Date(item.start_time),
-        end: new Date(item.end_time),
+        start: new Date(item.start_time ?? ''),
+        end: new Date(item.end_time ?? ''),
         title: `${item.user_name}`,
       }))}
       style={{ height: '100%' }}

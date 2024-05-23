@@ -1,13 +1,16 @@
 'use server';
 
+import { ServerActionInjected } from '@/schemas';
+import { ICreateScheduleBarberInput } from '@/schemas/schedules';
 import { throwIfError } from '@/utils/result-handling';
 
 import serverActionHof from '../server-action';
 import { getCurrentUser } from './auth';
 
-export const getBarberSchedules = serverActionHof(async (supabase) => {
-  const query = supabase.from('schedule').select(
-    `
+export const getBarberSchedules = serverActionHof(
+  async ({ supabase }: ServerActionInjected) => {
+    const query = supabase.from('schedule').select(
+      `
         id,
         id_barber,
         start_time,
@@ -26,19 +29,27 @@ export const getBarberSchedules = serverActionHof(async (supabase) => {
             name
         )
     `,
-  );
-  const { data, error } = await query;
-  if (error) throw error;
-  return data;
-});
+    );
+    const { data, error } = await query;
+    if (error) throw error;
+    return data;
+  },
+);
 
-export const createScheduleByBarber =
-  serverActionHof<ICreateScheduleByBarberInput>(async (supabase, _, values) => {
+export const createScheduleByBarber = serverActionHof(
+  async ({
+    supabase,
+    values,
+  }: ServerActionInjected<ICreateScheduleBarberInput>) => {
     const { data: user } = await throwIfError(getCurrentUser());
     const { data, error } = await supabase
       .from('schedule')
-      .insert({ ...values, id_barber: user?.user.id })
+      .insert({
+        ...values,
+        id_barber: user?.user.id,
+      })
       .select();
     if (error) throw error;
     return data;
-  });
+  },
+);
