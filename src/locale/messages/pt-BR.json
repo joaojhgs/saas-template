@@ -1,8 +1,20 @@
 {
   "customValidationErrors": {
-    "passwords-dont-match": "Senhas não são iguais"
+    "end-must-be-after-start": "O horário de término deve ser após o horário de início",
+    "passwords-dont-match": "As senhas não são iguais",
+    "start-must-be-after-now": "O horário de início deve ser no futuro"
   },
   "forms": {
+    "new-schedule-barber": {
+      "additional-information": "Additional Information",
+      "allow-notifications": "Allow Notifications",
+      "cancel": "Cancelar",
+      "create": "Criar",
+      "schedule_range": "Horário Agendado",
+      "title": "Novo Agendamento",
+      "user_name": "Nome",
+      "user_phone": "Telefone"
+    },
     "sign-in-component": {
       "contact-us": "Entre em contato",
       "dont-have-an-account": "Não tem uma conta?",

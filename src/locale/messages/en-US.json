@@ -1,23 +1,24 @@
 {
   "customValidationErrors": {
-    "passwords-dont-match": "Passwords don't match"
+    "end-must-be-after-start": "The End time must be after the Start time",
+    "passwords-dont-match": "Passwords don't match",
+    "start-must-be-after-now": "The Start time must be in the future"
   },
   "forms": {
+    "new-schedule-barber": {
+      "cancel": "Cancel",
+      "create": "Create",
+      "schedule_range": "Scheduled Time",
+      "title": "New Schedule",
+      "user_name": "Name",
+      "user_phone": "Phone"
+    },
     "sign-in-component": {
       "contact-us": "Contact us",
       "dont-have-an-account": "Don't have an account?",
       "email": "Email",
       "forgot-your-password": "Forgot your password?",
       "password": "Password",
-      "results": {
-        "error": {
-          "message": "Error"
-        },
-        "success": {
-          "description": "User logged in successfully",
-          "message": "Success"
-        }
-      },
       "sign-in": "Sign In"
     }
   },
