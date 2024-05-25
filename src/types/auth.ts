@@ -6,18 +6,12 @@ import {
   SignInPasswordInputValidation,
   SignUpPasswordInputValidation,
   UpdatePasswordInputValidation,
-} from '@/schemas/auth-schemas';
+} from '@/schemas/auth';
 
 /*
  * This file contains all the interfaces and validations that are used in the application.
  * Shared between client and server side.
  */
-
-export type ServerActionResult<T> = {
-  status: 'error' | 'success';
-  message?: string;
-  data?: T;
-};
 
 export type ISignInPasswordInput = z.infer<
   typeof SignInPasswordInputValidation

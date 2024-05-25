@@ -9,14 +9,14 @@ import {
   SignInPasswordInputValidation,
   SignUpPasswordInputValidation,
   UpdatePasswordInputValidation,
-} from '@/schemas/auth-schemas';
+} from '@/schemas/auth';
 import {
   IConfirmAccountInput,
   IForgotPasswordInput,
   ISignInPasswordInput,
   ISignUpPasswordInput,
   IUpdatePasswordInput,
-} from '@/utils/interfaces';
+} from '@/types';
 
 import {
   ServerActionError,

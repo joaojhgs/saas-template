@@ -2,6 +2,7 @@ import { SupabaseClient } from '@supabase/supabase-js';
 import { getTranslations } from 'next-intl/server';
 
 import { createClient } from '@/lib/supabase/server-client';
+import { ReactSerializable } from '@/types';
 import {
   ServerActionError,
   ServerActionSuccess,
@@ -19,7 +20,7 @@ import { initErrorsAndTranslations } from './init-errors';
 
 export default function serverActionHof<
   Input,
-  Return extends Record<string, unknown>,
+  Return extends ReactSerializable,
 >(
   callback: (
     supabase: SupabaseClient,
