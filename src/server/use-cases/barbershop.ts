@@ -1,11 +1,11 @@
 'use server';
 
-import { IBarbershop, IUpdateBarbershopInput } from '@/schemas';
+import { IUpdateBarbershopInput, ServerActionInjected } from '@/schemas';
 
 import serverActionHof from '../server-action';
 
-export const getBarbershop = serverActionHof<unknown, IBarbershop>(
-  async (supabase) => {
+export const getBarbershop = serverActionHof(
+  async ({ supabase }: ServerActionInjected) => {
     const { data, error } = await supabase
       .from('barbershop')
       .select('*')
@@ -16,25 +16,27 @@ export const getBarbershop = serverActionHof<unknown, IBarbershop>(
   },
 );
 
-export const updateBarbershop = serverActionHof<
-  IUpdateBarbershopInput,
-  IBarbershop
->(async (supabase, _, values) => {
-  const { data, error } = await supabase
-    .from('barbershop')
-    .select('*')
-    .eq('id', values?.id)
-    .single();
+export const updateBarbershop = serverActionHof(
+  async ({
+    supabase,
+    values,
+  }: ServerActionInjected<IUpdateBarbershopInput>) => {
+    const { data, error } = await supabase
+      .from('barbershop')
+      .select('*')
+      .eq('id', values?.id)
+      .single();
 
-  if (error) throw new Error(error.message);
+    if (error) throw new Error(error.message);
 
-  const { data: updateData, error: updateError } = await supabase
-    .from('barbershop')
-    .update({ ...data, ...values })
-    .eq('id', values?.id)
-    .single();
+    const { data: updateData, error: updateError } = await supabase
+      .from('barbershop')
+      .update({ ...data, ...values })
+      .eq('id', values?.id)
+      .single();
 
-  if (updateError) throw new Error(updateError.message);
+    if (updateError) throw new Error(updateError.message);
 
-  return updateData;
-});
+    return updateData;
+  },
+);

@@ -1,9 +1,11 @@
 'use server';
 
+import { ServerActionInjected } from '@/schemas';
+
 import serverActionHof from '../server-action';
 
 export const getBarbersFromBarbershop = serverActionHof(
-  async ({ supabase }) => {
+  async ({ supabase }: ServerActionInjected) => {
     const { data, error } = await supabase
       .from('barber')
       .select('*')
