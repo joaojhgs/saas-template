@@ -31,8 +31,6 @@ const { Title, Paragraph } = Typography;
 const BarbershopPage = () => {
   const { data, isLoading } = useGetBarbershop();
   const { mutate: editBarbershop, isPending } = useEditBarbershop();
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
 
   const [form] = Form.useForm();
 
@@ -43,21 +41,12 @@ const BarbershopPage = () => {
   const t = useI18nZodErrorsForm(useTranslations('forms.barbershop-config'));
 
   useEffect(() => {
-    if (data) {
-      setName(data?.data?.name ?? '');
-      setDescription(data?.data?.description ?? '');
+    if (data?.data) {
+      form.setFieldValue('name', data?.data?.name);
+      form.setFieldValue('description', data?.data?.description);
+      form.setFieldValue('picture', data?.data?.picture);
     }
-  }, [data, form]);
-
-  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value);
-  };
-
-  const handleDescriptionChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement>,
-  ) => {
-    setDescription(e.target.value);
-  };
+  }, [data]);
 
   const toggleEditField = (field: string | null) => {
     setEditingField(field === editingField ? null : field);
@@ -68,8 +57,8 @@ const BarbershopPage = () => {
     editBarbershop(
       {
         id: data?.data?.id ?? '',
-        name,
-        description,
+        name: form.getFieldValue('name'),
+        description: form.getFieldValue('description'),
       },
       {
         onSuccess: () => {
@@ -82,8 +71,6 @@ const BarbershopPage = () => {
 
   const handleCancel = () => {
     toggleEditField(null);
-    setName(data?.data?.name ?? '');
-    setDescription(data?.data?.description ?? '');
     form.resetFields();
   };
 
@@ -104,94 +91,81 @@ const BarbershopPage = () => {
             style={{ maxWidth: 600 }}
             form={form}
             onFinish={handleSubmit}
+            initialValues={data?.data}
           >
-            <Form.Item name="name" rules={[rule]}>
-              {editingField === 'name' ? (
-                <div className="flex items-center">
-                  <Input
-                    value={name}
-                    onChange={handleTitleChange}
-                    disabled={isPending}
-                  />
-                  <div className="ml-4 flex space-x-2">
-                    <Button
-                      type="default"
-                      onClick={handleCancel}
-                      disabled={isPending}
-                    >
-                      {t('cancel-button')}
-                    </Button>
-                    <Button
-                      type="primary"
-                      htmlType="submit"
-                      disabled={isPending}
-                    >
-                      {t('save-button')}
-                    </Button>
-                  </div>
-                </div>
-              ) : (
-                <div className="flex items-center">
-                  <Title level={3} className="grow">
-                    {name}
-                  </Title>
+            {editingField === 'name' ? (
+              <div className="flex items-center">
+                <Form.Item className="grow" name="name" rules={[rule]}>
+                  <Input />
+                </Form.Item>
+                <div className="ml-4 flex space-x-2">
                   <Button
-                    type="link"
-                    onClick={() => toggleEditField('name')}
-                    className="mb-3 ml-4"
-                    disabled={editingField !== null && editingField !== 'name'}
+                    type="default"
+                    onClick={handleCancel}
+                    disabled={isPending}
                   >
-                    <Icons.Pencil />
+                    {t('cancel-button')}
+                  </Button>
+                  <Button type="primary" htmlType="submit" disabled={isPending}>
+                    {t('save-button')}
                   </Button>
                 </div>
-              )}
-            </Form.Item>
+              </div>
+            ) : (
+              <div className="flex items-center">
+                <Title level={3} className="grow">
+                  {form.getFieldValue('name')}
+                </Title>
+                <Button
+                  type="link"
+                  onClick={() => toggleEditField('name')}
+                  className="mb-3 ml-4"
+                  disabled={editingField !== null && editingField !== 'name'}
+                >
+                  <Icons.Pencil />
+                </Button>
+              </div>
+            )}
 
             <Divider />
 
-            <Form.Item name="description" rules={[rule]}>
-              {editingField === 'description' ? (
-                <div>
+            {editingField === 'description' ? (
+              <div>
+                <Form.Item name="description" rules={[rule]}>
                   <Input.TextArea
-                    value={description}
-                    onChange={handleDescriptionChange}
                     rows={4}
                     disabled={isPending}
                     autoSize={{ minRows: 2, maxRows: 6 }}
                   />
-                  <div className="mt-2 flex space-x-2">
-                    <Button
-                      type="default"
-                      onClick={handleCancel}
-                      disabled={isPending}
-                    >
-                      {t('cancel-button')}
-                    </Button>
-                    <Button
-                      type="primary"
-                      htmlType="submit"
-                      disabled={isPending}
-                    >
-                      {t('save-button')}
-                    </Button>
-                  </div>
-                </div>
-              ) : (
-                <div className="flex flex-col">
-                  <Paragraph>{description}</Paragraph>
+                </Form.Item>
+                <div className="mt-2 flex space-x-2">
                   <Button
-                    type="primary"
-                    onClick={() => toggleEditField('description')}
-                    className="mt-2 self-start"
-                    disabled={
-                      editingField !== null && editingField !== 'description'
-                    }
+                    type="default"
+                    onClick={handleCancel}
+                    disabled={isPending}
                   >
-                    {t('edit-description-button')}
+                    {t('cancel-button')}
+                  </Button>
+                  <Button type="primary" htmlType="submit" disabled={isPending}>
+                    {t('save-button')}
                   </Button>
                 </div>
-              )}
-            </Form.Item>
+              </div>
+            ) : (
+              <div className="flex flex-col">
+                <Paragraph>{form.getFieldValue('description')}</Paragraph>
+                <Button
+                  type="primary"
+                  onClick={() => toggleEditField('description')}
+                  className="mt-2 self-start"
+                  disabled={
+                    editingField !== null && editingField !== 'description'
+                  }
+                >
+                  {t('edit-description-button')}
+                </Button>
+              </div>
+            )}
           </Form>
         </Col>
       </Row>

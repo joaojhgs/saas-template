@@ -8,7 +8,6 @@ export async function POST(req: NextRequest) {
 
     const file = formData.getAll('file')[0] as File;
     const data = await uploadFile({ fileName: file.name, file });
-    console.log(data);
     return NextResponse.json({ status: 'success', data });
   } catch (e) {
     return NextResponse.json({ status: 'fail', data: e });
