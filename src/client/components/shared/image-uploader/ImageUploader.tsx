@@ -2,13 +2,13 @@
 
 import React from 'react';
 
-import { Image, Skeleton, Upload } from 'antd';
+import { Image, Skeleton, Upload, UploadProps } from 'antd';
 import ImgCrop from 'antd-img-crop';
 
 import { cn } from '@/utils/tailwind';
 
 interface IImageUploaderProps {
-  onChange: (data: unknown) => void;
+  onChange: UploadProps['onChange'];
   rootClassName?: string;
   uploadClassName?: string;
   imageSrc: string;
