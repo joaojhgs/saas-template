@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import {
   Button,
@@ -38,16 +38,6 @@ const BarbershopPage = () => {
 
   const rule = createSchemaFieldRule(UpdateBarbershopInputValidation);
   const t = useI18nZodErrorsForm(useTranslations('forms.barbershop-config'));
-
-  useEffect(() => {
-    if (data?.data) {
-      form.setFieldsValue({
-        name: data?.data?.name,
-        description: data?.data?.description,
-        picture: data?.data?.picture,
-      });
-    }
-  }, [data, form]);
 
   const toggleEditField = (field: string | null) => {
     setEditingField(field === editingField ? null : field);
@@ -89,10 +79,13 @@ const BarbershopPage = () => {
     };
     return (
       <ImageUploader
-        imageSrc={data?.data?.picture ?? ''}
+        src={data?.data?.picture ?? ''}
         onChange={onChange}
         isLoading={isPending}
-        imageAlt="Barbershop banner"
+        alt="Barbershop banner"
+        width="100%"
+        rootClassName="w-full"
+        height={400}
       >
         <Button type="link">
           <Icons.Pencil />
@@ -107,7 +100,7 @@ const BarbershopPage = () => {
 
   return (
     <div>
-      <Row>
+      <Row gutter={40}>
         <Col xs={24} md={12}>
           <div className="flex justify-center">{renderImageUploader()}</div>
         </Col>
@@ -140,7 +133,7 @@ const BarbershopPage = () => {
             ) : (
               <div className="flex items-center">
                 <Title level={3} className="grow">
-                  {form.getFieldValue('name')}
+                  {data?.data?.name}
                 </Title>
                 <Button
                   type="link"
@@ -177,7 +170,7 @@ const BarbershopPage = () => {
               </div>
             ) : (
               <div className="flex flex-col">
-                <Paragraph>{form.getFieldValue('description')}</Paragraph>
+                <Paragraph>{data?.data?.description}</Paragraph>
                 <Button
                   type="primary"
                   onClick={() => toggleEditField('description')}

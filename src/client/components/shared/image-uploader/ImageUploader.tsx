@@ -3,41 +3,47 @@ import React from 'react';
 import { Image, Skeleton, Upload, UploadProps } from 'antd';
 import ImgCrop from 'antd-img-crop';
 
+import { cn } from '@/utils/tailwind';
+
 interface IImageUploaderProps {
   onChange: UploadProps['onChange'];
   rootClassName?: string;
   uploadClassName?: string;
-  imageSrc: string;
+  imageClassName?: string;
+  src: string;
   children?: React.ReactNode;
   isLoading: boolean;
-  imageAlt: string;
+  alt: string;
+  width: number | string;
+  height: number | string;
 }
 
 const ImageUploader = ({
   onChange,
   rootClassName,
   uploadClassName,
-  imageSrc,
+  imageClassName,
+  src,
   children,
   isLoading,
-  imageAlt,
+  alt,
+  width,
+  height,
 }: IImageUploaderProps) => {
   if (isLoading) {
     return (
-      <Skeleton.Image className="size-full flex justify-center items-center" />
+      <Skeleton.Image className="flex size-full items-center justify-center" />
     );
   }
 
   return (
-    <div className={rootClassName ? rootClassName : 'relative'}>
+    <div className={cn('relative', rootClassName)}>
       <ImgCrop rotationSlider>
         <Upload
           action="/api/upload"
           supportServerRender
           listType="picture"
-          className={
-            uploadClassName ? uploadClassName : 'absolute left-0 top-0 z-50'
-          }
+          className={cn(uploadClassName, 'absolute left-0 top-0 z-50')}
           onChange={onChange}
           showUploadList={false}
         >
@@ -45,9 +51,11 @@ const ImageUploader = ({
         </Upload>
       </ImgCrop>
       <Image
-        alt={imageAlt}
-        src={imageSrc}
-        style={{ width: '720px', height: '480px', objectFit: 'cover' }}
+        alt={alt}
+        src={src}
+        width={width}
+        height={height}
+        className={cn('object-cover', imageClassName)}
       />
     </div>
   );
