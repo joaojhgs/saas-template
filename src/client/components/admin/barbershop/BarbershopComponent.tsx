@@ -86,6 +86,7 @@ const BarbershopPage = () => {
         width="100%"
         rootClassName="w-full"
         height={400}
+        bucketName="barbershop"
       >
         <Button type="link">
           <Icons.Pencil />

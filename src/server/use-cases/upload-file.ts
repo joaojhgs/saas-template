@@ -1,17 +1,22 @@
 'use server';
 
+import crypto from 'crypto';
+
 import { createClient } from '@/lib/supabase/server-client';
 
 interface IInput {
-  fileName: string;
+  bucketName: string;
   file: File;
 }
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
 export const uploadFile = async (values: IInput) => {
   const supabase = createClient();
+
+  const uuid = crypto.randomUUID();
+
   const { data, error } = await supabase.storage
-    .from('barbershop')
-    .upload('public/' + values?.fileName, values?.file as File, {
+    .from(values.bucketName)
+    .upload('public/' + uuid, values?.file as File, {
       upsert: true,
     });
   if (error) {
