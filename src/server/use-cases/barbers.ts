@@ -1,18 +1,17 @@
 'use server';
 
-import { IBarber } from '@/types';
+import { ServerActionInjected } from '@/schemas';
 
 import serverActionHof from '../server-action';
 
-export const getBarbersFromBarbershop = serverActionHof<
-  unknown,
-  Array<IBarber>
->(async (supabase) => {
-  const { data, error } = await supabase
-    .from('barber')
-    .select('*')
-    .order('name');
+export const getBarbersFromBarbershop = serverActionHof(
+  async ({ supabase }: ServerActionInjected) => {
+    const { data, error } = await supabase
+      .from('barber')
+      .select('*')
+      .order('name');
 
-  if (error) throw new Error(error.message);
-  return data;
-});
+    if (error) throw new Error(error.message);
+    return data;
+  },
+);

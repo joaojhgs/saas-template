@@ -1,6 +1,8 @@
 {
   "customValidationErrors": {
-    "passwords-dont-match": "Senhas não são iguais"
+    "end-must-be-after-start": "O horário de término deve ser após o horário de início",
+    "passwords-dont-match": "As senhas não são iguais",
+    "start-must-be-after-now": "O horário de início deve ser no futuro"
   },
   "forms": {
     "barbershop-config": {
@@ -11,6 +13,16 @@
       "save-button": "Salvar",
       "update-barbershop-error": "Erro ao atualizar barbearia",
       "update-barbershop-success": "Barbearia atualizada com sucesso"
+    },
+    "new-schedule-barber": {
+      "additional-information": "Informações Adicionais",
+      "allow-notifications": "Permitir notificações",
+      "cancel": "Cancelar",
+      "create": "Criar",
+      "schedule_range": "Horário Agendado",
+      "title": "Novo Agendamento",
+      "user_name": "Nome",
+      "user_phone": "Telefone"
     },
     "sign-in-component": {
       "contact-us": "Entre em contato",

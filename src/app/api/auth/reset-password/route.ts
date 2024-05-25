@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { NextRequest } from 'next/server';
 
 import { validateCodeAndLogin } from '@/server/use-cases/auth';
-import { handleSAResult } from '@/utils/result-handling';
+import { throwIfError } from '@/utils/result-handling';
 
 export async function GET(request: NextRequest) {
   // The `/auth/callback` route is required for the server-side auth flow implemented
@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
   const code = requestUrl.searchParams.get('code');
 
   if (code) {
-    const data = await handleSAResult(validateCodeAndLogin(code));
+    const data = await throwIfError(validateCodeAndLogin(code));
 
     if (data.status === 'error') {
       return NextResponse.json(data);

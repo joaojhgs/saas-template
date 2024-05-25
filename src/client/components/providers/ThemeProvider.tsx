@@ -21,6 +21,7 @@ export function AntdConfigProvider({ children, locale }: ProviderProps) {
         token: {
           colorPrimary: '#ea9010',
           colorInfo: '#ea9010',
+          colorBgBase: '#181717',
         },
         algorithm: theme.darkAlgorithm,
       }}

@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { getCurrentUser } from '@/server/use-cases/auth';
-import { handleSAResult } from '@/utils/result-handling';
+import { throwIfError } from '@/utils/result-handling';
 
 /*
     This hook uses react-query to fetch the current user from our server side function with supabase;
@@ -13,7 +13,7 @@ import { handleSAResult } from '@/utils/result-handling';
 const useLoggedUser = () =>
   useQuery({
     queryKey: ['logged-user'],
-    queryFn: () => handleSAResult(getCurrentUser()),
+    queryFn: () => throwIfError(getCurrentUser()),
     refetchInterval: 3600000,
   });
 

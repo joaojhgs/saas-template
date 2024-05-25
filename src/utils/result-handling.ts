@@ -1,33 +1,30 @@
-import { ReactSerializable, ServerActionResult } from '@/types';
+import { ReactSerializable, ServerActionResult } from '@/schemas';
 
 enum ActionStatus {
   ERROR = 'error',
   SUCCESS = 'success',
 }
 
-export class ServerActionError {
-  public status;
-  public message;
-  constructor(public e: unknown) {
-    this.status = ActionStatus.ERROR;
-    if (typeof e === 'object' && e && 'message' in e) {
-      this.message = e.message;
-    }
+export function createServerActionError(e: Error): ServerActionResult {
+  const status = ActionStatus.ERROR;
+  let message = '';
+  if (typeof e === 'object' && e && 'message' in e) {
+    message = e.message;
   }
-  public stringfy() {
-    return JSON.stringify(this);
-  }
+  return {
+    status,
+    message,
+  };
 }
 
-export class ServerActionSuccess {
-  public status;
-  constructor(public data?: ReactSerializable) {
-    this.status = ActionStatus.SUCCESS;
-    this.data = data;
-  }
-  public stringfy() {
-    return JSON.stringify(this);
-  }
+export function createServerActionSuccess<Data extends ReactSerializable>(
+  data?: Data,
+): ServerActionResult<Data> {
+  const status = ActionStatus.SUCCESS;
+  return {
+    status,
+    data,
+  };
 }
 
 /*
@@ -36,16 +33,12 @@ export class ServerActionSuccess {
   The parsing is needed because client components can only receive JSON for communication and not objects nor classes
   (Even though we're just calling a function, there's a HTTP request involved)
 */
-export async function handleSAResult<Input>(
-  data: Promise<Input> | Promise<string>,
-): Promise<ServerActionResult<Input>> {
+export async function throwIfError<Input extends Record<string, unknown>>(
+  data: Promise<Input>,
+): Promise<Input> {
   const result = await data;
-  if (typeof result === 'string') {
-    const parsed = JSON.parse(result);
-    if (parsed.status === ActionStatus.ERROR) {
-      throw new Error(parsed.message);
-    }
-    return parsed;
+  if (result.status === ActionStatus.ERROR) {
+    throw new Error(`${result.message}`);
   }
-  throw new Error('Invalid data type');
+  return result;
 }

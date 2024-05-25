@@ -1,0 +1,28 @@
+/*
+    Overrides react-big-calendar classes for styling
+*/
+.rbc-today {
+  @apply bg-colorBgBase !important;
+}
+.rbc-off-range-bg {
+  @apply bg-colorBgContainer !important;
+}
+.rbc-btn-group button {
+  @apply text-white !important;
+}
+.rbc-active {
+  @apply bg-colorPrimary !important;
+}
+.rbc-btn-group button:hover {
+  @apply bg-colorPrimary  !important;
+}
+.rbc-btn-group button:focus {
+  @apply bg-colorPrimary  !important;
+}
+.rbc-event {
+  @apply bg-colorPrimary !important;
+  @apply text-white !important;
+}
+.rbc-slot-selection {
+  @apply bg-colorPrimaryHover !important;
+}

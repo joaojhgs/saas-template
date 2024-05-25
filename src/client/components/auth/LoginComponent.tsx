@@ -8,8 +8,7 @@ import { useTranslations } from 'next-intl';
 
 import { useI18nZodErrorsForm } from '@/client/hooks/useI18nZodErrors';
 import useLogin from '@/client/hooks/useLogin';
-import { SignInPasswordInputValidation } from '@/schemas/auth';
-import { ISignInPasswordInput } from '@/types';
+import { ISignInPasswordInput, SignInPasswordInputValidation } from '@/schemas';
 
 const LoginComponent: React.FC = () => {
   const rule = createSchemaFieldRule(SignInPasswordInputValidation);
@@ -34,7 +33,7 @@ const LoginComponent: React.FC = () => {
             {t('dont-have-an-account')}
             <a
               href="#"
-              className="pl-2 text-sm text-purple-700 hover:text-purple-700"
+              className="text-purple-700 hover:text-purple-700 pl-2 text-sm"
             >
               {t('contact-us')}
             </a>
@@ -44,7 +43,7 @@ const LoginComponent: React.FC = () => {
           <div>
             <Form.Item name="email" rules={[rule]}>
               <Input
-                className="w-full rounded-lg  border border-gray-200 bg-gray-200 px-4 py-3  text-sm focus:border-purple-400 focus:bg-gray-100 focus:outline-none"
+                className="focus:border-purple-400 w-full  rounded-lg border border-gray-200 bg-gray-200 px-4  py-3 text-sm focus:bg-gray-100 focus:outline-none"
                 placeholder={t('email')}
               />
             </Form.Item>
@@ -54,7 +53,7 @@ const LoginComponent: React.FC = () => {
             <Form.Item name="password" rules={[rule]}>
               <Input.Password
                 placeholder={t('password')}
-                className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm text-gray-200 focus:border-purple-400 focus:bg-gray-100 focus:outline-none"
+                className="focus:border-purple-400 w-full rounded-lg border border-gray-200 px-4 py-3 text-sm text-gray-200 focus:bg-gray-100 focus:outline-none"
               />
             </Form.Item>
           </div>
@@ -69,7 +68,7 @@ const LoginComponent: React.FC = () => {
           <div>
             <button
               type="submit"
-              className="flex w-full cursor-pointer justify-center  rounded-lg bg-purple-800 p-3  font-semibold tracking-wide text-gray-100  transition duration-500 ease-in hover:bg-purple-700"
+              className="bg-purple-800 hover:bg-purple-700 flex w-full  cursor-pointer justify-center rounded-lg  p-3 font-semibold tracking-wide  text-gray-100 transition duration-500 ease-in"
             >
               {t('sign-in')}
             </button>

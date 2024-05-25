@@ -1,11 +1,12 @@
-import { SupabaseClient } from '@supabase/supabase-js';
-import { getTranslations } from 'next-intl/server';
-
 import { createClient } from '@/lib/supabase/server-client';
-import { ReactSerializable } from '@/types';
 import {
-  ServerActionError,
-  ServerActionSuccess,
+  ReactSerializable,
+  ServerActionInjected,
+  ServerActionResult,
+} from '@/schemas';
+import {
+  createServerActionError,
+  createServerActionSuccess,
 } from '@/utils/result-handling';
 
 import { initErrorsAndTranslations } from './init-errors';
@@ -18,25 +19,47 @@ import { initErrorsAndTranslations } from './init-errors';
     and R is the return type of the callback function.    
 */
 
+type ICallback<Input, Output> = (
+  injected: ServerActionInjected<Input>,
+) => Output;
+
+/**
+ * Higher Order Function (HOF) used to create a server action.
+ *
+ * @template Input - The type of the values that will be passed to the callback function.
+ * @template Output - The return type of the callback function.
+ *
+ * @param {ICallback<Input, Output>} callback - The callback function that will be executed.
+ *
+ * @returns {Promise<ServerActionResult<Awaited<Output> | undefined>>} - A promise that resolves to the result of the callback.
+ */
 export default function serverActionHof<
-  Input,
-  Return extends ReactSerializable,
+  Input extends ReactSerializable,
+  Output extends ReactSerializable,
 >(
-  callback: (
-    supabase: SupabaseClient,
-    t: Awaited<ReturnType<typeof getTranslations<'results'>>>,
-    values?: Input,
-  ) => Promise<Return>,
-): (values?: Input) => Promise<Return> | Promise<string> {
-  return async (values?: Input) => {
+  callback: ICallback<Input, Output>,
+): Input extends undefined
+  ? () => Promise<ServerActionResult<Awaited<Output> | undefined>>
+  : (
+      values: Input,
+    ) => Promise<ServerActionResult<Awaited<Output> | undefined>> {
+  async function injectionFunction(
+    values: Input,
+  ): Promise<ServerActionResult<Awaited<Output> | undefined>> {
     try {
       const t = await initErrorsAndTranslations();
       const supabase = createClient();
-      return new ServerActionSuccess(
-        await callback(supabase, t, values),
-      ).stringfy();
+      return createServerActionSuccess(await callback({ supabase, t, values }));
     } catch (e) {
-      return new ServerActionError(e).stringfy();
+      if (e instanceof Error) {
+        return createServerActionError(e);
+      }
     }
-  };
+    return createServerActionError(new Error('An unknown error occurred'));
+  }
+  return injectionFunction as Input extends undefined
+    ? () => Promise<ServerActionResult<Awaited<Output> | undefined>>
+    : (
+        values: Input,
+      ) => Promise<ServerActionResult<Awaited<Output> | undefined>>;
 }

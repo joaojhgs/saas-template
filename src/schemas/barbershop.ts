@@ -6,3 +6,7 @@ export const UpdateBarbershopInputValidation = z.object({
   description: z.string().min(8).max(255).optional(),
   picture: z.string().optional(),
 });
+
+export type IUpdateBarbershopInput = z.infer<
+  typeof UpdateBarbershopInputValidation
+>;
