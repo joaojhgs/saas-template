@@ -16,6 +16,7 @@ interface IImageUploaderProps {
   alt: string;
   width: number | string;
   height: number | string;
+  bucketName: string;
 }
 
 const ImageUploader = ({
@@ -29,6 +30,7 @@ const ImageUploader = ({
   alt,
   width,
   height,
+  bucketName,
 }: IImageUploaderProps) => {
   if (isLoading) {
     return (
@@ -40,7 +42,7 @@ const ImageUploader = ({
     <div className={cn('relative', rootClassName)}>
       <ImgCrop rotationSlider>
         <Upload
-          action="/api/upload"
+          action={`/api/upload/${bucketName}`}
           supportServerRender
           listType="picture"
           className={cn(uploadClassName, 'absolute left-0 top-0 z-50')}
