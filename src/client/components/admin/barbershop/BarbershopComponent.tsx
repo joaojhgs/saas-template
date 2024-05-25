@@ -8,7 +8,6 @@ import {
   Divider,
   Form,
   Input,
-  Layout,
   Row,
   Typography,
   UploadProps,
@@ -35,18 +34,18 @@ const BarbershopPage = () => {
   const { mutate: editBarbershop, isPending } = useEditBarbershop();
 
   const [form] = Form.useForm();
-
   const [editingField, setEditingField] = useState<string | null>(null);
 
   const rule = createSchemaFieldRule(UpdateBarbershopInputValidation);
-
   const t = useI18nZodErrorsForm(useTranslations('forms.barbershop-config'));
 
   useEffect(() => {
     if (data?.data) {
-      form.setFieldValue('name', data?.data?.name);
-      form.setFieldValue('description', data?.data?.description);
-      form.setFieldValue('picture', data?.data?.picture);
+      form.setFieldsValue({
+        name: data?.data?.name,
+        description: data?.data?.description,
+        picture: data?.data?.picture,
+      });
     }
   }, [data, form]);
 
@@ -55,20 +54,21 @@ const BarbershopPage = () => {
   };
 
   const handleSubmit = () => {
-    form.setFieldValue(editingField, form.getFieldValue(editingField));
-    editBarbershop(
-      {
-        id: data?.data?.id ?? '',
-        name: form.getFieldValue('name'),
-        description: form.getFieldValue('description'),
-      },
-      {
-        onSuccess: () => {
-          setEditingField(null);
-          toggleEditField(editingField);
+    form.validateFields().then(() => {
+      editBarbershop(
+        {
+          id: data?.data?.id ?? '',
+          name: form.getFieldValue('name'),
+          description: form.getFieldValue('description'),
         },
-      },
-    );
+        {
+          onSuccess: () => {
+            setEditingField(null);
+            toggleEditField(editingField);
+          },
+        },
+      );
+    });
   };
 
   const handleCancel = () => {
@@ -82,10 +82,7 @@ const BarbershopPage = () => {
         if (file.response.data?.fullPath) {
           editBarbershop({
             id: data?.data?.id ?? '',
-            picture:
-              env.NEXT_PUBLIC_SUPABASE_STORAGE +
-              '/' +
-              file.response.data?.fullPath,
+            picture: `${env.NEXT_PUBLIC_SUPABASE_STORAGE}/${file.response.data?.fullPath}`,
           });
         }
       }
@@ -109,16 +106,15 @@ const BarbershopPage = () => {
   }
 
   return (
-    <Layout className="w-full md:p-4">
-      <Row className="mx-auto max-w-7xl" gutter={8}>
-        <Col xs={24} md={12} className="flex items-center justify-center">
-          {renderImageUploader()}
+    <div>
+      <Row>
+        <Col xs={24} md={12}>
+          <div className="flex justify-center">{renderImageUploader()}</div>
         </Col>
-
-        <Col xs={24} md={12} className="flex flex-col">
+        <Col xs={24} md={12}>
           <Form
             variant="filled"
-            style={{ maxWidth: 600 }}
+            style={{ maxWidth: 600, margin: '0 auto' }}
             form={form}
             onFinish={handleSubmit}
             initialValues={data?.data}
@@ -156,9 +152,7 @@ const BarbershopPage = () => {
                 </Button>
               </div>
             )}
-
             <Divider />
-
             {editingField === 'description' ? (
               <div>
                 <Form.Item name="description" rules={[rule]}>
@@ -200,7 +194,7 @@ const BarbershopPage = () => {
         </Col>
       </Row>
       <Divider />
-    </Layout>
+    </div>
   );
 };
 

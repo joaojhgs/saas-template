@@ -1,11 +1,7 @@
-'use client';
-
 import React from 'react';
 
 import { Image, Skeleton, Upload, UploadProps } from 'antd';
 import ImgCrop from 'antd-img-crop';
-
-import { cn } from '@/utils/tailwind';
 
 interface IImageUploaderProps {
   onChange: UploadProps['onChange'];
@@ -27,26 +23,32 @@ const ImageUploader = ({
   imageAlt,
 }: IImageUploaderProps) => {
   if (isLoading) {
-    return <Skeleton.Image className="h-64 w-full" />;
+    return (
+      <Skeleton.Image className="size-full flex justify-center items-center" />
+    );
   }
 
   return (
-    <div className={cn(rootClassName ? rootClassName : 'relative')}>
+    <div className={rootClassName ? rootClassName : 'relative'}>
       <ImgCrop rotationSlider>
         <Upload
           action="/api/upload"
           supportServerRender
           listType="picture"
-          className={cn(
-            uploadClassName ? uploadClassName : 'absolute left-0 top-0 z-50',
-          )}
+          className={
+            uploadClassName ? uploadClassName : 'absolute left-0 top-0 z-50'
+          }
           onChange={onChange}
           showUploadList={false}
         >
           {children}
         </Upload>
       </ImgCrop>
-      <Image alt={imageAlt} src={imageSrc} />
+      <Image
+        alt={imageAlt}
+        src={imageSrc}
+        style={{ width: '720px', height: '480px', objectFit: 'cover' }}
+      />
     </div>
   );
 };
