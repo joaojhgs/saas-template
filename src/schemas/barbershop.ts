@@ -1,12 +1,8 @@
-export type IBarbershop = {
-  name: string;
-  picture: string;
-  description: string;
-  id: string;
-};
+import { z } from 'zod';
 
-export type IUpdateBarbershopInput = {
-  name?: string;
-  picture?: string;
-  description?: string;
-};
+export const UpdateBarbershopInputValidation = z.object({
+  id: z.string(),
+  name: z.string().min(8).max(80).optional(),
+  description: z.string().min(8).max(255).optional(),
+  picture: z.string().optional(),
+});

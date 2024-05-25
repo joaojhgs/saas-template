@@ -1,20 +1,18 @@
 'use server';
 
+import { ServerActionInjected } from '@/schemas';
 import {
+  ConfirmAccountInputValidation,
+  ForgotPasswordInputValidation,
   IConfirmAccountInput,
   IForgotPasswordInput,
   ISignInPasswordInput,
   ISignUpPasswordInput,
   IUpdatePasswordInput,
-  ServerActionInjected,
-} from '@/schemas';
-import {
-  ConfirmAccountInputValidation,
-  ForgotPasswordInputValidation,
   SignInPasswordInputValidation,
   SignUpPasswordInputValidation,
   UpdatePasswordInputValidation,
-} from '@/schemas/auth-schemas';
+} from '@/schemas/auth';
 
 import serverActionHof from '../server-action';
 

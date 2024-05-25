@@ -5,6 +5,15 @@
     "start-must-be-after-now": "The Start time must be in the future"
   },
   "forms": {
+    "barbershop-config": {
+      "cancel-button": "Cancel",
+      "description": "Description",
+      "edit-description-button": "Edit description",
+      "name": "Name",
+      "save-button": "Save",
+      "update-barbershop-error": "Error updating barbershop",
+      "update-barbershop-success": "Barbershop updated successfully"
+    },
     "new-schedule-barber": {
       "additional-information": "Additional Information",
       "allow-notifications": "Allow notifications",

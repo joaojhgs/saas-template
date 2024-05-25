@@ -21,7 +21,7 @@ const useGetBarbershop = () =>
 
 const useEditBarbershop = (options?: Record<string, unknown>) => {
   const queryClient = useQueryClient();
-  const t = useTranslations();
+  const t = useTranslations('forms.barbershop-config');
   return useMutation({
     ...options,
     mutationFn: (data: IUpdateBarbershopInput) =>
@@ -30,13 +30,13 @@ const useEditBarbershop = (options?: Record<string, unknown>) => {
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['get-barbershop'] });
       notification.success({
-        message: t('results.success'),
+        message: t('update-barbershop-success'),
         description: data.message,
       });
     },
     onError: (error) => {
       notification.error({
-        message: t('results.error'),
+        message: t('update-barbershop-error'),
         description: error.message,
       });
     },
