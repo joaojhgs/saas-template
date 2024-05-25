@@ -10,7 +10,6 @@ import {
   Input,
   Layout,
   Row,
-  Skeleton,
   Typography,
 } from 'antd';
 import { createSchemaFieldRule } from 'antd-zod';
@@ -24,6 +23,7 @@ import { useI18nZodErrorsForm } from '@/client/hooks/useI18nZodErrors';
 import { UpdateBarbershopInputValidation } from '@/schemas/barbershop';
 
 import Icons from '../../Icons';
+import BarbershopPageLoading from './BarbershopLoadingComponent';
 import ImageUploader from './components/image-uploader/ImageUploader';
 
 const { Title, Paragraph } = Typography;
@@ -87,15 +87,15 @@ const BarbershopPage = () => {
     form.resetFields();
   };
 
+  if (isLoading) {
+    return <BarbershopPageLoading />;
+  }
+
   return (
     <Layout className="w-full md:p-4">
       <Row className="mx-auto max-w-7xl" gutter={8}>
         <Col xs={24} md={12} className="flex items-center justify-center">
-          {isLoading ? (
-            <Skeleton.Image className="h-64 w-full" />
-          ) : (
-            <ImageUploader />
-          )}
+          <ImageUploader />
         </Col>
 
         <Col xs={24} md={12} className="flex flex-col">
@@ -106,9 +106,7 @@ const BarbershopPage = () => {
             onFinish={handleSubmit}
           >
             <Form.Item name="name" rules={[rule]}>
-              {isLoading ? (
-                <Skeleton active paragraph={{ rows: 1 }} />
-              ) : editingField === 'name' ? (
+              {editingField === 'name' ? (
                 <div className="flex items-center">
                   <Input
                     value={name}
@@ -152,9 +150,7 @@ const BarbershopPage = () => {
             <Divider />
 
             <Form.Item name="description" rules={[rule]}>
-              {isLoading ? (
-                <Skeleton active paragraph={{ rows: 4 }} />
-              ) : editingField === 'description' ? (
+              {editingField === 'description' ? (
                 <div>
                   <Input.TextArea
                     value={description}
