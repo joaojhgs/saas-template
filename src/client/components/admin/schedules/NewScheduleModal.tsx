@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Button, Form, Input, Modal } from 'antd';
+import { Button, Checkbox, Form, Input, Modal } from 'antd';
 import { createSchemaFieldRule } from 'antd-zod';
 import dayjs from 'dayjs';
 import { useTranslations } from 'next-intl';
@@ -89,10 +89,10 @@ const NewScheduleModal: React.FC<NewScheduleModalProps> = ({
         </Form.Item>
         <Form.Item
           name="allow_notifications"
-          label={t('allow-notifications')}
           rules={[rule]}
+          valuePropName="checked"
         >
-          <Input.TextArea />
+          <Checkbox>{t('allow-notifications')}</Checkbox>
         </Form.Item>
         {/* <Form.Item
           name="schedule_range"

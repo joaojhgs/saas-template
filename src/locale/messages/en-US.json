@@ -6,6 +6,8 @@
   },
   "forms": {
     "new-schedule-barber": {
+      "additional-information": "Additional Information",
+      "allow-notifications": "Allow notifications",
       "cancel": "Cancel",
       "create": "Create",
       "schedule_range": "Scheduled Time",
