@@ -11,20 +11,22 @@ import {
   Layout,
   Row,
   Typography,
+  UploadProps,
 } from 'antd';
 import { createSchemaFieldRule } from 'antd-zod';
 import { useTranslations } from 'next-intl';
 
+import ImageUploader from '@/client/components/shared/image-uploader/ImageUploader';
 import {
   useEditBarbershop,
   useGetBarbershop,
 } from '@/client/hooks/useBarbershop';
 import { useI18nZodErrorsForm } from '@/client/hooks/useI18nZodErrors';
+import { env } from '@/env';
 import { UpdateBarbershopInputValidation } from '@/schemas/barbershop';
 
 import Icons from '../../Icons';
 import BarbershopPageLoading from './BarbershopLoadingComponent';
-import ImageUploader from './components/image-uploader/ImageUploader';
 
 const { Title, Paragraph } = Typography;
 
@@ -46,7 +48,7 @@ const BarbershopPage = () => {
       form.setFieldValue('description', data?.data?.description);
       form.setFieldValue('picture', data?.data?.picture);
     }
-  }, [data]);
+  }, [data, form]);
 
   const toggleEditField = (field: string | null) => {
     setEditingField(field === editingField ? null : field);
@@ -74,6 +76,34 @@ const BarbershopPage = () => {
     form.resetFields();
   };
 
+  const renderImageUploader = () => {
+    const onChange: UploadProps['onChange'] = ({ file }) => {
+      if (file && file.status === 'done') {
+        if (file.response.data?.fullPath) {
+          editBarbershop({
+            id: data?.data?.id ?? '',
+            picture:
+              env.NEXT_PUBLIC_SUPABASE_STORAGE +
+              '/' +
+              file.response.data?.fullPath,
+          });
+        }
+      }
+    };
+    return (
+      <ImageUploader
+        imageSrc={data?.data?.picture ?? ''}
+        onChange={onChange}
+        isLoading={isPending}
+        imageAlt="Barbershop banner"
+      >
+        <Button type="link">
+          <Icons.Pencil />
+        </Button>
+      </ImageUploader>
+    );
+  };
+
   if (isLoading) {
     return <BarbershopPageLoading />;
   }
@@ -82,7 +112,7 @@ const BarbershopPage = () => {
     <Layout className="w-full md:p-4">
       <Row className="mx-auto max-w-7xl" gutter={8}>
         <Col xs={24} md={12} className="flex items-center justify-center">
-          <ImageUploader />
+          {renderImageUploader()}
         </Col>
 
         <Col xs={24} md={12} className="flex flex-col">
