@@ -1,14 +1,12 @@
 import { cookies } from 'next/headers';
 
 import { type CookieOptions, createServerClient } from '@supabase/ssr';
+import 'server-only';
 
 import { env } from '@/env';
 import { Database } from '@/schemas/supabase';
 
-export function createClient() {
-  // We can use this one when we think of a solution to instantiate a single supabase on request context
-  // const cookieStore = cookies();
-
+export function createUserClient() {
   // Create a server's supabase client with newly configured cookie,
   // which could be used to maintain user's session
   return createServerClient<Database>(env.SUPABASE_URL, env.SUPABASE_ANON_KEY, {
@@ -37,3 +35,20 @@ export function createClient() {
     },
   });
 }
+
+/*
+  This is ADMIN client, all requests will ignore RLS. Use with caution.
+  Since it does not use cookies nor session, it can be initialized only once and used across all server functions
+*/
+
+export const adminClient = createServerClient<Database>(
+  env.SUPABASE_URL,
+  env.SUPABASE_SERVICE_ROLE_KEY,
+  {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false,
+    },
+    cookies: {},
+  },
+);

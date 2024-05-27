@@ -3,7 +3,7 @@ import { type NextRequest } from 'next/server';
 
 import createIntlMiddleware from 'next-intl/middleware';
 
-import { createClient } from './lib/supabase/server-client';
+import { createUserClient } from './lib/supabase/server-client';
 import { defaultLocale, languages } from './locale';
 
 const handleI18nRouting = createIntlMiddleware({
@@ -16,7 +16,7 @@ const handleI18nRouting = createIntlMiddleware({
 
 export async function middleware(request: NextRequest) {
   const response = handleI18nRouting(request);
-  const supabase = createClient();
+  const supabase = createUserClient();
 
   await supabase.auth.getUser();
   return response;
