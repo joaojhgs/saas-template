@@ -23,6 +23,7 @@ export type ServerActionResult<T = undefined> = {
 
 export type ServerActionInjected<T = undefined> = {
   supabase: SupabaseClient<Database>;
+  supabaseAdmin: SupabaseClient<Database>;
   t: Awaited<ReturnType<typeof getTranslations<'results'>>>;
   values: T;
 };

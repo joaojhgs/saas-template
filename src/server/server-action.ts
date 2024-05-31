@@ -1,4 +1,6 @@
-import { createClient } from '@/lib/supabase/server-client';
+import 'server-only';
+
+import { adminClient, createUserClient } from '@/lib/supabase/server-client';
 import {
   ReactSerializable,
   ServerActionInjected,
@@ -48,8 +50,10 @@ export default function serverActionHof<
   ): Promise<ServerActionResult<Awaited<Output> | undefined>> {
     try {
       const t = await initErrorsAndTranslations();
-      const supabase = createClient();
-      return createServerActionSuccess(await callback({ supabase, t, values }));
+      const supabase = createUserClient();
+      return createServerActionSuccess(
+        await callback({ supabase, supabaseAdmin: adminClient, t, values }),
+      );
     } catch (e) {
       if (e instanceof Error) {
         return createServerActionError(e);
