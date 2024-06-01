@@ -31,7 +31,7 @@ CREATE TABLE previous_service (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4() NOT NULL,
     id_contractor UUID references auth.users on delete cascade not null,
     description TEXT,
-    picture_link VARCHAR(255),
+    picture_link TEXT[],
     id_service_type UUID REFERENCES service_type(id) on delete cascade not null
 );
 

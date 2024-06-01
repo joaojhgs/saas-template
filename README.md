@@ -43,75 +43,84 @@ Files and folders in general should follow the `kebab-case` name convention, onl
 
 ```mermaid
 erDiagram
-    BARBER {
+    AUTH-USER {
         id UUID
-        id_external_user VARCHAR(255)
-        name VARCHAR(255)
-        accept_schedules_automatically BOOLEAN
+        email TEXT
     }
-    BARBERSHOP {
+    PROFILE {
+        id UUID
+        updated_at TIMESTAMP
+        full_name TEXT
+        avatar_url TEXT
+        social_medias JSON
+    }
+    ORGANIZATION {
         id UUID
         name VARCHAR(255)
-        location VARCHAR(255)
         description TEXT
         picture VARCHAR(255)
         document VARCHAR(255)
-        id_owner UUID
+        id_contractor_owner UUID
         latitude VARCHAR(255)
         longitude VARCHAR(255)
+        full_address VARCHAR(255)
     }
     PREVIOUS_SERVICE {
         id UUID
-        id_barber UUID
+        id_contractor UUID
         description TEXT
-        picture VARCHAR(255)
+        picture_link TEXT[]
         id_service_type UUID
     }
     SERVICE_TYPE {
         id UUID
         name VARCHAR(255)
+        picture_link VARCHAR(255)
     }
-    BARBER_HAS_SERVICE_TYPE {
+    CONTRACTOR_HAS_SERVICE_TYPE {
         id_service_type UUID
-        id_barber UUID
+        id_contractor UUID
         duration_minutes INT
         price BIGINT
+        picture_link VARCHAR(255)
+        custom_calendar_color VARCHAR(255)
     }
     SCHEDULE {
         id UUID
-        id_barber UUID
+        id_contractor UUID
         start_time TIMESTAMP
         end_time TIMESTAMP
         id_service_type UUID
         additional_information TEXT
         status VARCHAR(255)
         allow_notifications BOOLEAN
-        user_phone VARCHAR(255)
-        user_name VARCHAR(255)
+        client_phone VARCHAR(255)
+        client_name VARCHAR(255)
     }
     WORK_DAY {
-        id UUID
-        week_day STRING
+        id_contractor UUID
+        week_day WEEK_DAY_ENUM
         start_time TIMESTAMP
         end_time TIMESTAMP
     }
     CUSTOM_DAY_OF_WORK {
         id UUID
-        id_barber UUID
+        id_contractor UUID
         start_time TIMESTAMP
         end_time TIMESTAMP
         away BOOLEAN
     }
     
-    BARBER ||--o{ BARBER_HAS_SERVICE_TYPE : "has"
-    BARBER ||--o{ SCHEDULE : "has"
-    BARBER ||--o{ PREVIOUS_SERVICE : "has"
-    BARBERSHOP ||--o{ BARBER : "has"
-    SERVICE_TYPE ||--o{ BARBER_HAS_SERVICE_TYPE : "is associated with"
-    SERVICE_TYPE ||--o{ PREVIOUS_SERVICES : "is associated with"
+    AUTH-USER ||--o{ CONTRACTOR_HAS_SERVICE_TYPE : "has"
+    AUTH-USER ||--o{ SCHEDULE : "has"
+    AUTH-USER ||--o{ PREVIOUS_SERVICE : "has"
+    ORGANIZATION ||--o{ AUTH-USER : "employs"
+    SERVICE_TYPE ||--o{ CONTRACTOR_HAS_SERVICE_TYPE : "is associated with"
+    SERVICE_TYPE ||--o{ PREVIOUS_SERVICE : "is associated with"
     SERVICE_TYPE ||--o{ SCHEDULE : "is associated with"
-    BARBER ||--o{ WORK_DAY : "has"
-    BARBER ||--o{ CUSTOM_DAY_OF_WORK : "has"
+    AUTH-USER ||--o{ WORK_DAY : "has"
+    AUTH-USER ||--o{ CUSTOM_DAY_OF_WORK : "has"
+    AUTH-USER ||--|{ PROFILE : "references"
 ```
 
 
