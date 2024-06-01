@@ -1,10 +1,11 @@
 -- Create a table for public profiles
 create table profile (
   id uuid references auth.users on delete cascade not null primary key,
-  updated_at timestamp with time zone,
   full_name text,
   avatar_url text,
-  social_medias json
+  social_medias json,
+  created_at TIMESTAMP with time zone NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMP with time zone NOT NULL DEFAULT NOW()
 );
 
 -- Set up Row Level Security (RLS)

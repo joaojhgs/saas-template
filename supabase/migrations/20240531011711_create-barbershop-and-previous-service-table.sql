@@ -7,13 +7,17 @@ CREATE TABLE organization (
     id_contractor_owner UUID references auth.users on delete cascade not null,
     latitude VARCHAR(255),
     longitude VARCHAR(255),
-    full_address VARCHAR(255) NOT NULL
+    full_address VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP with time zone NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP with time zone NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE service_type (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     name VARCHAR(255) NOT NULL,
-    picture_link VARCHAR(255)
+    picture_link VARCHAR(255),
+    created_at TIMESTAMP with time zone NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP with time zone NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE contractor_has_service_type (
@@ -23,6 +27,8 @@ CREATE TABLE contractor_has_service_type (
     price BigInt NOT NULL,
     picture_link VARCHAR(255),
     custom_calendar_color VARCHAR(255),
+    created_at TIMESTAMP with time zone NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP with time zone NOT NULL DEFAULT NOW(),
 
     PRIMARY KEY (id_service_type, id_contractor)
 );
@@ -32,7 +38,9 @@ CREATE TABLE previous_service (
     id_contractor UUID references auth.users on delete cascade not null,
     description TEXT,
     picture_link TEXT[],
-    id_service_type UUID REFERENCES service_type(id) on delete cascade not null
+    id_service_type UUID REFERENCES service_type(id) on delete cascade not null,
+    created_at TIMESTAMP with time zone NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP with time zone NOT NULL DEFAULT NOW()
 );
 
 

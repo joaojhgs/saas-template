@@ -1,14 +1,16 @@
 CREATE TABLE schedule (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     id_contractor UUID references auth.users on delete cascade not null,
-    start_time TIMESTAMP NOT NULL,
-    end_time TIMESTAMP NOT NULL,
+    start_time TIMESTAMP with time zone NOT NULL,
+    end_time TIMESTAMP with time zone NOT NULL,
     id_service_type UUID REFERENCES service_type(id) NOT NULL,
     additional_information TEXT,
     status VARCHAR(255) NOT NULL,
     allow_notifications BOOLEAN NOT NULL,
     client_phone VARCHAR(255),
-    client_name VARCHAR(255) NOT NULL
+    client_name VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP with time zone NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP with time zone NOT NULL DEFAULT NOW()
 );
 
 CREATE INDEX ON schedule (id_contractor);
