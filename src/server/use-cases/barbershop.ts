@@ -7,7 +7,7 @@ import serverActionHof from '../server-action';
 export const getBarbershop = serverActionHof(
   async ({ supabase }: ServerActionInjected) => {
     const { data, error } = await supabase
-      .from('barbershop')
+      .from('organization')
       .select('*')
       .single();
 
@@ -22,7 +22,7 @@ export const updateBarbershop = serverActionHof(
     values,
   }: ServerActionInjected<IUpdateBarbershopInput>) => {
     const { data, error } = await supabase
-      .from('barbershop')
+      .from('organization')
       .select('*')
       .eq('id', values?.id)
       .single();
@@ -30,7 +30,7 @@ export const updateBarbershop = serverActionHof(
     if (error) throw new Error(error.message);
 
     const { data: updateData, error: updateError } = await supabase
-      .from('barbershop')
+      .from('organization')
       .update({ ...data, ...values })
       .eq('id', values?.id)
       .single();

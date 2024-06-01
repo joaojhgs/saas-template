@@ -13,7 +13,7 @@
     "check": "prettier --check \"**/*.{js,ts,tsx,mdx}\" --cache",
     "prepare": "husky",
     "commit": "git-cz",
-    "supabase:generate": "supabase gen types typescript --project-id nhtgmvgjkojhxrtjzzyv --schema public > src/types/supabase.ts ",
+    "supabase:generate": "supabase gen types typescript --local --schema public > src/schemas/supabase.ts ",
     "supabase": "supabase"
   },
   "dependencies": {

@@ -9,56 +9,47 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      barber: {
+      contractor_has_service_type: {
         Row: {
-          accept_schedules_automatically: boolean | null;
-          id: string;
-          id_external_user: string | null;
-          name: string | null;
+          created_at: string;
+          custom_calendar_color: string | null;
+          duration_minutes: number;
+          id_contractor: string;
+          id_service_type: string;
+          picture_link: string | null;
+          price: number;
+          updated_at: string;
         };
         Insert: {
-          accept_schedules_automatically?: boolean | null;
-          id?: string;
-          id_external_user?: string | null;
-          name?: string | null;
+          created_at?: string;
+          custom_calendar_color?: string | null;
+          duration_minutes: number;
+          id_contractor: string;
+          id_service_type: string;
+          picture_link?: string | null;
+          price: number;
+          updated_at?: string;
         };
         Update: {
-          accept_schedules_automatically?: boolean | null;
-          id?: string;
-          id_external_user?: string | null;
-          name?: string | null;
-        };
-        Relationships: [];
-      };
-      barber_has_service_type: {
-        Row: {
-          duration_minutes: number | null;
-          id_barber: string | null;
-          id_service_type: string | null;
-          price: number | null;
-        };
-        Insert: {
-          duration_minutes?: number | null;
-          id_barber?: string | null;
-          id_service_type?: string | null;
-          price?: number | null;
-        };
-        Update: {
-          duration_minutes?: number | null;
-          id_barber?: string | null;
-          id_service_type?: string | null;
-          price?: number | null;
+          created_at?: string;
+          custom_calendar_color?: string | null;
+          duration_minutes?: number;
+          id_contractor?: string;
+          id_service_type?: string;
+          picture_link?: string | null;
+          price?: number;
+          updated_at?: string;
         };
         Relationships: [
           {
-            foreignKeyName: 'barber_has_service_type_id_barber_fkey';
-            columns: ['id_barber'];
+            foreignKeyName: 'contractor_has_service_type_id_contractor_fkey';
+            columns: ['id_contractor'];
             isOneToOne: false;
-            referencedRelation: 'barber';
+            referencedRelation: 'users';
             referencedColumns: ['id'];
           },
           {
-            foreignKeyName: 'barber_has_service_type_id_service_type_fkey';
+            foreignKeyName: 'contractor_has_service_type_id_service_type_fkey';
             columns: ['id_service_type'];
             isOneToOne: false;
             referencedRelation: 'service_type';
@@ -66,102 +57,128 @@ export type Database = {
           },
         ];
       };
-      barbershop: {
-        Row: {
-          description: string | null;
-          document: string | null;
-          id: string;
-          id_owner: string | null;
-          latitude: string | null;
-          location: string | null;
-          longitude: string | null;
-          name: string | null;
-          picture: string | null;
-        };
-        Insert: {
-          description?: string | null;
-          document?: string | null;
-          id?: string;
-          id_owner?: string | null;
-          latitude?: string | null;
-          location?: string | null;
-          longitude?: string | null;
-          name?: string | null;
-          picture?: string | null;
-        };
-        Update: {
-          description?: string | null;
-          document?: string | null;
-          id?: string;
-          id_owner?: string | null;
-          latitude?: string | null;
-          location?: string | null;
-          longitude?: string | null;
-          name?: string | null;
-          picture?: string | null;
-        };
-        Relationships: [];
-      };
       custom_day_of_work: {
         Row: {
-          away: boolean | null;
-          end_time: string | null;
+          away: boolean;
+          created_at: string;
+          end_time: string;
           id: string;
-          id_barber: string | null;
-          start_time: string | null;
+          id_contractor: string;
+          start_time: string;
+          updated_at: string;
         };
         Insert: {
-          away?: boolean | null;
-          end_time?: string | null;
+          away: boolean;
+          created_at?: string;
+          end_time: string;
           id?: string;
-          id_barber?: string | null;
-          start_time?: string | null;
+          id_contractor: string;
+          start_time: string;
+          updated_at?: string;
         };
         Update: {
-          away?: boolean | null;
-          end_time?: string | null;
+          away?: boolean;
+          created_at?: string;
+          end_time?: string;
           id?: string;
-          id_barber?: string | null;
-          start_time?: string | null;
+          id_contractor?: string;
+          start_time?: string;
+          updated_at?: string;
         };
         Relationships: [
           {
-            foreignKeyName: 'custom_day_of_work_id_barber_fkey';
-            columns: ['id_barber'];
+            foreignKeyName: 'custom_day_of_work_id_contractor_fkey';
+            columns: ['id_contractor'];
             isOneToOne: false;
-            referencedRelation: 'barber';
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      organization: {
+        Row: {
+          created_at: string;
+          description: string | null;
+          document: string;
+          full_address: string;
+          id: string;
+          id_contractor_owner: string;
+          latitude: string | null;
+          longitude: string | null;
+          name: string;
+          picture: string | null;
+          updated_at: string;
+        };
+        Insert: {
+          created_at?: string;
+          description?: string | null;
+          document: string;
+          full_address: string;
+          id?: string;
+          id_contractor_owner: string;
+          latitude?: string | null;
+          longitude?: string | null;
+          name: string;
+          picture?: string | null;
+          updated_at?: string;
+        };
+        Update: {
+          created_at?: string;
+          description?: string | null;
+          document?: string;
+          full_address?: string;
+          id?: string;
+          id_contractor_owner?: string;
+          latitude?: string | null;
+          longitude?: string | null;
+          name?: string;
+          picture?: string | null;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'organization_id_contractor_owner_fkey';
+            columns: ['id_contractor_owner'];
+            isOneToOne: false;
+            referencedRelation: 'users';
             referencedColumns: ['id'];
           },
         ];
       };
       previous_service: {
         Row: {
+          created_at: string;
           description: string | null;
           id: string;
-          id_barber: string | null;
-          id_service_type: string | null;
-          picture: string | null;
+          id_contractor: string;
+          id_service_type: string;
+          picture_link: string[] | null;
+          updated_at: string;
         };
         Insert: {
+          created_at?: string;
           description?: string | null;
           id?: string;
-          id_barber?: string | null;
-          id_service_type?: string | null;
-          picture?: string | null;
+          id_contractor: string;
+          id_service_type: string;
+          picture_link?: string[] | null;
+          updated_at?: string;
         };
         Update: {
+          created_at?: string;
           description?: string | null;
           id?: string;
-          id_barber?: string | null;
-          id_service_type?: string | null;
-          picture?: string | null;
+          id_contractor?: string;
+          id_service_type?: string;
+          picture_link?: string[] | null;
+          updated_at?: string;
         };
         Relationships: [
           {
-            foreignKeyName: 'previous_service_id_barber_fkey';
-            columns: ['id_barber'];
+            foreignKeyName: 'previous_service_id_contractor_fkey';
+            columns: ['id_contractor'];
             isOneToOne: false;
-            referencedRelation: 'barber';
+            referencedRelation: 'users';
             referencedColumns: ['id'];
           },
           {
@@ -173,49 +190,90 @@ export type Database = {
           },
         ];
       };
-      schedule: {
+      profile: {
         Row: {
-          additional_information: string | null;
-          allow_notifications: boolean | null;
-          end_time: string | null;
+          avatar_url: string | null;
+          created_at: string;
+          full_name: string | null;
           id: string;
-          id_barber: string | null;
-          id_service_type: string | null;
-          start_time: string | null;
-          status: string | null;
-          user_name: string | null;
-          user_phone: string | null;
+          social_medias: Json | null;
+          updated_at: string;
         };
         Insert: {
-          additional_information?: string | null;
-          allow_notifications?: boolean | null;
-          end_time?: string | null;
-          id?: string;
-          id_barber?: string | null;
-          id_service_type?: string | null;
-          start_time?: string | null;
-          status?: string | null;
-          user_name?: string | null;
-          user_phone?: string | null;
+          avatar_url?: string | null;
+          created_at?: string;
+          full_name?: string | null;
+          id: string;
+          social_medias?: Json | null;
+          updated_at?: string;
         };
         Update: {
-          additional_information?: string | null;
-          allow_notifications?: boolean | null;
-          end_time?: string | null;
+          avatar_url?: string | null;
+          created_at?: string;
+          full_name?: string | null;
           id?: string;
-          id_barber?: string | null;
-          id_service_type?: string | null;
-          start_time?: string | null;
-          status?: string | null;
-          user_name?: string | null;
-          user_phone?: string | null;
+          social_medias?: Json | null;
+          updated_at?: string;
         };
         Relationships: [
           {
-            foreignKeyName: 'schedule_id_barber_fkey';
-            columns: ['id_barber'];
+            foreignKeyName: 'profile_id_fkey';
+            columns: ['id'];
+            isOneToOne: true;
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      schedule: {
+        Row: {
+          additional_information: string | null;
+          allow_notifications: boolean;
+          client_name: string;
+          client_phone: string | null;
+          created_at: string;
+          end_time: string;
+          id: string;
+          id_contractor: string;
+          id_service_type: string;
+          start_time: string;
+          status: string;
+          updated_at: string;
+        };
+        Insert: {
+          additional_information?: string | null;
+          allow_notifications: boolean;
+          client_name: string;
+          client_phone?: string | null;
+          created_at?: string;
+          end_time: string;
+          id?: string;
+          id_contractor: string;
+          id_service_type: string;
+          start_time: string;
+          status: string;
+          updated_at?: string;
+        };
+        Update: {
+          additional_information?: string | null;
+          allow_notifications?: boolean;
+          client_name?: string;
+          client_phone?: string | null;
+          created_at?: string;
+          end_time?: string;
+          id?: string;
+          id_contractor?: string;
+          id_service_type?: string;
+          start_time?: string;
+          status?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'schedule_id_contractor_fkey';
+            columns: ['id_contractor'];
             isOneToOne: false;
-            referencedRelation: 'barber';
+            referencedRelation: 'users';
             referencedColumns: ['id'];
           },
           {
@@ -229,44 +287,62 @@ export type Database = {
       };
       service_type: {
         Row: {
+          created_at: string;
           id: string;
-          name: string | null;
+          name: string;
+          picture_link: string | null;
+          updated_at: string;
         };
         Insert: {
+          created_at?: string;
           id?: string;
-          name?: string | null;
+          name: string;
+          picture_link?: string | null;
+          updated_at?: string;
         };
         Update: {
+          created_at?: string;
           id?: string;
-          name?: string | null;
+          name?: string;
+          picture_link?: string | null;
+          updated_at?: string;
         };
         Relationships: [];
       };
       work_day: {
         Row: {
-          end_time: string | null;
-          id_barber: string | null;
-          start_time: string | null;
-          week_day: Database['public']['Enums']['week_day_enum'] | null;
+          created_at: string;
+          enabled: boolean;
+          end_time: string;
+          id_contractor: string;
+          start_time: string;
+          updated_at: string;
+          week_day: Database['public']['Enums']['week_day_enum'];
         };
         Insert: {
-          end_time?: string | null;
-          id_barber?: string | null;
-          start_time?: string | null;
-          week_day?: Database['public']['Enums']['week_day_enum'] | null;
+          created_at?: string;
+          enabled?: boolean;
+          end_time: string;
+          id_contractor: string;
+          start_time: string;
+          updated_at?: string;
+          week_day: Database['public']['Enums']['week_day_enum'];
         };
         Update: {
-          end_time?: string | null;
-          id_barber?: string | null;
-          start_time?: string | null;
-          week_day?: Database['public']['Enums']['week_day_enum'] | null;
+          created_at?: string;
+          enabled?: boolean;
+          end_time?: string;
+          id_contractor?: string;
+          start_time?: string;
+          updated_at?: string;
+          week_day?: Database['public']['Enums']['week_day_enum'];
         };
         Relationships: [
           {
-            foreignKeyName: 'work_day_id_barber_fkey';
-            columns: ['id_barber'];
+            foreignKeyName: 'work_day_id_contractor_fkey';
+            columns: ['id_contractor'];
             isOneToOne: false;
-            referencedRelation: 'barber';
+            referencedRelation: 'users';
             referencedColumns: ['id'];
           },
         ];
