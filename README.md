@@ -46,6 +46,8 @@ erDiagram
     AUTH-USER {
         id UUID
         email TEXT
+        created_at TIMESTAMP
+        updated_at TIMESTAMP
     }
     PROFILE {
         id UUID
@@ -53,6 +55,8 @@ erDiagram
         full_name TEXT
         avatar_url TEXT
         social_medias JSON
+        created_at TIMESTAMP
+        updated_at TIMESTAMP
     }
     ORGANIZATION {
         id UUID
@@ -64,6 +68,8 @@ erDiagram
         latitude VARCHAR(255)
         longitude VARCHAR(255)
         full_address VARCHAR(255)
+        created_at TIMESTAMP
+        updated_at TIMESTAMP
     }
     PREVIOUS_SERVICE {
         id UUID
@@ -71,11 +77,15 @@ erDiagram
         description TEXT
         picture_link TEXT[]
         id_service_type UUID
+        created_at TIMESTAMP
+        updated_at TIMESTAMP
     }
     SERVICE_TYPE {
         id UUID
         name VARCHAR(255)
         picture_link VARCHAR(255)
+        created_at TIMESTAMP
+        updated_at TIMESTAMP
     }
     CONTRACTOR_HAS_SERVICE_TYPE {
         id_service_type UUID
@@ -84,6 +94,8 @@ erDiagram
         price BIGINT
         picture_link VARCHAR(255)
         custom_calendar_color VARCHAR(255)
+        created_at TIMESTAMP
+        updated_at TIMESTAMP
     }
     SCHEDULE {
         id UUID
@@ -96,12 +108,17 @@ erDiagram
         allow_notifications BOOLEAN
         client_phone VARCHAR(255)
         client_name VARCHAR(255)
+        created_at TIMESTAMP
+        updated_at TIMESTAMP
     }
     WORK_DAY {
         id_contractor UUID
         week_day WEEK_DAY_ENUM
         start_time TIMESTAMP
         end_time TIMESTAMP
+        enabled BOOLEAN
+        created_at TIMESTAMP
+        updated_at TIMESTAMP
     }
     CUSTOM_DAY_OF_WORK {
         id UUID
@@ -109,6 +126,8 @@ erDiagram
         start_time TIMESTAMP
         end_time TIMESTAMP
         away BOOLEAN
+        created_at TIMESTAMP
+        updated_at TIMESTAMP
     }
     
     AUTH-USER ||--o{ CONTRACTOR_HAS_SERVICE_TYPE : "has"
