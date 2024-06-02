@@ -37,7 +37,7 @@ const SchedullesCalendar: React.FC<SchedullesCalendarProps> = () => {
           ...item,
           start: new Date(item.start_time ?? ''),
           end: new Date(item.end_time ?? ''),
-          title: `${item.user_name}`,
+          title: `${item.client_name}`,
         }))}
         style={{ height: '100%' }}
         onSelectEvent={(e) => {

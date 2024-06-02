@@ -12,14 +12,14 @@ export const getBarberSchedules = serverActionHof(
     const query = supabase.from('schedule').select(
       `
         id,
-        id_contractor
+        id_contractor,
         start_time,
         end_time,
         additional_information,
         status,
         allow_notifications,
-        user_phone,
-        user_name,
+        client_phone,
+        client_name,
         service_type (
             id,
             name
