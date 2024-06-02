@@ -29,7 +29,7 @@ const SiderComponent: React.FC = () => {
       <div className="sticky inset-y-0 left-0 h-screen overflow-auto">
         <Link href="/">
           <div className="hidden h-[64px] items-center justify-center space-x-2 align-middle md:flex">
-            <Icons.logo className="size-6" />
+            <Icons.Logo className="size-6" />
             {!openMenu && (
               <span className="hidden font-bold sm:inline-block">
                 {t('title')}

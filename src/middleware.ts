@@ -17,16 +17,21 @@ const handleI18nRouting = createIntlMiddleware({
 export async function middleware(request: NextRequest) {
   const response = handleI18nRouting(request);
   const supabase = createUserClient();
-
-  if (request.url.includes('admin')) {
+  if (
+    request.nextUrl.pathname.includes('admin') ||
+    request.nextUrl.pathname.includes('auth')
+  ) {
     try {
       const { data } = await supabase.auth.getSession();
       if (!data.session) throw new Error('Session not found');
       await supabase.auth.getUser();
+      if (request.nextUrl.pathname.includes('auth'))
+        return NextResponse.redirect(new URL('/admin', request.url));
     } catch {
-      return NextResponse.redirect(
-        new URL(`/auth`, request.url).toString() + `?redirect=${request.url}`,
-      );
+      if (request.nextUrl.pathname.includes('admin'))
+        return NextResponse.redirect(
+          new URL(`/auth`, request.url).toString() + `?redirect=${request.url}`,
+        );
     }
   }
 

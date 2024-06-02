@@ -13,6 +13,15 @@ const nextConfig = {
   reactStrictMode: true, // Recommended for the `pages` directory, default in `app`.
   transpilePackages: ['antd'],
   swcMinify: true,
+  redirects: async () => {
+    return [
+      {
+        source: '/admin',
+        destination: '/admin/schedules',
+        permanent: false,
+      },
+    ];
+  },
   experimental: {
     // Required:
   },

@@ -11,7 +11,7 @@ type MainLayoutProps = {
 
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   return (
-    <Layout style={{ minHeight: '100vh' }} hasSider>
+    <Layout hasSider>
       <SiderComponent />
       <Layout>
         <SiteHeader />
