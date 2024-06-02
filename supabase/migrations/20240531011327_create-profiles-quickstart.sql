@@ -37,8 +37,8 @@ create trigger on_auth_user_created
   for each row execute procedure public.handle_new_user();
 
 -- Set up Storage!
-insert into storage.buckets (id, name)
-  values ('provile-avatars', 'profile-avatars');
+insert into storage.buckets (id, name, public)
+  values ('provile-avatars', 'profile-avatars', true);
 
 -- Set up access controls for storage.
 -- See https://supabase.com/docs/guides/storage#policy-examples for more details.

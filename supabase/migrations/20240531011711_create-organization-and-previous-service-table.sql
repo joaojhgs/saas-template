@@ -125,8 +125,8 @@ CREATE POLICY "Read_Previous_service" ON previous_service
 
 
 -- Set up Storage!
-insert into storage.buckets (id, name)
-  values ('organization', 'organization');
+insert into storage.buckets (id, name, public)
+  values ('organization', 'organization', true);
 
 -- Set up access controls for storage.
 -- See https://supabase.com/docs/guides/storage#policy-examples for more details.
