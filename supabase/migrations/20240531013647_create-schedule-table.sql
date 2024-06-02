@@ -1,6 +1,6 @@
 CREATE TABLE schedule (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    id_contractor UUID references auth.users on delete cascade not null,
+    id_contractor UUID references profile on delete cascade not null,
     start_time TIMESTAMP with time zone NOT NULL,
     end_time TIMESTAMP with time zone NOT NULL,
     id_service_type UUID REFERENCES service_type(id) NOT NULL,
@@ -19,6 +19,11 @@ CREATE INDEX ON schedule (id_contractor);
 ALTER TABLE schedule ENABLE ROW LEVEL SECURITY;
 
 -- Create policies
+CREATE POLICY "Select_Schedule" ON schedule
+    FOR SELECT
+    TO authenticated
+    USING (auth.uid() = id_contractor);
+
 CREATE POLICY "Insert_Schedule" ON schedule
     FOR INSERT
     TO authenticated

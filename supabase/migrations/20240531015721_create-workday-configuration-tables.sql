@@ -1,7 +1,7 @@
 CREATE TYPE WEEK_DAY_ENUM AS ENUM ('MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY');
 
 CREATE TABLE work_day (
-    id_contractor UUID references auth.users on delete cascade not null,
+    id_contractor UUID references profile on delete cascade not null,
     week_day WEEK_DAY_ENUM NOT NULL,
     start_time TIMESTAMP with time zone NOT NULL,
     end_time TIMESTAMP with time zone NOT NULL,
@@ -12,7 +12,7 @@ CREATE TABLE work_day (
 
 CREATE TABLE custom_day_of_work (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    id_contractor UUID references auth.users on delete cascade not null,
+    id_contractor UUID references profile on delete cascade not null,
     start_time TIMESTAMP with time zone NOT NULL,
     end_time TIMESTAMP with time zone NOT NULL,
     created_at TIMESTAMP with time zone NOT NULL DEFAULT NOW(),
@@ -25,6 +25,12 @@ CREATE TABLE custom_day_of_work (
 ALTER TABLE work_day ENABLE ROW LEVEL SECURITY;
 
 -- Create policies
+-- select
+CREATE POLICY "Select_WorkDay" ON work_day
+    FOR SELECT
+    TO authenticated
+    USING (auth.uid() = id_contractor);
+
 CREATE POLICY "Insert_WorkDay" ON work_day
     FOR INSERT
     TO authenticated
@@ -44,6 +50,11 @@ CREATE POLICY "Delete_WorkDay" ON work_day
 ALTER TABLE custom_day_of_work ENABLE ROW LEVEL SECURITY;
 
 -- Create policies
+CREATE POLICY "Select_CustomDayOfWork" ON custom_day_of_work
+    FOR SELECT
+    TO authenticated
+    USING (auth.uid() = id_contractor);
+
 CREATE POLICY "Insert_CustomDayOfWork" ON custom_day_of_work
     FOR INSERT
     TO authenticated

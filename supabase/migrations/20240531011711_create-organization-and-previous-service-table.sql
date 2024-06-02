@@ -4,7 +4,7 @@ CREATE TABLE organization (
     description TEXT,
     picture VARCHAR(255),
     document VARCHAR(255) NOT NULL,
-    id_contractor_owner UUID references auth.users on delete cascade not null,
+    id_contractor_owner UUID references profile on delete cascade not null,
     latitude VARCHAR(255),
     longitude VARCHAR(255),
     full_address VARCHAR(255) NOT NULL,
@@ -22,7 +22,7 @@ CREATE TABLE service_type (
 
 CREATE TABLE contractor_has_service_type (
     id_service_type UUID REFERENCES service_type(id) on delete cascade NOT NULL,
-    id_contractor UUID references auth.users on delete cascade not null,
+    id_contractor UUID references profile on delete cascade not null,
     duration_minutes Int NOT NULL,
     price BigInt NOT NULL,
     picture_link VARCHAR(255),
@@ -35,7 +35,7 @@ CREATE TABLE contractor_has_service_type (
 
 CREATE TABLE previous_service (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4() NOT NULL,
-    id_contractor UUID references auth.users on delete cascade not null,
+    id_contractor UUID references profile on delete cascade not null,
     description TEXT,
     picture_link TEXT[],
     id_service_type UUID REFERENCES service_type(id) on delete cascade not null,

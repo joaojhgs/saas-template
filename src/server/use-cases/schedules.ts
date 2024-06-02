@@ -26,7 +26,7 @@ export const getBarberSchedules = serverActionHof(
         ),
         profile (
             id,
-            name
+            full_name
         )
     `,
     );
