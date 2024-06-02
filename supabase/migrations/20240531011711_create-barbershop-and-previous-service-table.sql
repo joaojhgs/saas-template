@@ -124,3 +124,15 @@ CREATE POLICY "Read_Previous_service" ON previous_service
     USING (true);
 
 
+-- Set up Storage!
+insert into storage.buckets (id, name)
+  values ('organization', 'organization');
+
+-- Set up access controls for storage.
+-- See https://supabase.com/docs/guides/storage#policy-examples for more details.
+create policy "Organization images are publicly accessible." on storage.objects
+  for select using (bucket_id = 'organization');
+
+-- Should be updated in the future to use roles
+create policy "Anyone can upload to organization." on storage.objects
+  for insert with check (bucket_id = 'organization');

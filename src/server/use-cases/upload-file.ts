@@ -1,7 +1,7 @@
 import crypto from 'crypto';
 import 'server-only';
 
-import { adminClient } from '@/lib/supabase/server-client';
+import { createUserClient } from '@/lib/supabase/server-client';
 
 interface IInput {
   bucketName: string;
@@ -17,8 +17,8 @@ interface IInput {
 
 export const uploadFile = async (values: IInput) => {
   const uuid = crypto.randomUUID();
-
-  const { data, error } = await adminClient.storage
+  const supabase = createUserClient();
+  const { data, error } = await supabase.storage
     .from(values.bucketName)
     .upload('public/' + uuid, values?.file as File, {
       upsert: true,
