@@ -1,5 +1,5 @@
 // middleware.ts
-import { type NextRequest } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 
 import createIntlMiddleware from 'next-intl/middleware';
 
@@ -18,7 +18,18 @@ export async function middleware(request: NextRequest) {
   const response = handleI18nRouting(request);
   const supabase = createUserClient();
 
-  await supabase.auth.getUser();
+  if (request.url.includes('admin')) {
+    try {
+      const { data } = await supabase.auth.getSession();
+      if (!data.session) throw new Error('Session not found');
+      await supabase.auth.getUser();
+    } catch {
+      return NextResponse.redirect(
+        new URL(`/auth`, request.url).toString() + `?redirect=${request.url}`,
+      );
+    }
+  }
+
   return response;
 }
 
