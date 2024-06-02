@@ -12,21 +12,21 @@ export const getBarberSchedules = serverActionHof(
     const query = supabase.from('schedule').select(
       `
         id,
-        id_barber,
+        id_contractor,
         start_time,
         end_time,
         additional_information,
         status,
         allow_notifications,
-        user_phone,
-        user_name,
+        client_phone,
+        client_name,
         service_type (
             id,
             name
         ),
-        barber (
+        profile (
             id,
-            name
+            full_name
         )
     `,
     );
@@ -46,7 +46,7 @@ export const createScheduleByBarber = serverActionHof(
       .from('schedule')
       .insert({
         ...values,
-        id_barber: user?.user.id,
+        id_contractor: user?.user.id ?? '',
       })
       .select();
     if (error) throw error;

@@ -7,7 +7,7 @@ import serverActionHof from '../server-action';
 export const getBarbersFromBarbershop = serverActionHof(
   async ({ supabase }: ServerActionInjected) => {
     const { data, error } = await supabase
-      .from('barber')
+      .from('profile')
       .select('*')
       .order('name');
 

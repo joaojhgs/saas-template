@@ -13,8 +13,8 @@
     "check": "prettier --check \"**/*.{js,ts,tsx,mdx}\" --cache",
     "prepare": "husky",
     "commit": "git-cz",
-    "supabase:login": "supabase login",
-    "supabase:generate": "supabase gen types typescript --project-id nhtgmvgjkojhxrtjzzyv --schema public > src/types/supabase.ts "
+    "supabase:generate": "supabase gen types typescript --local --schema public > src/schemas/supabase.ts ",
+    "supabase": "supabase"
   },
   "dependencies": {
     "@ant-design/cssinjs": "^1.20.0",
@@ -24,6 +24,7 @@
     "antd": "^5.16.4",
     "antd-img-crop": "^4.22.0",
     "antd-zod": "^5.1.0",
+    "client-only": "^0.0.1",
     "clsx": "^1.2.1",
     "dayjs": "^1.11.10",
     "jiti": "^1.21.0",

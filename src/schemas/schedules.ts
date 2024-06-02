@@ -20,9 +20,9 @@ export const CreateScheduleBarberInput = z
     additional_information: z.string().max(255),
     status: z.enum(['pending', 'approved', 'canceled']),
     allow_notifications: z.boolean(),
-    user_phone: z.string().max(20),
-    user_name: z.string().max(80),
-    service_type_id: z.string().uuid(),
+    client_phone: z.string().max(20),
+    client_name: z.string().max(80),
+    id_service_type: z.string().uuid(),
   })
   .refine((v) => dayjs(v.end_time).isAfter(v.start_time), {
     params: { i18n: 'end-must-be-after-start' },
