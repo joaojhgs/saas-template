@@ -3,7 +3,7 @@ import React, { ReactNode } from 'react';
 import { Layout } from 'antd';
 
 import { SiteHeader } from './header/SiteHeader';
-import SiderComponent from './sider/SiderComponent';
+import SiderComponent from './sider/Sider';
 
 type MainLayoutProps = {
   children: ReactNode;

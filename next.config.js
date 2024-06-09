@@ -22,6 +22,31 @@ const nextConfig = {
       },
     ];
   },
+  headers: async () => [
+    {
+      source: '/:path',
+      headers: [
+        // This header specifies which "client hints" the server expects from the client browser
+        {
+          key: 'Accept-CH',
+          value:
+            'Viewport-Width, Width, Sec-CH-Viewport-Width, Sec-CH-UA-Mobile',
+        },
+        // This header specifies that it's returns may vary according to these specific client hints
+        {
+          key: 'Vary',
+          value:
+            'Viewport-Width, Width, Sec-CH-Viewport-Width, Sec-CH-UA-Mobile',
+        },
+        // This header specifies which "client hints" the server considers critical from the client browser
+        {
+          key: 'Critical-CH',
+          value:
+            'Viewport-Width, Width, Sec-CH-Viewport-Width, Sec-CH-UA-Mobile',
+        },
+      ],
+    },
+  ],
   experimental: {
     // Required:
   },

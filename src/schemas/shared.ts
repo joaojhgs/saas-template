@@ -37,3 +37,10 @@ export interface NestedObjects {
 }
 
 export type BigCalendarView = 'month' | 'week' | 'work_week' | 'day' | 'agenda';
+
+export type IMediaRendering = {
+  minWidth?: number;
+  maxWidth?: number;
+  isMobile?: boolean;
+  children: React.ReactNode;
+};
