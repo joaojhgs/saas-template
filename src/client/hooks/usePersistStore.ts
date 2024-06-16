@@ -4,9 +4,6 @@ import { persist } from 'zustand/middleware';
 import { BigCalendarView } from '@/schemas';
 
 interface PersistState {
-  openMenu: boolean;
-  setOpenMenu: (data: boolean) => void;
-  toggleMenu: () => void;
   calendarView: BigCalendarView;
   setCalendarView: (data: BigCalendarView) => void;
 }
@@ -19,9 +16,6 @@ interface PersistState {
 const usePersistStore = create<PersistState>()(
   persist(
     (set) => ({
-      openMenu: true,
-      setOpenMenu: (data) => set(() => ({ openMenu: data })),
-      toggleMenu: () => set((state) => ({ openMenu: !state.openMenu })),
       calendarView: 'week',
       setCalendarView: (data) => set(() => ({ calendarView: data })),
     }),

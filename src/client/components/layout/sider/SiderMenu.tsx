@@ -1,50 +1,47 @@
 'use client';
 
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
+
 import { Menu, theme } from 'antd';
 import { useTranslations } from 'next-intl';
 
 import useIsAdminRoute from '@/client/hooks/useIsAdminRoute';
-import usePersistStore from '@/client/hooks/usePersistStore';
-import { Link } from '@/client/navigation';
+import useSiderStore from '@/client/hooks/useSiderStore';
+import { removeLocale } from '@/utils/helpers';
 
 import Icons from '../../Icons';
+import { generateMenuItems } from './SiderMenuItems';
 
 const SiderMenu = () => {
-  const { openMenu } = usePersistStore();
+  const { openMenu, setOpenMenu } = useSiderStore();
   const isAdmin = useIsAdminRoute();
-  const t = useTranslations('site');
+  const t = useTranslations();
   const token = theme.useToken().token;
+  const router = useRouter();
+  const items = generateMenuItems(router, t, () => {
+    setOpenMenu(false);
+  });
+  const pathname = usePathname();
+
   if (!isAdmin) return null;
   return (
-    <div className="sticky inset-y-0 left-0 h-screen overflow-auto">
+    <div className="sticky inset-y-0 left-0 overflow-auto md:h-screen">
       <Link href="/">
-        <div className="hidden h-[64px] items-center justify-center space-x-2 align-middle md:flex">
+        <div className="flex h-[64px] items-center justify-center space-x-2 align-middle">
           <Icons.Logo className="size-6" />
-          {!openMenu && (
+          {openMenu && (
             <span className="hidden font-bold sm:inline-block">
-              {t('title')}
+              {t('site.title')}
             </span>
           )}
         </div>
       </Link>
       <Menu
         style={{ backgroundColor: token.colorBgBase }}
-        defaultSelectedKeys={['1']}
+        selectedKeys={[removeLocale(pathname)]}
         mode="vertical"
-        items={[
-          {
-            key: '1',
-            label: 'Option 1',
-            className: 'text-center',
-            icon: <Icons.Accessibility />,
-          },
-          {
-            key: '2',
-            label: 'Option 2',
-            className: 'text-center',
-            icon: <Icons.Activity />,
-          },
-        ]}
+        items={items}
       />
     </div>
   );

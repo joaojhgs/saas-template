@@ -5,7 +5,7 @@ import { Layout } from 'antd';
 import { PanelRightClose, PanelRightOpen } from 'lucide-react';
 
 import useIsAdminRoute from '@/client/hooks/useIsAdminRoute';
-import usePersistStore from '@/client/hooks/usePersistStore';
+import useSiderStore from '@/client/hooks/useSiderStore';
 import { cn } from '@/utils/tailwind';
 
 import LocaleSwitcher from '../../LocaleSwitcher';
@@ -14,7 +14,7 @@ import { MainNav } from './MainNav';
 const { Header } = Layout;
 
 export function SiteHeader() {
-  const { openMenu, setOpenMenu } = usePersistStore();
+  const { openMenu, setOpenMenu } = useSiderStore();
   const isAdmin = useIsAdminRoute();
   const token = theme.useToken().token;
 
@@ -33,7 +33,7 @@ export function SiteHeader() {
           <Button
             type="text"
             icon={
-              openMenu ? (
+              !openMenu ? (
                 <PanelRightClose color="white" />
               ) : (
                 <PanelRightOpen color="white" />

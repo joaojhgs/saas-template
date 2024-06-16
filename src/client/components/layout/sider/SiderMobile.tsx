@@ -1,17 +1,28 @@
 'use client';
 
-import { ReactNode, useState } from 'react';
+import { ReactNode } from 'react';
 
-import { Drawer } from 'antd';
+import { Drawer, theme } from 'antd';
+
+import useSiderStore from '@/client/hooks/useSiderStore';
 
 interface ISiderMobile {
   children: ReactNode;
 }
 
 const SiderMobile = ({ children }: ISiderMobile) => {
-  const [openMenu, setOpenMenu] = useState(false);
+  const { openMenu, setOpenMenu } = useSiderStore();
+  const token = theme.useToken().token;
+
   return (
-    <Drawer open={openMenu} onClose={() => setOpenMenu(false)}>
+    <Drawer
+      open={openMenu}
+      onClose={() => setOpenMenu(false)}
+      style={{
+        backgroundColor: token.colorBgBase,
+      }}
+      placement="left"
+    >
       {children}
     </Drawer>
   );

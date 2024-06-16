@@ -41,6 +41,12 @@
     "error": "Erro",
     "success": "Successo"
   },
+  "sider": {
+    "menu": {
+      "barbershop": "Barbearia",
+      "schedules": "Agendamentos"
+    }
+  },
   "site": {
     "desc": "Using Ant-Design 5 with Next.js 13 and Tailwind CSS",
     "title": "Next.js"
