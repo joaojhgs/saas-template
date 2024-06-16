@@ -69,3 +69,7 @@ export const serializeToSnakeCase = <T extends Record<string, unknown>>(
   }
   return obj as CamelCasedProperties<T>;
 };
+
+export const removeLocale = (path: string) => {
+  return '/' + path.split('/').slice(2).join('/');
+};

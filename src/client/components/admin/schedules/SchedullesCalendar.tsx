@@ -4,8 +4,8 @@ import React, { useState } from 'react';
 
 import dayjs from 'dayjs';
 
-import useBarberSchedules from '@/client/hooks/useBarberSchedules';
-import usePersistStore from '@/client/hooks/usePersistStore';
+import useBarberSchedules from '@/client/hooks/server-actions/useBarberSchedules';
+import usePersistStore from '@/client/hooks/stores/usePersistStore';
 
 import BigCalendar from '../../shared/big-calendar/BigCalendar';
 import NewScheduleModal from './NewScheduleModal';

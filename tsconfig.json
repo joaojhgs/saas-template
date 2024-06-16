@@ -17,6 +17,11 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
+      "@client/*": ["./src/client/*"],
+      "@server/*": ["./src/client/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@lib/*": ["./src/lib/*"],
+      "@schemas/*": ["./src/schemas/*"],
     },
     "plugins": [
       {

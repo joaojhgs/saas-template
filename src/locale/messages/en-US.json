@@ -34,11 +34,18 @@
     }
   },
   "nav": {
-    "home": "Home"
+    "home": "Home",
+    "menu": "Menu"
   },
   "results": {
     "error": "Error",
     "success": "Success"
+  },
+  "sider": {
+    "menu": {
+      "barbershop": "Barbershop",
+      "schedules": "Schedules"
+    }
   },
   "site": {
     "desc": "Using Ant-Design 5 with Next.js 13 and Tailwind CSS",

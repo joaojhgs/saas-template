@@ -16,11 +16,11 @@ import { createSchemaFieldRule } from 'antd-zod';
 import { useTranslations } from 'next-intl';
 
 import ImageUploader from '@/client/components/shared/image-uploader/ImageUploader';
+import { useI18nZodErrorsForm } from '@/client/hooks/misc/useI18nZodErrors';
 import {
   useEditBarbershop,
   useGetBarbershop,
-} from '@/client/hooks/useBarbershop';
-import { useI18nZodErrorsForm } from '@/client/hooks/useI18nZodErrors';
+} from '@/client/hooks/server-actions/useBarbershop';
 import { env } from '@/env';
 import { UpdateBarbershopInputValidation } from '@/schemas/barbershop';
 

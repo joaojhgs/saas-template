@@ -24,7 +24,7 @@ export function MainNav() {
       {!isAdminPage && (
         <Link href="/">
           <div className="hidden items-center space-x-2 md:flex">
-            <Icons.logo className="size-6" />
+            <Icons.Logo className="size-6" />
             <span className="hidden font-bold sm:inline-block">
               {t('site.title')}
             </span>
@@ -53,7 +53,7 @@ export function MainNav() {
           }}
         >
           <div className="btn md:hidden">
-            <Icons.logo className="mr-2 size-4" />{' '}
+            <Icons.Logo className="mr-2 size-4" />{' '}
             <span className="font-bold">{t('nav.menu')}</span>
           </div>
         </Dropdown>

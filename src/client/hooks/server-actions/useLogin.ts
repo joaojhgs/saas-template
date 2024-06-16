@@ -1,3 +1,5 @@
+import { useRouter, useSearchParams } from 'next/navigation';
+
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { notification } from 'antd';
 import { useTranslations } from 'next-intl';
@@ -18,6 +20,8 @@ import { throwIfError } from '@/utils/result-handling';
 const useLogin = (options?: Record<string, unknown>) => {
   const queryClient = useQueryClient();
   const t = useTranslations();
+  const searchParams = useSearchParams();
+  const router = useRouter();
   return useMutation({
     ...options,
     mutationFn: (data: ISignInPasswordInput) =>
@@ -30,6 +34,7 @@ const useLogin = (options?: Record<string, unknown>) => {
         message: t('results.success'),
         description: data.message,
       });
+      router.push(searchParams.get('redirect') || '/admin');
     },
     onError: (error) => {
       notification.error({

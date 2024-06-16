@@ -5,8 +5,8 @@ import LoginComponent from '@/client/components/auth/LoginComponent';
 export default function LoginPage() {
   return (
     <>
-      <div className="absolute inset-y-0 left-0 size-full overflow-hidden bg-purple-900 bg-gradient-to-b from-gray-900 via-gray-900 to-purple-800 leading-5"></div>
-      <div className="relative   min-h-screen  justify-center rounded-3xl  bg-transparent shadow-xl sm:flex sm:flex-row">
+      <div className="bg-purple-900 to-purple-800 absolute inset-y-0 left-0 size-full overflow-hidden bg-gradient-to-b from-gray-900 via-gray-900 leading-5"></div>
+      <div className="relative mt-12 justify-center  rounded-3xl bg-transparent shadow-xl sm:flex sm:flex-row">
         <div className="z-10 flex  flex-col self-center sm:max-w-4xl lg:px-14  xl:max-w-md">
           <div className="hidden flex-col self-start text-gray-300  lg:flex">
             <h1 className="my-3 text-4xl font-semibold">Welcome back</h1>
