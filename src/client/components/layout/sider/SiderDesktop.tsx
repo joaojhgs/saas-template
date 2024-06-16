@@ -5,7 +5,7 @@ import { ReactNode } from 'react';
 import { theme } from 'antd';
 import Sider from 'antd/es/layout/Sider';
 
-import useSiderStore from '@/client/hooks/useSiderStore';
+import useSiderStore from '@/client/hooks/stores/useSiderStore';
 
 interface ISiderDesktop {
   children: ReactNode;

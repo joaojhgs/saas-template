@@ -1,27 +1,24 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
-import { Menu, theme } from 'antd';
+import { Divider, Menu, theme } from 'antd';
 import { useTranslations } from 'next-intl';
 
-import useIsAdminRoute from '@/client/hooks/useIsAdminRoute';
-import useSiderStore from '@/client/hooks/useSiderStore';
+import useIsAdminRoute from '@/client/hooks/misc/useIsAdminRoute';
+import useSiderMenuItems from '@/client/hooks/misc/useSiderMenuItems';
+import useSiderStore from '@/client/hooks/stores/useSiderStore';
 import { removeLocale } from '@/utils/helpers';
 
 import Icons from '../../Icons';
-import { generateMenuItems } from './SiderMenuItems';
 
 const SiderMenu = () => {
-  const { openMenu, setOpenMenu } = useSiderStore();
+  const { openMenu } = useSiderStore();
   const isAdmin = useIsAdminRoute();
   const t = useTranslations();
   const token = theme.useToken().token;
-  const router = useRouter();
-  const items = generateMenuItems(router, t, () => {
-    setOpenMenu(false);
-  });
+  const items = useSiderMenuItems();
   const pathname = usePathname();
 
   if (!isAdmin) return null;
@@ -31,12 +28,11 @@ const SiderMenu = () => {
         <div className="flex h-[64px] items-center justify-center space-x-2 align-middle">
           <Icons.Logo className="size-6" />
           {openMenu && (
-            <span className="hidden font-bold sm:inline-block">
-              {t('site.title')}
-            </span>
+            <span className="inline-block font-bold">{t('site.title')}</span>
           )}
         </div>
       </Link>
+      <Divider className="mt-0 mb-2" />
       <Menu
         style={{ backgroundColor: token.colorBgBase }}
         selectedKeys={[removeLocale(pathname)]}

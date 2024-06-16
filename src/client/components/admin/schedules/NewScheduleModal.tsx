@@ -6,7 +6,7 @@ import dayjs from 'dayjs';
 import { useTranslations } from 'next-intl';
 import { Except } from 'type-fest';
 
-import { useI18nZodErrorsForm } from '@/client/hooks/useI18nZodErrors';
+import { useI18nZodErrorsForm } from '@/client/hooks/misc/useI18nZodErrors';
 import {
   CreateScheduleBarberInput,
   ICreateScheduleBarberInput,

@@ -4,8 +4,8 @@ import { Button, theme } from 'antd';
 import { Layout } from 'antd';
 import { PanelRightClose, PanelRightOpen } from 'lucide-react';
 
-import useIsAdminRoute from '@/client/hooks/useIsAdminRoute';
-import useSiderStore from '@/client/hooks/useSiderStore';
+import useIsAdminRoute from '@/client/hooks/misc/useIsAdminRoute';
+import useSiderStore from '@/client/hooks/stores/useSiderStore';
 import { cn } from '@/utils/tailwind';
 
 import LocaleSwitcher from '../../LocaleSwitcher';

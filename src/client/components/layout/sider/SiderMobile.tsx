@@ -4,7 +4,7 @@ import { ReactNode } from 'react';
 
 import { Drawer, theme } from 'antd';
 
-import useSiderStore from '@/client/hooks/useSiderStore';
+import useSiderStore from '@/client/hooks/stores/useSiderStore';
 
 interface ISiderMobile {
   children: ReactNode;

@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 
-import useLoggedUser from '../hooks/useLoggedUser';
+import useLoggedUser from '@client/hooks/server-actions/useLoggedUser';
 
 export default function FormComponent() {
   const { data } = useLoggedUser();

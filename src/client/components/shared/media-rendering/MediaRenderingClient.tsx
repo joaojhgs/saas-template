@@ -2,7 +2,10 @@
 
 import { useMemo } from 'react';
 
-import { useIsClientMobile, useMediaQuery } from '@/client/hooks/useMediaQuery';
+import {
+  useIsClientMobile,
+  useMediaQuery,
+} from '@/client/hooks/misc/useMediaQuery';
 import { IMediaRendering } from '@/schemas';
 
 interface IMediaRenderingClient extends IMediaRendering {
