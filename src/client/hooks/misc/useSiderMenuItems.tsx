@@ -32,7 +32,7 @@ const useSiderMenuItems = () => {
       label: 'menu.barbershop',
       icon: (
         <div className="flex h-full align-middle">
-          <Icons.Settings className="!my-auto" />
+          <Icons.Building className="!my-auto" />
         </div>
       ),
     },
