@@ -9,92 +9,6 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      contractor_has_service_type: {
-        Row: {
-          created_at: string;
-          custom_calendar_color: string | null;
-          duration_minutes: number;
-          id_contractor: string;
-          id_service_type: string;
-          picture_link: string | null;
-          price: number;
-          updated_at: string;
-        };
-        Insert: {
-          created_at?: string;
-          custom_calendar_color?: string | null;
-          duration_minutes: number;
-          id_contractor: string;
-          id_service_type: string;
-          picture_link?: string | null;
-          price: number;
-          updated_at?: string;
-        };
-        Update: {
-          created_at?: string;
-          custom_calendar_color?: string | null;
-          duration_minutes?: number;
-          id_contractor?: string;
-          id_service_type?: string;
-          picture_link?: string | null;
-          price?: number;
-          updated_at?: string;
-        };
-        Relationships: [
-          {
-            foreignKeyName: 'contractor_has_service_type_id_contractor_fkey';
-            columns: ['id_contractor'];
-            isOneToOne: false;
-            referencedRelation: 'users';
-            referencedColumns: ['id'];
-          },
-          {
-            foreignKeyName: 'contractor_has_service_type_id_service_type_fkey';
-            columns: ['id_service_type'];
-            isOneToOne: false;
-            referencedRelation: 'service_type';
-            referencedColumns: ['id'];
-          },
-        ];
-      };
-      custom_day_of_work: {
-        Row: {
-          away: boolean;
-          created_at: string;
-          end_time: string;
-          id: string;
-          id_contractor: string;
-          start_time: string;
-          updated_at: string;
-        };
-        Insert: {
-          away: boolean;
-          created_at?: string;
-          end_time: string;
-          id?: string;
-          id_contractor: string;
-          start_time: string;
-          updated_at?: string;
-        };
-        Update: {
-          away?: boolean;
-          created_at?: string;
-          end_time?: string;
-          id?: string;
-          id_contractor?: string;
-          start_time?: string;
-          updated_at?: string;
-        };
-        Relationships: [
-          {
-            foreignKeyName: 'custom_day_of_work_id_contractor_fkey';
-            columns: ['id_contractor'];
-            isOneToOne: false;
-            referencedRelation: 'users';
-            referencedColumns: ['id'];
-          },
-        ];
-      };
       organization: {
         Row: {
           created_at: string;
@@ -140,52 +54,7 @@ export type Database = {
             foreignKeyName: 'organization_id_contractor_owner_fkey';
             columns: ['id_contractor_owner'];
             isOneToOne: false;
-            referencedRelation: 'users';
-            referencedColumns: ['id'];
-          },
-        ];
-      };
-      previous_service: {
-        Row: {
-          created_at: string;
-          description: string | null;
-          id: string;
-          id_contractor: string;
-          id_service_type: string;
-          picture_link: string[] | null;
-          updated_at: string;
-        };
-        Insert: {
-          created_at?: string;
-          description?: string | null;
-          id?: string;
-          id_contractor: string;
-          id_service_type: string;
-          picture_link?: string[] | null;
-          updated_at?: string;
-        };
-        Update: {
-          created_at?: string;
-          description?: string | null;
-          id?: string;
-          id_contractor?: string;
-          id_service_type?: string;
-          picture_link?: string[] | null;
-          updated_at?: string;
-        };
-        Relationships: [
-          {
-            foreignKeyName: 'previous_service_id_contractor_fkey';
-            columns: ['id_contractor'];
-            isOneToOne: false;
-            referencedRelation: 'users';
-            referencedColumns: ['id'];
-          },
-          {
-            foreignKeyName: 'previous_service_id_service_type_fkey';
-            columns: ['id_service_type'];
-            isOneToOne: false;
-            referencedRelation: 'service_type';
+            referencedRelation: 'profile';
             referencedColumns: ['id'];
           },
         ];
@@ -225,128 +94,6 @@ export type Database = {
           },
         ];
       };
-      schedule: {
-        Row: {
-          additional_information: string | null;
-          allow_notifications: boolean;
-          client_name: string;
-          client_phone: string | null;
-          created_at: string;
-          end_time: string;
-          id: string;
-          id_contractor: string;
-          id_service_type: string;
-          start_time: string;
-          status: string;
-          updated_at: string;
-        };
-        Insert: {
-          additional_information?: string | null;
-          allow_notifications: boolean;
-          client_name: string;
-          client_phone?: string | null;
-          created_at?: string;
-          end_time: string;
-          id?: string;
-          id_contractor: string;
-          id_service_type: string;
-          start_time: string;
-          status: string;
-          updated_at?: string;
-        };
-        Update: {
-          additional_information?: string | null;
-          allow_notifications?: boolean;
-          client_name?: string;
-          client_phone?: string | null;
-          created_at?: string;
-          end_time?: string;
-          id?: string;
-          id_contractor?: string;
-          id_service_type?: string;
-          start_time?: string;
-          status?: string;
-          updated_at?: string;
-        };
-        Relationships: [
-          {
-            foreignKeyName: 'schedule_id_contractor_fkey';
-            columns: ['id_contractor'];
-            isOneToOne: false;
-            referencedRelation: 'users';
-            referencedColumns: ['id'];
-          },
-          {
-            foreignKeyName: 'schedule_id_service_type_fkey';
-            columns: ['id_service_type'];
-            isOneToOne: false;
-            referencedRelation: 'service_type';
-            referencedColumns: ['id'];
-          },
-        ];
-      };
-      service_type: {
-        Row: {
-          created_at: string;
-          id: string;
-          name: string;
-          picture_link: string | null;
-          updated_at: string;
-        };
-        Insert: {
-          created_at?: string;
-          id?: string;
-          name: string;
-          picture_link?: string | null;
-          updated_at?: string;
-        };
-        Update: {
-          created_at?: string;
-          id?: string;
-          name?: string;
-          picture_link?: string | null;
-          updated_at?: string;
-        };
-        Relationships: [];
-      };
-      work_day: {
-        Row: {
-          created_at: string;
-          enabled: boolean;
-          end_time: string;
-          id_contractor: string;
-          start_time: string;
-          updated_at: string;
-          week_day: Database['public']['Enums']['week_day_enum'];
-        };
-        Insert: {
-          created_at?: string;
-          enabled?: boolean;
-          end_time: string;
-          id_contractor: string;
-          start_time: string;
-          updated_at?: string;
-          week_day: Database['public']['Enums']['week_day_enum'];
-        };
-        Update: {
-          created_at?: string;
-          enabled?: boolean;
-          end_time?: string;
-          id_contractor?: string;
-          start_time?: string;
-          updated_at?: string;
-          week_day?: Database['public']['Enums']['week_day_enum'];
-        };
-        Relationships: [
-          {
-            foreignKeyName: 'work_day_id_contractor_fkey';
-            columns: ['id_contractor'];
-            isOneToOne: false;
-            referencedRelation: 'users';
-            referencedColumns: ['id'];
-          },
-        ];
-      };
     };
     Views: {
       [_ in never]: never;
@@ -355,14 +102,7 @@ export type Database = {
       [_ in never]: never;
     };
     Enums: {
-      week_day_enum:
-        | 'MONDAY'
-        | 'TUESDAY'
-        | 'WEDNESDAY'
-        | 'THURSDAY'
-        | 'FRIDAY'
-        | 'SATURDAY'
-        | 'SUNDAY';
+      [_ in never]: never;
     };
     CompositeTypes: {
       [_ in never]: never;

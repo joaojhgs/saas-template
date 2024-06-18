@@ -18,8 +18,6 @@ export default async function RootLayout({
     messages = {
       ...(await import(`../../locale/messages/${locale}.json`)).default,
       ...(await import(`../../locale/messages/zod/${locale}.json`)).default,
-      ...(await import(`../../locale/messages/big-calendar/${locale}.json`))
-        .default,
     };
   } catch (error) {
     notFound();

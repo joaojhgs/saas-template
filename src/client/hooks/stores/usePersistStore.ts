@@ -1,11 +1,9 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-import { BigCalendarView } from '@/schemas';
-
 interface PersistState {
-  calendarView: BigCalendarView;
-  setCalendarView: (data: BigCalendarView) => void;
+  persistedProperty: string;
+  setPersistedProperty: (data: string) => void;
 }
 
 /*
@@ -16,8 +14,9 @@ interface PersistState {
 const usePersistStore = create<PersistState>()(
   persist(
     (set) => ({
-      calendarView: 'week',
-      setCalendarView: (data) => set(() => ({ calendarView: data })),
+      persistedProperty: 'teste',
+      setPersistedProperty: (persistedProperty) =>
+        set(() => ({ persistedProperty })),
     }),
     {
       name: 'persist-store',

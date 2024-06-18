@@ -17,7 +17,7 @@ const nextConfig = {
     return [
       {
         source: '/admin',
-        destination: '/admin/schedules',
+        destination: '/admin/dashboard',
         permanent: false,
       },
     ];

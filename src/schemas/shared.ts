@@ -36,8 +36,6 @@ export interface NestedObjects {
     | Array<string | number | NestedObjects>;
 }
 
-export type BigCalendarView = 'month' | 'week' | 'work_week' | 'day' | 'agenda';
-
 export type IMediaRendering = {
   minWidth?: number;
   maxWidth?: number;

@@ -24,17 +24,8 @@ const useSiderMenuItems = () => {
   const menuPages: ISiderMenuItem[] = [
     {
       path: '/admin/schedules',
-      label: 'menu.schedules',
-      icon: <Icons.Calendar className="!my-auto" />,
-    },
-    {
-      path: '/admin/barbershop',
-      label: 'menu.barbershop',
-      icon: (
-        <div className="flex h-full align-middle">
-          <Icons.Building className="!my-auto" />
-        </div>
-      ),
+      label: 'menu.dashboard',
+      icon: <Icons.LayoutDashboard className="!my-auto" />,
     },
   ];
 
