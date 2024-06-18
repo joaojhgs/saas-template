@@ -3,7 +3,7 @@ import React, { ReactNode } from 'react';
 import { Layout } from 'antd';
 
 import { SiteHeader } from './header/SiteHeader';
-import SiderComponent from './sider/SiderComponent';
+import SiderComponent from './sider/Sider';
 
 type MainLayoutProps = {
   children: ReactNode;
@@ -11,7 +11,7 @@ type MainLayoutProps = {
 
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   return (
-    <Layout style={{ minHeight: '100vh' }}>
+    <Layout hasSider>
       <SiderComponent />
       <Layout>
         <SiteHeader />

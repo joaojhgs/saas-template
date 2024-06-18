@@ -1,8 +1,29 @@
 {
   "customValidationErrors": {
-    "passwords-dont-match": "Senhas não são iguais"
+    "end-must-be-after-start": "O horário de término deve ser após o horário de início",
+    "passwords-dont-match": "As senhas não são iguais",
+    "start-must-be-after-now": "O horário de início deve ser no futuro"
   },
   "forms": {
+    "barbershop-config": {
+      "cancel-button": "Cancelar",
+      "description": "Descrição",
+      "edit-description-button": "Editar descrição",
+      "name": "Nome",
+      "save-button": "Salvar",
+      "update-barbershop-error": "Erro ao atualizar barbearia",
+      "update-barbershop-success": "Barbearia atualizada com sucesso"
+    },
+    "new-schedule-barber": {
+      "additional-information": "Informações Adicionais",
+      "allow-notifications": "Permitir notificações",
+      "cancel": "Cancelar",
+      "create": "Criar",
+      "schedule_range": "Horário Agendado",
+      "title": "Novo Agendamento",
+      "user_name": "Nome",
+      "user_phone": "Telefone"
+    },
     "sign-in-component": {
       "contact-us": "Entre em contato",
       "dont-have-an-account": "Não tem uma conta?",
@@ -19,6 +40,12 @@
   "results": {
     "error": "Erro",
     "success": "Successo"
+  },
+  "sider": {
+    "menu": {
+      "barbershop": "Barbearia",
+      "schedules": "Agendamentos"
+    }
   },
   "site": {
     "desc": "Using Ant-Design 5 with Next.js 13 and Tailwind CSS",

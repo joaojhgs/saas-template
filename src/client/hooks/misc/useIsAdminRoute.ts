@@ -1,4 +1,4 @@
-'use client';
+'client-only';
 
 import { usePathname } from 'next/navigation';
 

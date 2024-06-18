@@ -1,0 +1,20 @@
+{
+  "big-calendar": {
+    "agenda": "Agenda",
+    "allDay": "All Day",
+    "date": "Date",
+    "day": "Day",
+    "event": "Event",
+    "month": "Month",
+    "next": "Next",
+    "noEventsInRange": "No events in range",
+    "previous": "Previous",
+    "showMore": "{count} more",
+    "time": "Time",
+    "today": "Today",
+    "tomorrow": "Tomorrow",
+    "week": "Week",
+    "work_week": "Work Week",
+    "yesterday": "Yesterday"
+  }
+}

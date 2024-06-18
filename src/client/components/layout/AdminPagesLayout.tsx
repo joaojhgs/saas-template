@@ -25,7 +25,10 @@ const AdminPagesLayout: React.FC<AdminPagesLayoutProps> = ({ children }) => {
     });
 
   return (
-    <Layout style={{ padding: '0 48px 48px' }}>
+    <Layout
+      style={{ padding: '0 48px 48px' }}
+      className="min-h-[calc(100vh-64px)]"
+    >
       <Breadcrumb
         className="my-[16px]"
         items={breadcrumbItems}
@@ -35,7 +38,7 @@ const AdminPagesLayout: React.FC<AdminPagesLayoutProps> = ({ children }) => {
           </>
         )}
       />
-      <Content className="min-h-[280px] rounded-lg">{children}</Content>
+      <Content className="h-full rounded-lg">{children}</Content>
     </Layout>
   );
 };

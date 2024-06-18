@@ -1,10 +1,12 @@
+import { useRouter, useSearchParams } from 'next/navigation';
+
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { notification } from 'antd';
 import { useTranslations } from 'next-intl';
 
+import { ISignInPasswordInput } from '@/schemas';
 import { loginWithPassword } from '@/server/use-cases/auth';
-import { ISignInPasswordInput } from '@/utils/interfaces';
-import { handleSAResult } from '@/utils/result-handling';
+import { throwIfError } from '@/utils/result-handling';
 
 /* 
   The custom hook calls the loginWithPassword function from the server use-cases
@@ -18,10 +20,12 @@ import { handleSAResult } from '@/utils/result-handling';
 const useLogin = (options?: Record<string, unknown>) => {
   const queryClient = useQueryClient();
   const t = useTranslations();
+  const searchParams = useSearchParams();
+  const router = useRouter();
   return useMutation({
     ...options,
     mutationFn: (data: ISignInPasswordInput) =>
-      handleSAResult(loginWithPassword(data)),
+      throwIfError(loginWithPassword(data)),
     mutationKey: ['login'],
     onSuccess: (data) => {
       // On login success, it invalidates the getUser query to automatically update the cached data and rendering
@@ -30,6 +34,7 @@ const useLogin = (options?: Record<string, unknown>) => {
         message: t('results.success'),
         description: data.message,
       });
+      router.push(searchParams.get('redirect') || '/admin');
     },
     onError: (error) => {
       notification.error({

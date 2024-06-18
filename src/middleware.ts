@@ -1,9 +1,9 @@
 // middleware.ts
-import { type NextRequest } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 
 import createIntlMiddleware from 'next-intl/middleware';
 
-import { createClient } from './lib/supabase/server-client';
+import { createUserClient } from './lib/supabase/server-client';
 import { defaultLocale, languages } from './locale';
 
 const handleI18nRouting = createIntlMiddleware({
@@ -16,9 +16,25 @@ const handleI18nRouting = createIntlMiddleware({
 
 export async function middleware(request: NextRequest) {
   const response = handleI18nRouting(request);
-  const supabase = createClient();
+  const supabase = createUserClient();
+  if (
+    request.nextUrl.pathname.includes('admin') ||
+    request.nextUrl.pathname.includes('auth')
+  ) {
+    try {
+      const { data } = await supabase.auth.getSession();
+      if (!data.session) throw new Error('Session not found');
+      await supabase.auth.getUser();
+      if (request.nextUrl.pathname.includes('auth'))
+        return NextResponse.redirect(new URL('/admin', request.url));
+    } catch {
+      if (request.nextUrl.pathname.includes('admin'))
+        return NextResponse.redirect(
+          new URL(`/auth`, request.url).toString() + `?redirect=${request.url}`,
+        );
+    }
+  }
 
-  await supabase.auth.getUser();
   return response;
 }
 

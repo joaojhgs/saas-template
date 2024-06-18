@@ -21,7 +21,7 @@ export default function ThemeToggle() {
       key: 'light',
       label: (
         <div className="flex items-center">
-          <Icons.SunMedium className="mr-2 size-5 text-orange-500" />
+          <Icons.SunMedium className="text-orange-500 mr-2 size-5" />
           <span>{t('light')}</span>
         </div>
       ),
@@ -30,7 +30,7 @@ export default function ThemeToggle() {
       key: 'dark',
       label: (
         <div className="flex items-center">
-          <Icons.Moon className="mr-2 size-5 text-blue-500" />
+          <Icons.Moon className="text-blue-500 mr-2 size-5" />
           <span>{t('dark')}</span>
         </div>
       ),
@@ -56,8 +56,8 @@ export default function ThemeToggle() {
       }}
     >
       <button className="btn">
-        <Icons.SunMedium className="rotate-0 scale-100 text-orange-500 transition-all dark:-rotate-90 dark:scale-0" />
-        <Icons.Moon className="absolute rotate-90 scale-0 text-blue-500 transition-all dark:rotate-0 dark:scale-100" />
+        <Icons.SunMedium className="text-orange-500 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+        <Icons.Moon className="text-blue-500 absolute rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
       </button>
     </Dropdown>
   );

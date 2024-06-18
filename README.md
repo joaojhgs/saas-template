@@ -39,7 +39,6 @@ Commit messages should follow the [conventional commits](https://www.conventiona
 
 Files and folders in general should follow the `kebab-case` name convention, only react `.tsx` files inside the `components` folder should follow the `SnakeCase` naming convetion.
 
-
 ## Run 
 
 Node version: 20.9.0
@@ -51,7 +50,24 @@ Install dependencies:
 pnpm install
 ```
 
+Init supabase with:
+```
+pnpm supabase start
+```
+
+Replace the environment variables with the correct data after supabase finishes starting.
+
 Run dev mode: 
 ```
 pnpm dev
+```
+
+The Supabase Studio will run at: [http://127.0.0.1:54323/](http://127.0.0.1:54323/)
+
+The frontend will run at: [http://127.0.0.1:3000/](http://127.0.0.1:54323/)
+
+A default admin use will be created to be used on the application:
+```
+email: admin@admin.com
+password: password123
 ```

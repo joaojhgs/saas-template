@@ -1,3 +1,6 @@
+import camelCase from 'lodash/camelCase';
+import { CamelCasedProperties } from 'type-fest';
+
 export const getURL = (path: string = '') => {
   // Check if NEXT_PUBLIC_SITE_URL is set and non-empty. Set this to your site URL in production env.
   let url =
@@ -20,4 +23,53 @@ export const getURL = (path: string = '') => {
 
   // Concatenate the URL and the path.
   return path ? `${url}/${path}` : url;
+};
+
+/* Bruh */
+export const serializeToCamelCase = <T extends Record<string, unknown>>(
+  obj: T,
+): CamelCasedProperties<T> => {
+  if (Array.isArray(obj)) {
+    return obj.map((v) =>
+      serializeToCamelCase(v),
+    ) as unknown as CamelCasedProperties<T>;
+  } else if (obj != null && obj.constructor === Object) {
+    return Object.keys(obj).reduce(
+      (result, key) => ({
+        ...result,
+        [camelCase(key)]:
+          typeof obj[key] === 'object'
+            ? serializeToCamelCase(obj[key] as T)
+            : obj[key],
+      }),
+      {} as CamelCasedProperties<T>,
+    );
+  }
+  return obj as CamelCasedProperties<T>;
+};
+
+export const serializeToSnakeCase = <T extends Record<string, unknown>>(
+  obj: T,
+): CamelCasedProperties<T> => {
+  if (Array.isArray(obj)) {
+    return obj.map((v) =>
+      serializeToCamelCase(v),
+    ) as unknown as CamelCasedProperties<T>;
+  } else if (obj != null && obj.constructor === Object) {
+    return Object.keys(obj).reduce(
+      (result, key) => ({
+        ...result,
+        [camelCase(key)]:
+          typeof obj[key] === 'object'
+            ? serializeToCamelCase(obj[key] as T)
+            : obj[key],
+      }),
+      {} as CamelCasedProperties<T>,
+    );
+  }
+  return obj as CamelCasedProperties<T>;
+};
+
+export const removeLocale = (path: string) => {
+  return '/' + path.split('/').slice(2).join('/');
 };
