@@ -9,8 +9,11 @@ importers:
   .:
     dependencies:
       '@ant-design/cssinjs':
-        specifier: ^1.20.0
-        version: 1.20.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: ^1.21.0
+        version: 1.21.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      '@ant-design/nextjs-registry':
+        specifier: ^1.0.0
+        version: 1.0.0(@ant-design/cssinjs@1.21.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(antd@5.16.4(luxon@3.4.4)(moment@2.30.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(next@14.2.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@supabase/ssr':
         specifier: ^0.3.0
         version: 0.3.0(@supabase/supabase-js@2.42.7)
@@ -182,8 +185,8 @@ packages:
   '@ant-design/colors@7.0.2':
     resolution: {integrity: sha512-7KJkhTiPiLHSu+LmMJnehfJ6242OCxSlR3xHVBecYxnMW8MS/878NXct1GqYARyL59fyeFdKRxXTfvR9SnDgJg==}
 
-  '@ant-design/cssinjs@1.20.0':
-    resolution: {integrity: sha512-uG3iWzJxgNkADdZmc6W0Ci3iQAUOvLMcM8SnnmWq3r6JeocACft4ChnY/YWvI2Y+rG/68QBla/O+udke1yH3vg==}
+  '@ant-design/cssinjs@1.21.0':
+    resolution: {integrity: sha512-gIilraPl+9EoKdYxnupxjHB/Q6IHNRjEXszKbDxZdsgv4sAZ9pjkCq8yanDWNvyfjp4leir2OVAJm0vxwKK8YA==}
     peerDependencies:
       react: '>=16.0.0'
       react-dom: '>=16.0.0'
@@ -195,6 +198,15 @@ packages:
     resolution: {integrity: sha512-JeWsgNjvkTTC73YDPgWOgdScRku/iHN9JU0qk39OSEmJSCiRghQMLlxGTCY5ovbRRoXjxHXnUKgQEgBDnQfKmA==}
     engines: {node: '>=8'}
     peerDependencies:
+      react: '>=16.0.0'
+      react-dom: '>=16.0.0'
+
+  '@ant-design/nextjs-registry@1.0.0':
+    resolution: {integrity: sha512-kU1K1UOhwrF6DPv73MhuL5a6U4e6/TiFapeLUt/c/kch9h5qFwEaJPb4RSJKNw0PRBfqCAPS011wVm4wYcrqbQ==}
+    peerDependencies:
+      '@ant-design/cssinjs': ^1.18.2
+      antd: ^5.0.0
+      next: ^14.0.0
       react: '>=16.0.0'
       react-dom: '>=16.0.0'
 
@@ -3325,7 +3337,7 @@ snapshots:
     dependencies:
       '@ctrl/tinycolor': 3.6.1
 
-  '@ant-design/cssinjs@1.20.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
+  '@ant-design/cssinjs@1.21.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
       '@babel/runtime': 7.24.4
       '@emotion/hash': 0.8.0
@@ -3346,6 +3358,14 @@ snapshots:
       '@babel/runtime': 7.24.4
       classnames: 2.5.1
       rc-util: 5.39.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+
+  '@ant-design/nextjs-registry@1.0.0(@ant-design/cssinjs@1.21.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(antd@5.16.4(luxon@3.4.4)(moment@2.30.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(next@14.2.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
+    dependencies:
+      '@ant-design/cssinjs': 1.21.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      antd: 5.16.4(luxon@3.4.4)(moment@2.30.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      next: 14.2.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
@@ -4177,7 +4197,7 @@ snapshots:
   antd@5.16.4(luxon@3.4.4)(moment@2.30.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
       '@ant-design/colors': 7.0.2
-      '@ant-design/cssinjs': 1.20.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      '@ant-design/cssinjs': 1.21.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@ant-design/icons': 5.3.6(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@ant-design/react-slick': 1.1.2(react@18.2.0)
       '@babel/runtime': 7.24.4

@@ -1,10 +1,12 @@
-'use client';
+import { PropsWithChildren } from 'react';
 
-import { PropsWithChildren, useEffect, useState } from 'react';
-
-import { ConfigProvider, theme } from 'antd';
+import { ConfigProvider } from 'antd';
+import dayjs from 'dayjs';
+import 'dayjs/locale/en';
+import 'dayjs/locale/pt-br';
 import { ThemeProvider as NextThemeProvider } from 'next-themes';
 
+import { colorsToken } from '@/client/constants';
 import { defaultLocale, languages } from '@/locale';
 
 import { AntdProvider } from './AntdProvider';
@@ -14,36 +16,23 @@ export type ProviderProps = PropsWithChildren<{
 }>;
 
 export function AntdConfigProvider({ children, locale }: ProviderProps) {
+  dayjs.locale(locale === 'pt-BR' ? 'pt-br' : 'en');
+
   return (
-    <ConfigProvider
-      locale={languages[locale ?? defaultLocale].antd}
-      theme={{
-        token: {
-          colorPrimary: '#ea9010',
-          colorInfo: '#ea9010',
-          colorBgBase: '#181717',
-        },
-        algorithm: theme.darkAlgorithm,
-      }}
-    >
-      <AntdProvider>{children}</AntdProvider>
-    </ConfigProvider>
+    <AntdProvider>
+      <ConfigProvider
+        locale={languages[locale ?? defaultLocale].antd}
+        theme={{
+          token: colorsToken,
+        }}
+      >
+        {children}
+      </ConfigProvider>
+    </AntdProvider>
   );
 }
 
 export default function ThemeProvider(props: ProviderProps) {
-  const [mounted, setMounted] = useState(false);
-
-  // useEffect only runs on the client, so now we can safely show the UI
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    // use your loading page
-    return <div className="hidden">{props.children}</div>;
-  }
-
   return (
     <NextThemeProvider
       attribute="class"
