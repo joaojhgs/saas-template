@@ -11,6 +11,7 @@ This repository integrates it with Tailwindcss, Globalization, themes, state man
 - [Next.js 14](https://github.com/vercel/next.js) `app` directory
 - [Ant-Design 5](https://github.com/ant-design/ant-design)
 - [Tailwind CSS](https://github.com/tailwindlabs/tailwindcss)
+- [Supabase](https://supabase.com/docs) For auth and back end as a service
 - Dark mode with [next-themes](https://github.com/pacocoursey/next-themes)
 - Icons from [Lucide](https://lucide.dev)
 - Typesafe globalization with [next-intl](https://github.com/amannn/next-intl)
