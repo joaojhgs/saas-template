@@ -3,10 +3,9 @@
 import React from 'react';
 
 import { Dropdown, MenuProps } from 'antd';
+import { Laptop, Moon, SunMedium } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
-
-import Icons from './Icons';
 
 export default function ThemeToggle() {
   const { setTheme, theme } = useTheme();
@@ -21,7 +20,7 @@ export default function ThemeToggle() {
       key: 'light',
       label: (
         <div className="flex items-center">
-          <Icons.SunMedium className="text-orange-500 mr-2 size-5" />
+          <SunMedium className="text-orange-500 mr-2 size-5" />
           <span>{t('light')}</span>
         </div>
       ),
@@ -30,7 +29,7 @@ export default function ThemeToggle() {
       key: 'dark',
       label: (
         <div className="flex items-center">
-          <Icons.Moon className="text-blue-500 mr-2 size-5" />
+          <Moon className="text-blue-500 mr-2 size-5" />
           <span>{t('dark')}</span>
         </div>
       ),
@@ -39,7 +38,7 @@ export default function ThemeToggle() {
       key: 'system',
       label: (
         <div className="flex items-center">
-          <Icons.Laptop className="stroke-1.5 mr-2 size-5" />
+          <Laptop className="stroke-1.5 mr-2 size-5" />
           <span>{t('system')}</span>
         </div>
       ),
@@ -56,8 +55,8 @@ export default function ThemeToggle() {
       }}
     >
       <button className="btn">
-        <Icons.SunMedium className="text-orange-500 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-        <Icons.Moon className="text-blue-500 absolute rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+        <SunMedium className="text-orange-500 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+        <Moon className="text-blue-500 absolute rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
       </button>
     </Dropdown>
   );

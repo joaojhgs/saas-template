@@ -1,11 +1,10 @@
 'use client';
 
 import { Dropdown } from 'antd';
+import { Languages } from 'lucide-react';
 
 import { Link, usePathname } from '@/client/navigation';
 import { languages } from '@/locale';
-
-import Icons from './Icons';
 
 export default function LocaleSwitcher() {
   const pathname = usePathname();
@@ -24,7 +23,7 @@ export default function LocaleSwitcher() {
       }}
     >
       <div className="btn" role={'button'} tabIndex={0}>
-        <Icons.Languages className="size-5" />
+        <Languages className="size-5" />
       </div>
     </Dropdown>
   );

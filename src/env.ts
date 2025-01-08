@@ -7,6 +7,7 @@ export const env = createEnv({
     SUPABASE_URL: z.string().url(),
     SUPABASE_ANON_KEY: z.string().min(1),
     SUPABASE_SERVICE_ROLE_KEY: z.string().min(1),
+    FLAGS_SECRET: z.string().min(1),
   },
   client: {
     NEXT_PUBLIC_SUPABASE_STORAGE: z.string().url(),

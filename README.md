@@ -11,11 +11,10 @@ This repository integrates it with Tailwindcss, Globalization, themes, state man
 - [Next.js 14](https://github.com/vercel/next.js) `app` directory
 - [Ant-Design 5](https://github.com/ant-design/ant-design)
 - [Tailwind CSS](https://github.com/tailwindlabs/tailwindcss)
-- Dark mode with [next-themes](https://github.com/pacocoursey/next-themes)
+- Dark mode with [next-themes](https://github.com/pacocoursey/next-themes) **@deprecated to static theme**
 - Icons from [Lucide](https://lucide.dev)
 - Typesafe globalization with [next-intl](https://github.com/amannn/next-intl)
 - State management with [Zustand](https://github.com/pmndrs/zustand)
-- Query caching and invalidation with [react-query](https://www.npmjs.com/package/@tanstack/react-query)
 - Type and schema validation with [zod](https://zod.dev/)
 - Antd form integration with [antd-zod](https://github.com/MrBr/antd-zod)
 - Typesafe validated env variables for server and client with [t3-env](https://env.t3.gg/docs/nextjs)
@@ -26,7 +25,7 @@ This repository integrates it with Tailwindcss, Globalization, themes, state man
 - Globalization sorting and linting with [eslint-plugin-i18n-json](https://www.npmjs.com/package/eslint-plugin-i18n-json)
 - Pre-commit lint and prettier checks with [lint-staged](https://github.com/lint-staged/lint-staged)
 
-# Codebase convetions and enforced rules
+# Codebase conventions and enforced rules
 
 All files inside the [server](/src/server/) folder should have the `'use server'` directive on top, as them will only be served to the backend and callable from the front end.
 

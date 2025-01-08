@@ -1,7 +1,7 @@
 import { useRouter } from 'next/navigation';
 
-import Icons from '@client/components/Icons';
 import { cn } from '@utils/tailwind';
+import { LayoutDashboard } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import useSiderStore from '@/client/hooks/stores/useSiderStore';
@@ -25,7 +25,7 @@ const useSiderMenuItems = () => {
     {
       path: '/admin/schedules',
       label: 'menu.dashboard',
-      icon: <Icons.LayoutDashboard className="!my-auto" />,
+      icon: <LayoutDashboard className="!my-auto" />,
     },
   ];
 
