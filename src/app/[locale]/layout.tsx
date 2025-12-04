@@ -6,25 +6,28 @@ import { getLocale, getTranslations } from 'next-intl/server';
 import MainLayout from '@/client/components/layout/MainLayout';
 import MainProvider from '@/client/components/providers/MainProvider';
 
-export default async function RootLayout({
-  children,
-  params: { locale },
-}: {
+export default async function RootLayout(props: {
   children: React.ReactNode;
-  params: Record<string, string>;
+  params: Promise<Record<string, string>>;
 }) {
+  const params = await props.params;
+
+  const { locale } = params;
+
+  const { children } = props;
+
   let messages;
   try {
     messages = {
       ...(await import(`../../locale/messages/${locale}.json`)).default,
       ...(await import(`../../locale/messages/zod/${locale}.json`)).default,
     };
-  } catch (error) {
+  } catch {
     notFound();
   }
 
   return (
-    <html lang={locale}>
+    <html lang={locale} suppressHydrationWarning>
       <head />
       <body>
         <MainProvider locale={locale} messages={messages}>

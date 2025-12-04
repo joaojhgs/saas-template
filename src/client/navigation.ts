@@ -1,7 +1,5 @@
-import {
-  Pathnames,
-  createLocalizedPathnamesNavigation,
-} from 'next-intl/navigation';
+import { createNavigation } from 'next-intl/navigation';
+import { Pathnames } from 'next-intl/routing';
 
 import { languages } from '../locale';
 
@@ -23,8 +21,7 @@ export const pathnames = {
   //   },
 } satisfies Pathnames<typeof locales>;
 
-export const { Link, redirect, usePathname, useRouter } =
-  createLocalizedPathnamesNavigation({
-    locales,
-    pathnames,
-  });
+export const { Link, redirect, usePathname, useRouter } = createNavigation({
+  locales,
+  pathnames,
+});

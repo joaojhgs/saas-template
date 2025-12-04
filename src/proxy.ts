@@ -14,9 +14,9 @@ const handleI18nRouting = createIntlMiddleware({
   defaultLocale,
 });
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const response = handleI18nRouting(request);
-  const supabase = createUserClient();
+  const supabase = await createUserClient();
   if (
     request.nextUrl.pathname.includes('admin') ||
     request.nextUrl.pathname.includes('auth')

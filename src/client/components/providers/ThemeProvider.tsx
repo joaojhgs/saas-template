@@ -1,6 +1,6 @@
 import { PropsWithChildren } from 'react';
 
-import { ConfigProvider } from 'antd';
+import { App, ConfigProvider } from 'antd';
 import dayjs from 'dayjs';
 import 'dayjs/locale/en';
 import 'dayjs/locale/pt-br';
@@ -26,7 +26,7 @@ export function AntdConfigProvider({ children, locale }: ProviderProps) {
           token: colorsToken,
         }}
       >
-        {children}
+        <App>{children}</App>
       </ConfigProvider>
     </AntdProvider>
   );

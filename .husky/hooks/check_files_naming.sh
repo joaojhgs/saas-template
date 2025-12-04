@@ -40,7 +40,7 @@ error=0
 # Check all files and folders inside the src folder
 for item in $(find src -type d -o -type f); do
     # Exclude .git, .next, and node_modules directories
-    if [[ "$item" != ".git"* && "$item" != ".next"* && "$item" != "node_modules"* && "$item" != "src/locale/messages"* ]]; then
+    if [[ "$item" != ".git"* && "$item" != ".next"* && "$item" != "node_modules"* && "$item" != "src/locale/messages"* && "$item" != "src/app/.well-known"* ]]; then
         # Check if it's a folder
         if [[ -d "$item" ]]; then
             # Check kebab-case naming for folders

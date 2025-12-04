@@ -1,8 +1,15 @@
 import { getRequestConfig } from 'next-intl/server';
 
-export default getRequestConfig(async ({ locale }) => ({
-  messages: {
-    ...(await import(`./locale/messages/${locale}.json`)).default,
-    ...(await import(`./locale/messages/zod/${locale}.json`)).default,
-  },
-}));
+import { defaultLocale } from './locale';
+
+export default getRequestConfig(async ({ locale }) => {
+  const currentLocale = locale || defaultLocale;
+  return {
+    locale: currentLocale,
+    messages: {
+      ...(await import(`./locale/messages/${currentLocale}.json`)).default,
+      ...(await import(`./locale/messages/zod/${currentLocale}.json`)).default,
+    },
+    timeZone: 'America/Sao_Paulo',
+  };
+});

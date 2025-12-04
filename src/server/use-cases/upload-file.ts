@@ -17,7 +17,7 @@ interface IInput {
 
 export const uploadFile = async (values: IInput) => {
   const uuid = crypto.randomUUID();
-  const supabase = createUserClient();
+  const supabase = await createUserClient();
   const { data, error } = await supabase.storage
     .from(values.bucketName)
     .upload('public/' + uuid, values?.file as File, {

@@ -1,7 +1,7 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { notification } from 'antd';
+import { App } from 'antd';
 import { useTranslations } from 'next-intl';
 
 import { ISignInPasswordInput } from '@/schemas';
@@ -19,6 +19,7 @@ import { throwIfError } from '@/utils/result-handling';
 
 const useLogin = (options?: Record<string, unknown>) => {
   const queryClient = useQueryClient();
+  const { notification } = App.useApp();
   const t = useTranslations();
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -31,14 +32,18 @@ const useLogin = (options?: Record<string, unknown>) => {
       // On login success, it invalidates the getUser query to automatically update the cached data and rendering
       queryClient.invalidateQueries({ queryKey: ['logged-user'] });
       notification.success({
-        message: t('results.success'),
+        message: data.message,
+
+        title: t('results.success'),
         description: data.message,
       });
       router.push(searchParams.get('redirect') || '/admin');
     },
     onError: (error) => {
       notification.error({
-        message: t('results.error'),
+        message: error.message,
+
+        title: t('results.error'),
         description: error.message,
       });
     },

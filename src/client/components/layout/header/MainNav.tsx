@@ -14,10 +14,11 @@ import Icons from '../../Icons';
 
 export function MainNav() {
   const t = useTranslations();
+  const tNav = useTranslations('nav');
 
   const pathname = usePathname();
   const isAdminPage = pathname.includes('admin');
-  const navItems = getNavItems(isAdminPage, t);
+  const navItems = getNavItems(isAdminPage, tNav);
 
   return (
     <div className="flex gap-6 md:gap-10">

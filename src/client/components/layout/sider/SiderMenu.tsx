@@ -32,7 +32,7 @@ const SiderMenu = () => {
           )}
         </div>
       </Link>
-      <Divider className="mt-0 mb-2" />
+      <Divider className="mb-2 mt-0" />
       <Menu
         style={{ backgroundColor: token.colorBgBase }}
         selectedKeys={[removeLocale(pathname)]}

@@ -18,8 +18,8 @@ import MediaRenderingClient from './MediaRenderingClient';
  *   This is a server component used to grab as much browser info as possible from the request.
  *   passing it to the client side and then updating it with reliable data
  */
-const MediaRendering = ({ children, ...props }: IMediaRendering) => {
-  const allHeaders = headers();
+const MediaRendering = async ({ children, ...props }: IMediaRendering) => {
+  const allHeaders = await headers();
 
   // Try to use multiple headers the browser MIGHT send to capture screen width
   const serverWidth =

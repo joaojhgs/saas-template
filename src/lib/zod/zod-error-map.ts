@@ -1,12 +1,12 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 /**
  * This error map is a modified version of the on used by zod-i18n
  * Checkout the original at: https://github.com/aiji42/zod-i18n
  */
-import { useTranslations } from 'next-intl';
+import { NamespaceKeys, NestedKeyOf, useTranslations } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import { ZodErrorMap, ZodIssueCode, ZodParsedType, defaultErrorMap } from 'zod';
+
+import { IntlMessages } from '@/global';
 
 const jsonStringifyReplacer = (_: string, value: unknown): unknown => {
   if (typeof value === 'bigint') {
@@ -24,7 +24,6 @@ function joinValues<T extends unknown[]>(array: T, separator = ' | '): string {
 const isRecord = (value: unknown): value is Record<string, unknown> => {
   if (typeof value !== 'object' || value === null) return false;
 
-  // eslint-disable-next-line no-restricted-syntax
   for (const key in value) {
     if (!Object.prototype.hasOwnProperty.call(value, key)) return false;
   }
@@ -79,8 +78,15 @@ export const makeZodI18nMap: MakeZodI18nMap = (option) => (issue, ctx) => {
 
   const path =
     issue.path.length > 0 && !!tForm
-      ? { path: tForm(issue.path.join('.') as keyof IntlMessages['forms']) }
-      : {};
+      ? {
+          path: tForm(
+            issue.path.join('.') as NamespaceKeys<
+              IntlMessages['forms'],
+              NestedKeyOf<IntlMessages>
+            >,
+          ),
+        }
+      : { path: '' };
 
   switch (issue.code) {
     case ZodIssueCode.invalid_type:
@@ -155,11 +161,31 @@ export const makeZodI18nMap: MakeZodI18nMap = (option) => (issue, ctx) => {
             ...path,
           });
         }
-      } else {
-        message = t(`errors.invalid_string.${issue.validation}` as any, {
-          validation: t(`validations.${issue.validation}` as any),
+      } else if (
+        [
+          'cuid',
+          'nanoid',
+          'time',
+          'duration',
+          'base64',
+          'date',
+          'cuid2',
+          'datetime',
+          'email',
+          'emoji',
+          'ip',
+          'regex',
+          'ulid',
+          'url',
+          'uuid',
+        ].includes(issue.validation as string)
+      ) {
+        message = t(`errors.invalid_string.${issue.validation}` as const, {
+          validation: t(`validations.${issue.validation}` as const),
           ...path,
         });
+      } else {
+        message = t('errors.invalid_string.regex', { ...path }); // Fallback or handle unknown?
       }
       break;
     case ZodIssueCode.too_small: {
@@ -169,7 +195,6 @@ export const makeZodI18nMap: MakeZodI18nMap = (option) => (issue, ctx) => {
           : (issue.minimum as number);
       message = t(
         `errors.too_small.${issue.type}.${
-          // eslint-disable-next-line no-nested-ternary
           issue.exact
             ? 'exact'
             : issue.inclusive
@@ -178,7 +203,7 @@ export const makeZodI18nMap: MakeZodI18nMap = (option) => (issue, ctx) => {
         }`,
         {
           minimum,
-          count: typeof minimum === 'number' ? minimum : undefined,
+          count: typeof minimum === 'number' ? minimum : 0,
           ...path,
         },
       );
@@ -191,7 +216,6 @@ export const makeZodI18nMap: MakeZodI18nMap = (option) => (issue, ctx) => {
           : (issue.maximum as number);
       message = t(
         `errors.too_big.${issue.type}.${
-          // eslint-disable-next-line no-nested-ternary
           issue.exact
             ? 'exact'
             : issue.inclusive
@@ -200,7 +224,7 @@ export const makeZodI18nMap: MakeZodI18nMap = (option) => (issue, ctx) => {
         }`,
         {
           maximum,
-          count: typeof maximum === 'number' ? maximum : undefined,
+          count: typeof maximum === 'number' ? maximum : 0,
           ...path,
         },
       );

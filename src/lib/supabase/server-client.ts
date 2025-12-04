@@ -1,33 +1,28 @@
 import { cookies } from 'next/headers';
 
-import { type CookieOptions, createServerClient } from '@supabase/ssr';
+import { createServerClient } from '@supabase/ssr';
 import 'server-only';
 
 import { env } from '@/env';
 import { Database } from '@/schemas/supabase';
 
-export function createUserClient() {
+export async function createUserClient() {
+  const cookieStore = await cookies();
+
   // Create a server's supabase client with newly configured cookie,
   // which could be used to maintain user's session
   return createServerClient<Database>(env.SUPABASE_URL, env.SUPABASE_ANON_KEY, {
     cookies: {
-      get(name: string) {
-        return cookies().get(name)?.value;
+      getAll() {
+        return cookieStore.getAll();
       },
-      set(name: string, value: string, options: CookieOptions) {
+      setAll(cookiesToSet) {
         try {
-          cookies().set({ name, value, ...options });
-        } catch (error) {
-          // The `set` method was called from a Server Component.
-          // This can be ignored if you have middleware refreshing
-          // user sessions.
-        }
-      },
-      remove(name: string, options: CookieOptions) {
-        try {
-          cookies().set({ name, value: '', ...options });
-        } catch (error) {
-          // The `delete` method was called from a Server Component.
+          cookiesToSet.forEach(({ name, value, options }) =>
+            cookieStore.set(name, value, options),
+          );
+        } catch {
+          // The `setAll` method was called from a Server Component.
           // This can be ignored if you have middleware refreshing
           // user sessions.
         }
@@ -49,6 +44,11 @@ export const adminClient = createServerClient<Database>(
       autoRefreshToken: false,
       persistSession: false,
     },
-    cookies: {},
+    cookies: {
+      getAll() {
+        return [];
+      },
+      setAll() {},
+    },
   },
 );

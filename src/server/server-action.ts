@@ -50,7 +50,7 @@ export default function serverActionHof<
   ): Promise<ServerActionResult<Awaited<Output> | undefined>> {
     try {
       const t = await initErrorsAndTranslations();
-      const supabase = createUserClient();
+      const supabase = await createUserClient();
       return createServerActionSuccess(
         await callback({ supabase, supabaseAdmin: adminClient, t, values }),
       );
