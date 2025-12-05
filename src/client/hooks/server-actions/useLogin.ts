@@ -5,8 +5,7 @@ import { App } from 'antd';
 import { useTranslations } from 'next-intl';
 
 import { ISignInPasswordInput } from '@/schemas';
-import { loginWithPassword } from '@/server/use-cases/auth';
-import { throwIfError } from '@/utils/result-handling';
+import { useTRPC, useTRPCClient } from '@/trpc/client';
 
 /* 
   The custom hook calls the loginWithPassword function from the server use-cases
@@ -18,6 +17,8 @@ import { throwIfError } from '@/utils/result-handling';
 */
 
 const useLogin = (options?: Record<string, unknown>) => {
+  const trpc = useTRPC();
+  const trpcClient = useTRPCClient();
   const queryClient = useQueryClient();
   const { notification } = App.useApp();
   const t = useTranslations();
@@ -26,16 +27,18 @@ const useLogin = (options?: Record<string, unknown>) => {
   return useMutation({
     ...options,
     mutationFn: (data: ISignInPasswordInput) =>
-      throwIfError(loginWithPassword(data)),
+      trpcClient.auth.loginWithPassword.mutate(data),
     mutationKey: ['login'],
-    onSuccess: (data) => {
+    onSuccess: () => {
       // On login success, it invalidates the getUser query to automatically update the cached data and rendering
-      queryClient.invalidateQueries({ queryKey: ['logged-user'] });
+      queryClient.invalidateQueries({
+        queryKey: trpc.auth.getCurrentUser.queryKey(),
+      });
       notification.success({
-        message: data.message,
+        message: 'Login successful',
 
         title: t('results.success'),
-        description: data.message,
+        description: 'Login successful',
       });
       router.push(searchParams.get('redirect') || '/admin');
     },

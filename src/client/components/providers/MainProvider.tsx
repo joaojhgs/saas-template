@@ -1,9 +1,10 @@
 'use client';
 
-import React, { ReactNode, useState } from 'react';
+import React, { ReactNode } from 'react';
 
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AbstractIntlMessages, NextIntlClientProvider } from 'next-intl';
+
+import { TRPCReactProvider } from '@/trpc/client';
 
 import ThemeProvider from './ThemeProvider';
 
@@ -14,14 +15,12 @@ type Props = {
 };
 
 const MainProvider: React.FC<Props> = ({ children, locale, messages }) => {
-  const [queryClient] = useState(() => new QueryClient());
-
   return (
-    <QueryClientProvider client={queryClient}>
+    <TRPCReactProvider>
       <NextIntlClientProvider locale={locale} messages={messages}>
         <ThemeProvider locale={locale}>{children}</ThemeProvider>
       </NextIntlClientProvider>
-    </QueryClientProvider>
+    </TRPCReactProvider>
   );
 };
 

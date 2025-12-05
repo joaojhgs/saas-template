@@ -3,6 +3,7 @@ import React from 'react';
 import { Image, Skeleton, Upload, UploadProps } from 'antd';
 import ImgCrop from 'antd-img-crop';
 
+import { useTRPCClient } from '@/trpc/client';
 import { cn } from '@/utils/tailwind';
 
 interface IImageUploaderProps {
@@ -32,17 +33,45 @@ const ImageUploader = ({
   height,
   bucketName,
 }: IImageUploaderProps) => {
+  const trpcClient = useTRPCClient();
+
   if (isLoading) {
     return (
       <Skeleton.Image className="flex size-full items-center justify-center" />
     );
   }
 
+  const customRequest = async (
+    options: Parameters<NonNullable<UploadProps['customRequest']>>[0],
+  ) => {
+    const { file, onSuccess, onError } = options;
+    const reader = new FileReader();
+    reader.readAsDataURL(file as Blob);
+    reader.onload = async () => {
+      const base64 = reader.result?.toString().split(',')[1];
+      if (base64) {
+        try {
+          const result = await trpcClient.upload.uploadFile.mutate({
+            bucketName,
+            fileBase64: base64,
+            fileName: (file as File).name,
+            contentType: (file as File).type,
+          });
+          onSuccess?.(result);
+        } catch (err) {
+          onError?.(err as Error);
+        }
+      } else {
+        onError?.(new Error('Failed to read file'));
+      }
+    };
+  };
+
   return (
     <div className={cn('relative', rootClassName)}>
       <ImgCrop rotationSlider>
         <Upload
-          action={`/api/upload/${bucketName}`}
+          customRequest={customRequest}
           supportServerRender
           listType="picture"
           className={cn(uploadClassName, 'absolute left-0 top-0 z-50')}

@@ -26,6 +26,15 @@ importers:
       '@tanstack/react-query':
         specifier: ^5.90.11
         version: 5.90.11(react@19.2.1)
+      '@trpc/client':
+        specifier: ^11.7.2
+        version: 11.7.2(@trpc/server@11.7.2(typescript@5.1.3))(typescript@5.1.3)
+      '@trpc/server':
+        specifier: ^11.7.2
+        version: 11.7.2(typescript@5.1.3)
+      '@trpc/tanstack-react-query':
+        specifier: ^11.7.2
+        version: 11.7.2(@tanstack/react-query@5.90.11(react@19.2.1))(@trpc/client@11.7.2(@trpc/server@11.7.2(typescript@5.1.3))(typescript@5.1.3))(@trpc/server@11.7.2(typescript@5.1.3))(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(typescript@5.1.3)
       '@vercel/flags':
         specifier: ^2.5.1
         version: 2.5.1(next@16.0.7(@babel/core@7.28.5)(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
@@ -74,6 +83,9 @@ importers:
       server-only:
         specifier: ^0.0.1
         version: 0.0.1
+      superjson:
+        specifier: ^2.2.6
+        version: 2.2.6
       tailwind-merge:
         specifier: ^1.14.0
         version: 1.14.0
@@ -1224,6 +1236,27 @@ packages:
       '@vue/compiler-sfc':
         optional: true
 
+  '@trpc/client@11.7.2':
+    resolution: {integrity: sha512-OQxqUMfpDvjcszo9dbnqWQXnW2L5IbrKSz2H7l8s+mVM3EvYw7ztQ/gjFIN3iy0NcamiQfd4eE6qjcb9Lm+63A==}
+    peerDependencies:
+      '@trpc/server': 11.7.2
+      typescript: '>=5.7.2'
+
+  '@trpc/server@11.7.2':
+    resolution: {integrity: sha512-AgB26PXY69sckherIhCacKLY49rxE2XP5h38vr/KMZTbLCL1p8IuIoKPjALTcugC2kbyQ7Lbqo2JDVfRSmPmfQ==}
+    peerDependencies:
+      typescript: '>=5.7.2'
+
+  '@trpc/tanstack-react-query@11.7.2':
+    resolution: {integrity: sha512-3XrY0b8lV0Fhj4Z2hVn1d1ZJzq2/stbc2F1e9Y6RrUWOfLmOKHlEVHYO1QfDGM6rqj66DkUj7eA593hAI0VTkQ==}
+    peerDependencies:
+      '@tanstack/react-query': ^5.80.3
+      '@trpc/client': 11.7.2
+      '@trpc/server': 11.7.2
+      react: '>=18.2.0'
+      react-dom: '>=18.2.0'
+      typescript: '>=5.7.2'
+
   '@types/conventional-commits-parser@5.0.0':
     resolution: {integrity: sha512-loB369iXNmAZglwWATL+WRe+CRMmmBPtpolYzIebFaX4YA3x+BEfLqhUAV9WanycKI3TG1IMr5bMJDajDKLlUQ==}
 
@@ -1867,6 +1900,10 @@ packages:
 
   cookie@1.1.1:
     resolution: {integrity: sha512-ei8Aos7ja0weRpFzJnEA9UHJ/7XQmqglbRwnf2ATjcB9Wq874VKH9kfjjirM6UhU2/E5fFYadylyhFldcqSidQ==}
+    engines: {node: '>=18'}
+
+  copy-anything@4.0.5:
+    resolution: {integrity: sha512-7Vv6asjS4gMOuILabD3l739tsaxFQmC+a7pLZm02zyvs8p977bL3zEgq3yDk5rn9B0PbYgIv++jmHcuUab4RhA==}
     engines: {node: '>=18'}
 
   cosmiconfig-typescript-loader@5.0.0:
@@ -2892,6 +2929,10 @@ packages:
     resolution: {integrity: sha512-LvIm3/KWzS9oRFHugab7d+M/GcBXuXX5xZkzPmN+NxihdQlZUQ4dWuSV1xR/sq6upL1TJEDrfBgRepHFdBtSNQ==}
     engines: {node: '>= 0.4'}
 
+  is-what@5.5.0:
+    resolution: {integrity: sha512-oG7cgbmg5kLYae2N5IVd3jm2s+vldjxJzK1pcu9LfpGuQ93MQSzo0okvRna+7y5ifrD+20FE8FvjusyGaz14fw==}
+    engines: {node: '>=18'}
+
   is-windows@1.0.2:
     resolution: {integrity: sha512-eXK1UInq2bPmjyX6e3VHIzMLobc4J94i4AWn+Hpq3OU5KkrRC96OAcR3PRJ/pGu6m8TRnBHP9dkXQVsT/COVIA==}
     engines: {node: '>=0.10.0'}
@@ -3916,6 +3957,10 @@ packages:
     resolution: {integrity: sha512-DTaTsYQ48FdOPvTTl3H1cQnGDHvm4kQdBakeI5qbs7BFZgu2SRJDYRrCcSgH9sbZReOKrQdJCPfNpoy/Z359gA==}
     engines: {npm: '>=8'}
     hasBin: true
+
+  superjson@2.2.6:
+    resolution: {integrity: sha512-H+ue8Zo4vJmV2nRjpx86P35lzwDT3nItnIsocgumgr0hHMQ+ZGq5vrERg9kJBo5AWGmxZDhzDo+WVIJqkB0cGA==}
+    engines: {node: '>=16'}
 
   supports-color@5.5.0:
     resolution: {integrity: sha512-QjVjwdXIt408MIiAqCX4oUKsgU2EqAGzs2Ppkm4aQYbjm+ZEWEcW4SfFNTr4uMNZma0ey4f5lgLrkB0aX0QMow==}
@@ -5411,6 +5456,24 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@trpc/client@11.7.2(@trpc/server@11.7.2(typescript@5.1.3))(typescript@5.1.3)':
+    dependencies:
+      '@trpc/server': 11.7.2(typescript@5.1.3)
+      typescript: 5.1.3
+
+  '@trpc/server@11.7.2(typescript@5.1.3)':
+    dependencies:
+      typescript: 5.1.3
+
+  '@trpc/tanstack-react-query@11.7.2(@tanstack/react-query@5.90.11(react@19.2.1))(@trpc/client@11.7.2(@trpc/server@11.7.2(typescript@5.1.3))(typescript@5.1.3))(@trpc/server@11.7.2(typescript@5.1.3))(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(typescript@5.1.3)':
+    dependencies:
+      '@tanstack/react-query': 5.90.11(react@19.2.1)
+      '@trpc/client': 11.7.2(@trpc/server@11.7.2(typescript@5.1.3))(typescript@5.1.3)
+      '@trpc/server': 11.7.2(typescript@5.1.3)
+      react: 19.2.1
+      react-dom: 19.2.1(react@19.2.1)
+      typescript: 5.1.3
+
   '@types/conventional-commits-parser@5.0.0':
     dependencies:
       '@types/node': 18.13.0
@@ -6261,6 +6324,10 @@ snapshots:
   convert-source-map@2.0.0: {}
 
   cookie@1.1.1: {}
+
+  copy-anything@4.0.5:
+    dependencies:
+      is-what: 5.5.0
 
   cosmiconfig-typescript-loader@5.0.0(@types/node@18.13.0)(cosmiconfig@9.0.0(typescript@5.1.3))(typescript@5.1.3):
     dependencies:
@@ -7612,6 +7679,8 @@ snapshots:
       call-bind: 1.0.7
       get-intrinsic: 1.2.4
 
+  is-what@5.5.0: {}
+
   is-windows@1.0.2: {}
 
   isarray@2.0.5: {}
@@ -8701,6 +8770,10 @@ snapshots:
       tar: 7.1.0
     transitivePeerDependencies:
       - supports-color
+
+  superjson@2.2.6:
+    dependencies:
+      copy-anything: 4.0.5
 
   supports-color@5.5.0:
     dependencies:

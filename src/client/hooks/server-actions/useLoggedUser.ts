@@ -1,7 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { getCurrentUser } from '@/server/use-cases/auth';
-import { throwIfError } from '@/utils/result-handling';
+import { useTRPC } from '@/trpc/client';
 
 /*
     This hook uses react-query to fetch the current user from our server side function with supabase;
@@ -10,11 +9,12 @@ import { throwIfError } from '@/utils/result-handling';
     This ensures, the users stays logged in and authorized securely.
 */
 
-const useLoggedUser = () =>
-  useQuery({
-    queryKey: ['logged-user'],
-    queryFn: () => throwIfError(getCurrentUser()),
+const useLoggedUser = () => {
+  const trpc = useTRPC();
+  return useQuery({
+    ...trpc.auth.getCurrentUser.queryOptions(),
     refetchInterval: 3600000,
   });
+};
 
 export default useLoggedUser;

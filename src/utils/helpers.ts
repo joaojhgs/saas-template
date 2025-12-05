@@ -1,16 +1,16 @@
 import camelCase from 'lodash/camelCase';
 import { CamelCasedProperties } from 'type-fest';
 
+import { env } from '@/env';
+
 export const getURL = (path: string = '') => {
   // Check if NEXT_PUBLIC_SITE_URL is set and non-empty. Set this to your site URL in production env.
   let url =
-    process?.env?.NEXT_PUBLIC_SITE_URL &&
-    process.env.NEXT_PUBLIC_SITE_URL.trim() !== ''
-      ? process.env.NEXT_PUBLIC_SITE_URL
+    env.NEXT_PUBLIC_SITE_URL && env.NEXT_PUBLIC_SITE_URL.trim() !== ''
+      ? env.NEXT_PUBLIC_SITE_URL
       : // If not set, check for NEXT_PUBLIC_VERCEL_URL, which is automatically set by Vercel.
-        process?.env?.NEXT_PUBLIC_VERCEL_URL &&
-          process.env.NEXT_PUBLIC_VERCEL_URL.trim() !== ''
-        ? process.env.NEXT_PUBLIC_VERCEL_URL
+        env.NEXT_PUBLIC_VERCEL_URL && env.NEXT_PUBLIC_VERCEL_URL.trim() !== ''
+        ? env.NEXT_PUBLIC_VERCEL_URL
         : // If neither is set, default to localhost for local development.
           'http://localhost:3000/';
 
@@ -23,6 +23,13 @@ export const getURL = (path: string = '') => {
 
   // Concatenate the URL and the path.
   return path ? `${url}/${path}` : url;
+};
+
+export const getTRPCUrl = () => {
+  if (env.NEXT_PUBLIC_SERVER_URL) {
+    return env.NEXT_PUBLIC_SERVER_URL;
+  }
+  return getURL('api/trpc');
 };
 
 /* Bruh */
