@@ -1,4 +1,4 @@
-# SaaS template using ANTD, TailwindCSS, NextJS 14 and other opnionated libraries
+# SaaS template using ANTD, TailwindCSS, NextJS 16 and other opnionated libraries
 
 Antd is is an excellent UI component library, the biggest when it comes to ecosystem and functionalities.
 
@@ -8,14 +8,15 @@ This repository integrates it with Tailwindcss, Globalization, themes, state man
 
 ## Features
 
-- [Next.js 14](https://github.com/vercel/next.js) `app` directory
-- [Ant-Design 5](https://github.com/ant-design/ant-design)
+- [Next.js 16](https://github.com/vercel/next.js) `app` directory
+- [Ant-Design 6](https://github.com/ant-design/ant-design)
 - [Tailwind CSS](https://github.com/tailwindlabs/tailwindcss)
 - Dark mode with [next-themes](https://github.com/pacocoursey/next-themes) **@deprecated to static theme**
 - [Supabase](https://supabase.com/docs) For auth and back end as a service
 - Icons from [Lucide](https://lucide.dev)
 - Typesafe globalization with [next-intl](https://github.com/amannn/next-intl)
-- State management with [Zustand](https://github.com/pmndrs/zustand)
+- State management and Data Fetching with [tRPC](https://trpc.io/) & [React Query](https://tanstack.com/query/latest)
+- Client State management with [Zustand](https://github.com/pmndrs/zustand)
 - Type and schema validation with [zod](https://zod.dev/)
 - Antd form integration with [antd-zod](https://github.com/MrBr/antd-zod)
 - Typesafe validated env variables for server and client with [t3-env](https://env.t3.gg/docs/nextjs)
@@ -28,7 +29,10 @@ This repository integrates it with Tailwindcss, Globalization, themes, state man
 
 # Codebase conventions and enforced rules
 
-All files inside the [server](/src/server/) folder should have the `'use server'` directive on top, as them will only be served to the backend and callable from the front end.
+We use **tRPC** for backend communication.
+- **Controllers:** Logic resides in `src/server/controllers`.
+- **Routers:** Definitions reside in `src/server/routers`.
+- **Client:** Use `useTRPCClient` hook or `trpc` proxy for fetching data.
 
 Branch names should follow this convention:
 `^((hotfix|bugfix|fix|feature|improvement|chore|style|refactor)\/[a-zA-Z0-9_\-]+)|(main)$`.
@@ -37,7 +41,7 @@ Ex: `hotfix-auth-component` | `feature-schedulling` | `main`
 
 Commit messages should follow the [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) naming style. You can also use `pnpm commit` for a cli interface for commit naming.
 
-Files and folders in general should follow the `kebab-case` name convention, only react `.tsx` files inside the `components` folder should follow the `SnakeCase` naming convetion.
+Files and folders in general should follow the `kebab-case` name convention, only react `.tsx` files inside the `components` folder should follow the `PascalCase` naming convetion.
 
 ## Run 
 

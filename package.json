@@ -14,7 +14,10 @@
     "prepare": "husky",
     "commit": "git-cz",
     "supabase:generate": "supabase gen types typescript --local --schema public > src/schemas/supabase.ts ",
-    "supabase": "supabase"
+    "supabase:migration:new": "supabase migration new",
+    "supabase:migration:up": "supabase migration up",
+    "supabase": "supabase",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "@ant-design/cssinjs": "^2.0.1",
